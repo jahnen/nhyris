@@ -4,6 +4,11 @@
 
 The minimal framework for transform R shiny application into standalone
 
+## Demo video in youtube (new page)
+<a href='https://youtu.be/P300v5u-PPI' target="_blank">
+  <img src='https://github.com/user-attachments/assets/fc93f66b-2add-4d03-9c38-8901b147a769'>
+</a>
+
 ## How to use
 
 [![Use this template](https://img.shields.io/badge/USE_THIS_TEMPLATE-54A258?style=for-the-badge)](https://github.com/new?template_owner=jahnen&template_name=nhyris&owner=%40me)
