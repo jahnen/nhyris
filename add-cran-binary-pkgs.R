@@ -18,7 +18,7 @@ library(automagic)
 
 options(repos = "https://cloud.r-project.org")
 
-cran_pkgs <- setdiff(unique(c("shiny", automagic::get_dependent_packages("shiny"))), "automagic")
+cran_pkgs <- setdiff(unique(c("shiny", automagic::get_dependent_packages(directory = "shiny"))), "automagic")
 
 install_bins <- function(
     cran_pkgs, library_path, type, decompress,
