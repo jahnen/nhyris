@@ -1,21 +1,21 @@
 {
-  "name": "myapp",
-  "productName": "myapp",
-  "version": "1.0.0",
-  "description": "My Electron application description",
-  "main": "src/index.js",
-  "author": {
-    "name": "jhk0530",
-    "email": "hwanistic@gmail.com"
+  "name": "nhyris",
+  "version": "0.1.0",
+  "description": "CLI for packaging R Shiny apps into Electron-based desktop apps",
+  "type": "module",
+  "bin": {
+    "nhyris": "./bin/nhyris.js"
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jhk0530/nhyris"
+  "scripts": {
+    "start": "node ./bin/nhyris.js"
   },
-  "devDependencies": {
-    "@electron-forge/cli": "^7.6.1",
-    "@electron-forge/maker-zip": "^7.6.1",
-    "electron": "^34.2.0"
-  }
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=22.13.1"
+  },
+  "author": "Jinhwan Kim",
+  "license": "MIT"
 }
