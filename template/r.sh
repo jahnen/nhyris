@@ -4,11 +4,18 @@
 #!/usr/bin/env bash
 set -e
 
+# Define the R version explicitly
+# Define the R version explicitly
+# Chosen for compatibility with specific dependencies
+R_VERSION="4.5.0"
+
+# Print the R version being installed
+echo "Installing R version: $R_VERSION"
+
 # Download and extract the main Mac Resources directory
 # Updated as Sonoma / m1
 mkdir -p r-mac
-curl -o r-mac/latest_r.pkg \
-    https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-4.5.0-arm64.pkg
+curl -o r-mac/latest_r.pkg "$R_URL"
 
 cd r-mac
 xar -xf latest_r.pkg
@@ -25,6 +32,6 @@ sed -i.bak 's;/Library/Frameworks/R.framework/Resources;${R_HOME};g' \
 chmod +x bin/R
 rm -f bin/R.bak
 
-# Remove unneccessary files
+# Remove unnecessary files
 rm -r doc tests
 rm -r lib/*.dSYM
