@@ -5,9 +5,9 @@
 set -e
 
 # Define the R version explicitly
-# Define the R version explicitly
 # Chosen for compatibility with specific dependencies
 R_VERSION="4.5.0"
+R_URL="https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-${R_VERSION}-arm64.pkg"
 
 # Print the R version being installed
 echo "Installing R version: $R_VERSION"
