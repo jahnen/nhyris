@@ -58,15 +58,24 @@ export const initCommand = new Command("init")
       const newAppPath = path.join(shinyPath, "app.R");
 
       // Remove existing app.R if it exists
-      if (fs.existsSync(oldAppPath)) {
+      try {
         fs.rmSync(oldAppPath);
         console.log("🗑️ Removed existing app.R");
+      } catch (err) {
+        console.error("❌ Error removing existing app.R:", err.message);
       }
 
       // Rename 01-faithful.R to app.R
       if (fs.existsSync(faithfulPath)) {
-        fs.renameSync(faithfulPath, newAppPath);
-        console.log("✅ Renamed 01-faithful.R to app.R");
+        try {
+          fs.renameSync(faithfulPath, newAppPath);
+          console.log("✅ Renamed 01-faithful.R to app.R");
+        } catch (err) {
+          console.error(
+            "❌ Error renaming 01-faithful.R to app.R:",
+            err.message
+          );
+        }
       } else {
         console.warn("⚠️  01-faithful.R not found in the shiny directory.");
       }
