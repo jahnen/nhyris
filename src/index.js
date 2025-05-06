@@ -111,7 +111,7 @@ const tryStartWebserver = async (
     if (shinyProcessAlreadyDead) {
       break;
     }
-    await waitFor(500);
+    await waitFor(1000);
     try {
       const serverUp = await checkServerStatus(url);
       if (serverUp) {
