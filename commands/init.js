@@ -50,6 +50,28 @@ export const initCommand = new Command("init")
     execSync(`cp -r ${templatePath}/shiny ${projectPath}`);
     execSync(`cp -r ${templatePath}/src ${projectPath}`);
 
+    // If name is "ex01", handle app.R and 01-faithful.R
+    if (name === "ex01") {
+      const shinyPath = path.join(projectPath, "shiny");
+      const oldAppPath = path.join(shinyPath, "app.R");
+      const faithfulPath = path.join(shinyPath, "01-faithful.R");
+      const newAppPath = path.join(shinyPath, "app.R");
+
+      // Remove existing app.R if it exists
+      if (fs.existsSync(oldAppPath)) {
+        fs.rmSync(oldAppPath);
+        console.log("🗑️ Removed existing app.R");
+      }
+
+      // Rename 01-faithful.R to app.R
+      if (fs.existsSync(faithfulPath)) {
+        fs.renameSync(faithfulPath, newAppPath);
+        console.log("✅ Renamed 01-faithful.R to app.R");
+      } else {
+        console.warn("⚠️  01-faithful.R not found in the shiny directory.");
+      }
+    }
+
     const copy = (file) => {
       const from = path.join(templatePath, file);
       const to = path.join(projectPath, file);
