@@ -35,7 +35,6 @@ const startShinyProcess = () => {
           R_LIBS: libPath,
           R_LIBS_USER: libPath,
           R_LIBS_SITE: libPath,
-          R_LIB_PATHS: libPath,
         },
         stdio: "ignore",
         // terminal output for debug

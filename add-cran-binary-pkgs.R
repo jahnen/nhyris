@@ -20,15 +20,15 @@ options(repos = "https://cloud.r-project.org")
 
 # Check if 'shiny' directory exists and contains R files
 if (!dir.exists("shiny")) {
-  stop("The 'shiny' directory does not exist.")
+  stop("The 'shiny' directory does not exist at path: ", getwd(), "/shiny")
 }
 
 r_files <- list.files("shiny", pattern = "\\.R$", full.names = TRUE)
 if (length(r_files) == 0) {
-  stop("No R files found in the 'shiny' directory.")
+  stop("No R files found in the 'shiny' directory at path: ", getwd(), "/shiny")
 }
 
-cran_pkgs <- setdiff(unique(c("shiny", automagic::get_dependent_packages(directory = "shiny"))), "automagic")
+cran_pkgs <- setdiff(unique(c("shiny", automagic::get_dependent_packages(directory = "shiny"))), "automagic") # nolint: line_length_linter.
 
 install_bins <- function(
     cran_pkgs, library_path, type, decompress,
@@ -59,7 +59,7 @@ install_bins <- function(
     suppressMessages(suppressWarnings({
       tryCatch(
         {
-          downloaded <- download.packages(cran_to_install, destdir = td, type = type)
+          downloaded <- download.packages(cran_to_install, destdir = td, type = type) # nolint: line_length_linter.
         },
         error = function(e) {
           stop("Failed to download packages: ", e$message)
