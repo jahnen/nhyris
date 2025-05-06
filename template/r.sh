@@ -8,7 +8,7 @@ set -e
 # Updated as Sonoma / m1
 mkdir -p r-mac
 curl -o r-mac/latest_r.pkg \
-https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-4.4.2-arm64.pkg
+    https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-4.5.0-arm64.pkg
 
 cd r-mac
 xar -xf latest_r.pkg
@@ -21,7 +21,7 @@ rm -r R-fw.pkg R.framework
 # Patch the main R script
 sed -i.bak '/^R_HOME_DIR=/d' bin/R
 sed -i.bak 's;/Library/Frameworks/R.framework/Resources;${R_HOME};g' \
-bin/R
+    bin/R
 chmod +x bin/R
 rm -f bin/R.bak
 

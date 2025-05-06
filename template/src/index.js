@@ -10,9 +10,10 @@ const rPath = "r-mac";
 // remove axios
 const checkServerStatus = async (url) => {
   try {
-    const res = await fetch(url, { method: "HEAD", timeout: 1000 });
+    const res = await fetch(url, { method: "HEAD", timeout: 3000 });
     return res.status === 200;
   } catch (e) {
+    console.error("Error checking server status:", e);
     return false;
   }
 };
@@ -28,9 +29,16 @@ const startShinyProcess = () => {
           WITHIN_ELECTRON: "1",
           RE_SHINY_PATH: shinyAppPath,
           R_LIB_PATHS: libPath,
+          R_HOME_DIR: rpath,
+          RHOME: rpath,
+          RE_SHINY_PORT: 1124,
+          R_LIBS: libPath,
+          R_LIBS_USER: libPath,
+          R_LIBS_SITE: libPath,
         },
         stdio: "ignore",
-        // stdio: "inherit", // terminal output
+        // terminal output for debug
+        // stdio: "inherit",
       }
     );
 
@@ -88,40 +96,21 @@ const tryStartWebserver = async (
   await progressCallback({ attempt: attempt, code: "start" });
 
   let shinyRunning = false;
-  const onError = async (e) => {
-    console.error(e);
-    rShinyProcess = null;
-    if (shutdown) {
-      // global state :(
-      return;
-    }
-    if (shinyRunning) {
-      await onErrorLater();
-    } else {
-      await tryStartWebserver(
-        attempt + 1,
-        progressCallback,
-        onErrorStartup,
-        onErrorLater,
-        onSuccess
-      );
-    }
-  };
 
   let shinyProcessAlreadyDead = false;
   try {
     rShinyProcess = await startShinyProcess();
   } catch (e) {
     shinyProcessAlreadyDead = true;
-    onError(e);
+    console.error("Error starting Shiny process:", e);
   }
 
   let url = `http://127.0.0.1:1124`;
-  for (let i = 0; i <= 50; i++) {
+  for (let i = 0; i <= 10; i++) {
     if (shinyProcessAlreadyDead) {
       break;
     }
-    await waitFor(500);
+    await waitFor(1000);
     try {
       const serverUp = await checkServerStatus(url);
       if (serverUp) {
@@ -130,13 +119,17 @@ const tryStartWebserver = async (
         onSuccess(url);
         return;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error checking server status:", e);
+    }
   }
   await progressCallback({ attempt: attempt, code: "notresponding" });
 
   try {
     rShinyProcess.kill();
-  } catch (e) {}
+  } catch (e) {
+    console.error("Error killing Shiny process:", e);
+  }
 };
 
 let mainWindow;
@@ -209,7 +202,9 @@ app.on("ready", async () => {
   const emitSpashEvent = async (event, data) => {
     try {
       await loadingSplashScreen.webContents.send(event, data);
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error emitting splash event:", e);
+    }
   };
 
   const progressCallback = async (event) => {
@@ -244,6 +239,7 @@ app.on("ready", async () => {
       }
     );
   } catch (e) {
+    console.error("Error starting webserver:", e);
     await emitSpashEvent("failed");
   }
 });
@@ -253,5 +249,7 @@ app.on("window-all-closed", () => {
   app.quit();
   try {
     rShinyProcess.kill();
-  } catch (e) {}
+  } catch (e) {
+    console.error("Error killing Shiny process:", e);
+  }
 });
