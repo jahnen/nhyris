@@ -1,0 +1,62 @@
+color:
+  palette:
+    black: "#2d2722"
+    green: "#4d573E"
+    blue: "#73A7C9"
+    beige: "#F4EBD0"
+    gray: "#F2F7F9"
+  foreground: black
+  background: gray
+  primary: "#1D1D19"
+  secondary: green
+  tertiary: yellow
+  success: green
+  info: skyblue
+  warning: orange
+  danger: red
+  light: white
+  dark: black
+  link: blue
+meta:
+  name:
+    short: nhyris
+    full: nhyris-jahnen
+  link:
+    home: https://jahnen.io
+    github: https://github.com/acmecorp
+    description: |
+      jahnen: Do What You're good at
+  founded: 2024
+
+logo:
+  small: "brand/logo.png"
+  medium: "brand/logo.png"
+  large: "brand/logo.png"
+typography:
+  fonts:
+    - family: Raleway
+      source: google
+  base:
+    family: Raleway
+    size: 16px
+    weight: 400
+    line-height: 1.25
+  headings:
+    family: Raleway
+    weight: 700
+    style: normal
+    line-height: 1.25
+    color: black
+  monospace-inline:
+    family: "Ubuntu Mono"
+    color: white
+    background-color: black
+  monospace-block:
+    family: "Ubuntu Mono"
+    color: white
+    background-color: beige
+  link:
+    color: blue
+    weight: 400
+    background-color: none
+    decoration: underline

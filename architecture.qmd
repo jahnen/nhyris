@@ -1,0 +1,67 @@
+---
+title: "Architecture"
+---
+
+::: {.callout-note}
+These are for developers who want to contribute or make modification.
+:::
+
+## Architecture of nhyris
+
+nhyris is consisted with 4 parts: **template**, **commands**, **Electrons**, **Installings** and **Documents**
+
+### 1. template
+
+#### shiny
+
+If name is not predefined: like **ex01**
+
+- **app.R**: shiny code for show simple shiny application.
+- **nn-x.R(pattern)**: shiny code used in shiny gallery. If predefined template name used, it will replace previous **app.R **
+
+#### src
+
+These are codes for running electron application.
+
+- **index.js**: The main code, it will show **loading.html** and call **start-shiny.R** that run shiny application in port 1124.
+and as shiny is ready, it will show shiny application.
+- **loading.html**: temporary file that show loading screen to electron
+- **start-shiny.R**: R code to launch shiny.
+
+### 2. commamnds
+
+These are codes for utilizing `nhyris` as CLI commands.
+
+- **bin/nhyris.js** will manage these commands.
+- **init.js** will activate `nhyris init` 
+- **build.js** will activate `nhyris build`
+
+Also if you have issue on these, please set a label as `commands`
+
+### 3. Electrons
+
+These are code for configuration about manage electron application.
+Some configuration exists in **src/index.js**
+
+- **template/forge.config.js**: electron forge configuration file.
+- **template/package.json**: node package information for electron.
+
+::: {.callout-note}
+**/packages.json** is node package information for `nhyris`
+:::
+
+### 4. Installings
+
+These are codes for installing local R
+
+- **add-cran-binary-pkgs.R**: R code to install cran packages into local R
+- **r.sh**: shell script that install local R
+
+### 5. Documents
+
+- **\_quarto.yml**: quarto configuration
+- **\*.qmd**: quarto document files
+- **brand/**: quarto configuration
+- **docs/**: quarto destination
+- **images/**: nhyris logo
+

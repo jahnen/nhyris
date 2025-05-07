@@ -1,0 +1,48 @@
+---
+title: "nhyris"
+---
+
+`nhyris` is minimal framework to transform R Shiny application into standalone.
+
+## How to use
+
+1. clone repository
+
+2. initialize project with
+
+```sh
+nhyris init myapp
+```
+
+3. modify your shiny application
+
+
+4. Modify shiny and Run your application
+
+Code for shiny is in **"myapp/shiny/app.R"**
+
+```sh
+nhyris run myapp
+```
+
+::: {.callout-note}
+nhyris supports single file: not `ui.R` & `server.R`
+:::
+
+4. build application into electron
+
+```sh
+nhyris build myapp
+```
+
+5. Share your result
+
+results exists in "out"
+
+
+## app.R template from Shiny Galleries 
+
+```sh
+nhyris init ex01
+```
+

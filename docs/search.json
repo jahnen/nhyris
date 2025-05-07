@@ -1,0 +1,156 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "nhyris",
+    "section": "",
+    "text": "nhyris is minimal framework to transform R Shiny application into standalone."
+  },
+  {
+    "objectID": "CONTRIBUTING.html",
+    "href": "CONTRIBUTING.html",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "First off, thanks for taking the time to contribute! ❤️\nAll types of contributions are encouraged and valued. See the Table of Contents for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉\n\nAnd if you like the project, but just don’t have time to contribute, that’s fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about: - Star the project - Tweet about it - Refer this project in your project’s readme - Mention the project at local meetups and tell your friends/colleagues\n\n\n\n\n\nI Have a Question\nI Want To Contribute\nReporting Bugs\nSuggesting Enhancements\nYour First Code Contribution\nImproving The Documentation\nStyleguides\nCommit Messages\nJoin The Project Team\n\n\n\n\n\nIf you want to ask a question, we assume that you have read the available Documentation.\n\nBefore you ask a question, it is best to search for existing Issues that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.\nIf you then still feel the need to ask a question and need clarification, we recommend the following:\n\nOpen an Issue.\nProvide as much context as you can about what you’re running into.\nProvide project and platform versions (nodejs, npm, etc), depending on what seems relevant.\n\nWe will then take care of the issue as soon as possible.\n\n\n\n\n\n\nWhen contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project licence.\n\n\n\n\n\n\nA good bug report shouldn’t leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.\n\nMake sure that you are using the latest version.\nDetermine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the documentation. If you are looking for support, you might want to check this section).\nTo see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the bug tracker.\nAlso make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.\nCollect information about the bug:\nStack trace (Traceback)\nOS, Platform and Version (Windows, Linux, macOS, x86, ARM)\nVersion of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.\nPossibly your input and the output\nCan you reliably reproduce the issue? And can you also reproduce it with older versions?\n\n\n\n\n\n\nYou must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to . \n\nWe use GitHub issues to track bugs and errors. If you run into an issue with the project:\n\nOpen an Issue. (Since we can’t be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)\nExplain the behavior you would expect and the actual behavior.\nPlease provide as much context as possible and describe the reproduction steps that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.\nProvide the information you collected in the previous section.\n\nOnce it’s filed:\n\nThe project team will label the issue accordingly.\nA team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as needs-repro. Bugs with the needs-repro tag will not be addressed until they are reproduced.\nIf the team is able to reproduce the issue, it will be marked needs-fix, as well as possibly other tags (such as critical), and the issue will be left to be implemented by someone.\n\n\n\n\n\n\nThis section guides you through submitting an enhancement suggestion for nhyris, including completely new features and minor improvements to existing functionality. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.\n\n\n\n\nMake sure that you are using the latest version.\nRead the documentation carefully and find out if the functionality is already covered, maybe by an individual configuration.\nPerform a search to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.\nFind out whether your idea fits with the scope and aims of the project. It’s up to you to make a strong case to convince the project’s developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you’re just targeting a minority of users, consider writing an add-on/plugin library.\n\n\n\n\n\nEnhancement suggestions are tracked as GitHub issues.\n\nUse a clear and descriptive title for the issue to identify the suggestion.\nProvide a step-by-step description of the suggested enhancement in as many details as possible.\nDescribe the current behavior and explain which behavior you expected to see instead and why. At this point you can also tell which alternatives do not work for you.\nYou may want to include screenshots or screen recordings which help you demonstrate the steps or point out the part which the suggestion is related to. You can use LICEcap to record GIFs on macOS and Windows, and the built-in screen recorder in GNOME or SimpleScreenRecorder on Linux. \nExplain why this enhancement would be useful to most nhyris users. You may also want to point out the other projects that solved it better and which could serve as inspiration.\n\n\n\n\n\n\nStart with fork this repository.\n\n\n\nWe’re still working on the prototype, so we won’t cover this part yet.\n\n\n\n\n\n\nUse Commitlint.io\n\n\n\n\nEmail me: jinhwan@jahnen.io\n\n\n\n\nThis guide is based on the contributing.md!"
+  },
+  {
+    "objectID": "CONTRIBUTING.html#table-of-contents",
+    "href": "CONTRIBUTING.html#table-of-contents",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "I Have a Question\nI Want To Contribute\nReporting Bugs\nSuggesting Enhancements\nYour First Code Contribution\nImproving The Documentation\nStyleguides\nCommit Messages\nJoin The Project Team"
+  },
+  {
+    "objectID": "CONTRIBUTING.html#i-have-a-question",
+    "href": "CONTRIBUTING.html#i-have-a-question",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "If you want to ask a question, we assume that you have read the available Documentation.\n\nBefore you ask a question, it is best to search for existing Issues that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.\nIf you then still feel the need to ask a question and need clarification, we recommend the following:\n\nOpen an Issue.\nProvide as much context as you can about what you’re running into.\nProvide project and platform versions (nodejs, npm, etc), depending on what seems relevant.\n\nWe will then take care of the issue as soon as possible."
+  },
+  {
+    "objectID": "CONTRIBUTING.html#i-want-to-contribute",
+    "href": "CONTRIBUTING.html#i-want-to-contribute",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project licence.\n\n\n\n\n\n\nA good bug report shouldn’t leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.\n\nMake sure that you are using the latest version.\nDetermine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the documentation. If you are looking for support, you might want to check this section).\nTo see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the bug tracker.\nAlso make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.\nCollect information about the bug:\nStack trace (Traceback)\nOS, Platform and Version (Windows, Linux, macOS, x86, ARM)\nVersion of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.\nPossibly your input and the output\nCan you reliably reproduce the issue? And can you also reproduce it with older versions?\n\n\n\n\n\n\nYou must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to . \n\nWe use GitHub issues to track bugs and errors. If you run into an issue with the project:\n\nOpen an Issue. (Since we can’t be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)\nExplain the behavior you would expect and the actual behavior.\nPlease provide as much context as possible and describe the reproduction steps that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.\nProvide the information you collected in the previous section.\n\nOnce it’s filed:\n\nThe project team will label the issue accordingly.\nA team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as needs-repro. Bugs with the needs-repro tag will not be addressed until they are reproduced.\nIf the team is able to reproduce the issue, it will be marked needs-fix, as well as possibly other tags (such as critical), and the issue will be left to be implemented by someone.\n\n\n\n\n\n\nThis section guides you through submitting an enhancement suggestion for nhyris, including completely new features and minor improvements to existing functionality. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.\n\n\n\n\nMake sure that you are using the latest version.\nRead the documentation carefully and find out if the functionality is already covered, maybe by an individual configuration.\nPerform a search to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.\nFind out whether your idea fits with the scope and aims of the project. It’s up to you to make a strong case to convince the project’s developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you’re just targeting a minority of users, consider writing an add-on/plugin library.\n\n\n\n\n\nEnhancement suggestions are tracked as GitHub issues.\n\nUse a clear and descriptive title for the issue to identify the suggestion.\nProvide a step-by-step description of the suggested enhancement in as many details as possible.\nDescribe the current behavior and explain which behavior you expected to see instead and why. At this point you can also tell which alternatives do not work for you.\nYou may want to include screenshots or screen recordings which help you demonstrate the steps or point out the part which the suggestion is related to. You can use LICEcap to record GIFs on macOS and Windows, and the built-in screen recorder in GNOME or SimpleScreenRecorder on Linux. \nExplain why this enhancement would be useful to most nhyris users. You may also want to point out the other projects that solved it better and which could serve as inspiration.\n\n\n\n\n\n\nStart with fork this repository.\n\n\n\nWe’re still working on the prototype, so we won’t cover this part yet."
+  },
+  {
+    "objectID": "CONTRIBUTING.html#styleguides",
+    "href": "CONTRIBUTING.html#styleguides",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "Use Commitlint.io"
+  },
+  {
+    "objectID": "CONTRIBUTING.html#join-the-project-team",
+    "href": "CONTRIBUTING.html#join-the-project-team",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "Email me: jinhwan@jahnen.io"
+  },
+  {
+    "objectID": "CONTRIBUTING.html#attribution",
+    "href": "CONTRIBUTING.html#attribution",
+    "title": "Contributing to nhyris",
+    "section": "",
+    "text": "This guide is based on the contributing.md!"
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html",
+    "href": "CODE_OF_CONDUCT.html",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\nWe pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.\n\n\n\nExamples of behavior that contributes to a positive environment for our community include:\n\nDemonstrating empathy and kindness toward other people\nBeing respectful of differing opinions, viewpoints, and experiences\nGiving and gracefully accepting constructive feedback\nAccepting responsibility and apologizing to those affected by our mistakes, and learning from the experience\nFocusing on what is best not just for us as individuals, but for the overall community\n\nExamples of unacceptable behavior include:\n\nThe use of sexualized language or imagery, and sexual attention or advances of any kind\nTrolling, insulting or derogatory comments, and personal or political attacks\nPublic or private harassment\nPublishing others’ private information, such as a physical or email address, without their explicit permission\nOther conduct which could reasonably be considered inappropriate in a professional setting\n\n\n\n\nCommunity leaders are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.\nCommunity leaders have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, and will communicate reasons for moderation decisions when appropriate.\n\n\n\nThis Code of Conduct applies within all community spaces, and also applies when an individual is officially representing the community in public spaces. Examples of representing our community include using an official e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event.\n\n\n\nInstances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at jinhwan@jahnen.io. All complaints will be reviewed and investigated promptly and fairly.\nAll community leaders are obligated to respect the privacy and security of the reporter of any incident.\n\n\n\nCommunity leaders will follow these Community Impact Guidelines in determining the consequences for any action they deem in violation of this Code of Conduct:\n\n\nCommunity Impact: Use of inappropriate language or other behavior deemed unprofessional or unwelcome in the community.\nConsequence: A private, written warning from community leaders, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.\n\n\n\nCommunity Impact: A violation through a single incident or series of actions.\nConsequence: A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes avoiding interactions in community spaces as well as external channels like social media. Violating these terms may lead to a temporary or permanent ban.\n\n\n\nCommunity Impact: A serious violation of community standards, including sustained inappropriate behavior.\nConsequence: A temporary ban from any sort of interaction or public communication with the community for a specified period of time. No public or private interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, is allowed during this period. Violating these terms may lead to a permanent ban.\n\n\n\nCommunity Impact: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment of an individual, or aggression toward or disparagement of classes of individuals.\nConsequence: A permanent ban from any sort of public interaction within the community.\n\n\n\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.\nCommunity Impact Guidelines were inspired by Mozilla’s code of conduct enforcement ladder.\nFor answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations."
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#our-pledge",
+    "href": "CODE_OF_CONDUCT.html#our-pledge",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\nWe pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community."
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#our-standards",
+    "href": "CODE_OF_CONDUCT.html#our-standards",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "Examples of behavior that contributes to a positive environment for our community include:\n\nDemonstrating empathy and kindness toward other people\nBeing respectful of differing opinions, viewpoints, and experiences\nGiving and gracefully accepting constructive feedback\nAccepting responsibility and apologizing to those affected by our mistakes, and learning from the experience\nFocusing on what is best not just for us as individuals, but for the overall community\n\nExamples of unacceptable behavior include:\n\nThe use of sexualized language or imagery, and sexual attention or advances of any kind\nTrolling, insulting or derogatory comments, and personal or political attacks\nPublic or private harassment\nPublishing others’ private information, such as a physical or email address, without their explicit permission\nOther conduct which could reasonably be considered inappropriate in a professional setting"
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#enforcement-responsibilities",
+    "href": "CODE_OF_CONDUCT.html#enforcement-responsibilities",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "Community leaders are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.\nCommunity leaders have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, and will communicate reasons for moderation decisions when appropriate."
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#scope",
+    "href": "CODE_OF_CONDUCT.html#scope",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "This Code of Conduct applies within all community spaces, and also applies when an individual is officially representing the community in public spaces. Examples of representing our community include using an official e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event."
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#enforcement",
+    "href": "CODE_OF_CONDUCT.html#enforcement",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at jinhwan@jahnen.io. All complaints will be reviewed and investigated promptly and fairly.\nAll community leaders are obligated to respect the privacy and security of the reporter of any incident."
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#enforcement-guidelines",
+    "href": "CODE_OF_CONDUCT.html#enforcement-guidelines",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "Community leaders will follow these Community Impact Guidelines in determining the consequences for any action they deem in violation of this Code of Conduct:\n\n\nCommunity Impact: Use of inappropriate language or other behavior deemed unprofessional or unwelcome in the community.\nConsequence: A private, written warning from community leaders, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.\n\n\n\nCommunity Impact: A violation through a single incident or series of actions.\nConsequence: A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes avoiding interactions in community spaces as well as external channels like social media. Violating these terms may lead to a temporary or permanent ban.\n\n\n\nCommunity Impact: A serious violation of community standards, including sustained inappropriate behavior.\nConsequence: A temporary ban from any sort of interaction or public communication with the community for a specified period of time. No public or private interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, is allowed during this period. Violating these terms may lead to a permanent ban.\n\n\n\nCommunity Impact: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment of an individual, or aggression toward or disparagement of classes of individuals.\nConsequence: A permanent ban from any sort of public interaction within the community."
+  },
+  {
+    "objectID": "CODE_OF_CONDUCT.html#attribution",
+    "href": "CODE_OF_CONDUCT.html#attribution",
+    "title": "Contributor Covenant Code of Conduct",
+    "section": "",
+    "text": "This Code of Conduct is adapted from the Contributor Covenant, version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.\nCommunity Impact Guidelines were inspired by Mozilla’s code of conduct enforcement ladder.\nFor answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html#h2",
+    "href": "index.html#h2",
+    "title": "docs",
+    "section": "H2",
+    "text": "H2\n\nCodes\ninline code\n\nblock code\n\na &lt;- 1\nprint(a)"
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "nhyris",
+    "section": "How to use",
+    "text": "How to use\n\nclone repository\ninitialize project with\n\nnhyris init myapp\n\nmodify your shiny application\nModify shiny and Run your application\n\nCode for shiny is in “myapp/shiny/app.R”\nnhyris run myapp\n\n\n\n\n\n\nNote\n\n\n\nnhyris supports single file: not ui.R & server.R\n\n\n\nbuild application into electron\n\nnhyris build myapp\n\nShare your result\n\nresults exists in “out”"
+  },
+  {
+    "objectID": "index.html#app.r-template-from-shiny-galleries",
+    "href": "index.html#app.r-template-from-shiny-galleries",
+    "title": "nhyris",
+    "section": "app.R template from Shiny Galleries",
+    "text": "app.R template from Shiny Galleries\nnhyris init ex01"
+  },
+  {
+    "objectID": "architecture.html",
+    "href": "architecture.html",
+    "title": "Architecture",
+    "section": "",
+    "text": "Note\n\n\n\nThese are for developers who want to contribute or make modification."
+  },
+  {
+    "objectID": "architecture.html#architecture-of-nhyris",
+    "href": "architecture.html#architecture-of-nhyris",
+    "title": "Architecture",
+    "section": "Architecture of nhyris",
+    "text": "Architecture of nhyris\nnhyris is consisted with 4 parts: template, commands, Electrons, Installings and Documents\n\n1. template\n\nshiny\nIf name is not predefined: like ex01\n\napp.R: shiny code for show simple shiny application.\nnn-x.R(pattern): shiny code used in shiny gallery. If predefined template name used, it will replace previous app.R \n\n\n\nsrc\nThese are codes for running electron application.\n\nindex.js: The main code, it will show loading.html and call start-shiny.R that run shiny application in port 1124. and as shiny is ready, it will show shiny application.\nloading.html: temporary file that show loading screen to electron\nstart-shiny.R: R code to launch shiny.\n\n\n\n\n2. commamnds\nThese are codes for utilizing nhyris as CLI commands.\n\nbin/nhyris.js will manage these commands.\ninit.js will activate nhyris init\nbuild.js will activate nhyris build\n\nAlso if you have issue on these, please set a label as commands\n\n\n3. Electrons\nThese are code for configuration about manage electron application. Some configuration exists in src/index.js\n\ntemplate/forge.config.js: electron forge configuration file.\ntemplate/package.json: node package information for electron.\n\n\n\n\n\n\n\nNote\n\n\n\n/packages.json is node package information for nhyris\n\n\n\n\n4. Installings\nThese are codes for installing local R\n\nadd-cran-binary-pkgs.R: R code to install cran packages into local R\nr.sh: shell script that install local R\n\n\n\n5. Documents\n\n_quarto.yml: quarto configuration\n*.qmd: quarto document files\nbrand/: quarto configuration\ndocs/: quarto destination\nimages/: nhyris logo"
+  }
+]

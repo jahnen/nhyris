@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "nhyris user guide"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: architecture.qmd
+        text: Architecture
+
+format:
+  html:
+    theme:
+      - brand
+    css: styles.css
+    toc: true
+
+brand: brand/_brand.yml
