@@ -4,12 +4,23 @@ project:
 
 website:
   title: "nhyris user guide"
+  description: "Documentation for the nhyris platform"
+  repo-url: https://github.com/jahnen/nhyris
+  issue-url: https://github.com/jahnen/nhyris/issues
+  search: false
+  favicon: brand/logo.png
+  page-navigation: true
   navbar:
     left:
       - href: index.qmd
         text: Home
       - href: architecture.qmd
         text: Architecture
+    right:
+      - icon: github
+        href: https://github.com/jahnen/nhyris
+  body-footer: Made by [jahnen](https://jahnen.io)
+  image: brand/logo.png
 
 format:
   html:
