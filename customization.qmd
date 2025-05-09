@@ -1,0 +1,31 @@
+---
+title: "Customize nhyris"
+---
+
+### Icon
+
+`nhyris` uses nhyris logo, as icon of electron application.
+
+<img src='images/app.png' width='70%'>
+
+#### Where it should be located?
+
+Image file for icon must exist in each project. For example(myapp), **myapp/icon.png** will used for electron application's icon in `out` directory.
+
+::: {.callout-note}
+In template, there's 3 example image file: `icon.png`, `icon.icns`, `icon.ico`
+
+However, these are basically same file. (make `icon.png` and copy and renamed)
+:::
+
+In macOS, all of `png`, `icns`, `ico` will work.
+but in official [guide](https://www.electronforge.io/guides/create-and-add-icons) of electron-forge, it's recommended to use
+`icns` for mac, `ico` for windows, `png` for linux.
+
+#### How to make custom icon file?
+
+To make custom icon file in **macOS** you can use `nhyris.key` template file in repository. 
+
+Modify image as you want ans export that page as Image (`png`).
+
+<img src='images/keynote.png' width='70%'>

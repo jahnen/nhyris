@@ -126,6 +126,13 @@
     "text": "This Code of Conduct is adapted from the Contributor Covenant, version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.\nCommunity Impact Guidelines were inspired by Mozilla’s code of conduct enforcement ladder.\nFor answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations."
   },
   {
+    "objectID": "customization.html",
+    "href": "customization.html",
+    "title": "Customize nhyris",
+    "section": "",
+    "text": "Icon\nnhyris uses nhyris logo, as icon of electron application.\n\n\nWhere it should be located?\nImage file for icon must exist in each project. For example(myapp), myapp/icon.png will used for electron application’s icon in out directory.\n\n\n\n\n\n\nNote\n\n\n\nIn template, there’s 3 example image file: icon.png, icon.icns, icon.ico\nHowever, these are basically same file. (make icon.png and copy and renamed)\n\n\nIn macOS, all of png, icns, ico will work. but in official guide of electron-forge, it’s recommended to use icns for mac, ico for windows, png for linux.\n\n\nHow to make custom icon file?\nTo make custom icon file in macOS you can use nhyris.key template file in repository.\nModify image as you want ans export that page as Image (png).\n\n\n\n\n\n\nMade by jahnen"
+  },
+  {
     "objectID": "architecture.html",
     "href": "architecture.html",
     "title": "Architecture",

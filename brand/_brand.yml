@@ -58,5 +58,4 @@ typography:
   link:
     color: blue
     weight: 400
-    background-color: none
     decoration: underline

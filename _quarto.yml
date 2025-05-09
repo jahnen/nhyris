@@ -16,6 +16,8 @@ website:
         text: Home
       - href: architecture.qmd
         text: Architecture
+      - href: customization.qmd
+        text: Customization
     right:
       - icon: github
         href: https://github.com/jahnen/nhyris
