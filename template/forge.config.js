@@ -1,3 +1,10 @@
 module.exports = {
-  makers: [{ name: "@electron-forge/maker-zip" }],
+  packagerConfig: {
+    icon: "icon",
+  },
+  makers: [
+    {
+      name: "@electron-forge/maker-zip",
+    },
+  ],
 };
