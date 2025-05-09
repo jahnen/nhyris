@@ -27,4 +27,5 @@ export const buildCommand = new Command("build")
 
     process.chdir(root);
     console.log(`✅ '${name}' build complete.`);
+    console.log(`ℹ️ Check '${name}/out' directory.`);
   });
