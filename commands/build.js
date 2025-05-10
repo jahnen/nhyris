@@ -21,11 +21,14 @@ export const buildCommand = new Command("build")
     }
 
     const maker = options.maker;
-    if (options.maker === true) {
+    const maker = options.maker;
+    const supportedMakers = ['dmg', 'zip']; // Define supported makers
+    if (options.maker === true || !supportedMakers.includes(maker)) {
       console.error(
-        "❌ Please specify a maker type after -m (e.g., dmg or zip)."
+        `❌ Invalid maker type specified: '${maker}'. Supported types are: ${supportedMakers.join(', ')}.`
       );
       process.exit(1);
+    }
     }
 
     process.chdir(projectPath);
