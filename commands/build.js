@@ -21,17 +21,83 @@ export const buildCommand = new Command("build")
     }
 
     const maker = options.maker;
-    const maker = options.maker;
-    const supportedMakers = ['dmg', 'zip']; // Define supported makers
+    const supportedMakers = ["dmg", "zip"]; // Define supported makers
     if (options.maker === true || !supportedMakers.includes(maker)) {
       console.error(
-        `❌ Invalid maker type specified: '${maker}'. Supported types are: ${supportedMakers.join(', ')}.`
+        `❌ Invalid maker type specified: '${maker}'. Supported types are: ${supportedMakers.join(
+          ", "
+        )}.`
       );
       process.exit(1);
     }
-    }
 
     process.chdir(projectPath);
+
+    if (maker === "dmg") {
+      const backgroundSource = path.join(
+        root,
+        "template",
+        "assets",
+        "background-DMG.png"
+      );
+      const backgroundDestination = path.join(
+        projectPath,
+        "background-DMG.png"
+      );
+
+      if (!fs.existsSync(backgroundDestination)) {
+        if (fs.existsSync(backgroundSource)) {
+          fs.copyFileSync(backgroundSource, backgroundDestination);
+          console.log("✅ Copied 'background-DMG.png' to project directory.");
+        } else {
+          console.warn("⚠️ 'background-DMG.png' not found in template/assets.");
+        }
+      } else {
+        console.log(
+          "ℹ️ 'background-DMG.png' already exists in the project directory."
+        );
+      }
+
+      // Add @electron-forge/maker-dmg to devDependencies in package.json
+      const packageJsonPath = path.join(projectPath, "package.json");
+      let shouldInstallDependencies = false;
+
+      if (fs.existsSync(packageJsonPath)) {
+        const packageJson = JSON.parse(
+          fs.readFileSync(packageJsonPath, "utf-8")
+        );
+        packageJson.devDependencies = packageJson.devDependencies || {};
+        if (!packageJson.devDependencies["@electron-forge/maker-dmg"]) {
+          packageJson.devDependencies["@electron-forge/maker-dmg"] = "^7.8.1";
+          fs.writeFileSync(
+            packageJsonPath,
+            JSON.stringify(packageJson, null, 2)
+          );
+          console.log(
+            "✅ Added '@electron-forge/maker-dmg' to devDependencies in package.json."
+          );
+          shouldInstallDependencies = true; // Mark that dependencies need to be installed
+        } else {
+          console.log(
+            "ℹ️ '@electron-forge/maker-dmg' is already in devDependencies."
+          );
+        }
+      } else {
+        console.warn("⚠️ package.json not found in the project directory.");
+      }
+
+      // Run npm install if dependencies were updated
+      if (shouldInstallDependencies) {
+        try {
+          console.log("📦 Installing updated dependencies...");
+          execSync("npm install", { stdio: "inherit", cwd: projectPath });
+          console.log("✅ Dependencies installed successfully.");
+        } catch (err) {
+          console.error("❌ Failed to install dependencies:", err.message);
+          process.exit(1);
+        }
+      }
+    }
 
     try {
       console.log(`📦 Building Electron app with maker: ${maker}...`);
@@ -47,26 +113,20 @@ export const buildCommand = new Command("build")
         const dmgMakerConfig = {
           name: "@electron-forge/maker-dmg",
           config: {
-            name: "nhyris installer",
+            name: name,
+            background: "background-DMG.png",
             icon: "icon.icns",
-            overwrite: true,
-            debug: true,
+            iconSize: 200,
             format: "UDZO",
-            /*
-            // background: "icon.png",
-            // iconSize: 80,
-            // windowPositionOptions: { x: 100, y: 100 },
-            // windowSizeOptions: { width: 1000, height: 1000 },
             contents: [
               {
-                x: 38,
-                y: 100,
+                x: 140,
+                y: 276,
                 type: "file",
-                path: `${process.cwd()}/out/myapp-darwin-arm64/myapp.app`,
+                path: `${process.cwd()}/out/${name}-darwin-arm64/${name}.app`,
               },
-              { x: 262, y: 100, type: "link", path: "/Applications" },
+              { x: 518, y: 276, type: "link", path: "/Applications" },
             ],
-            */
           },
         };
 
