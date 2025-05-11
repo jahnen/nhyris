@@ -86,6 +86,7 @@ export const initCommand = new Command("init")
       const to = path.join(projectPath, file);
       if (fs.existsSync(from)) {
         fs.copyFileSync(from, to);
+        console.log(`✅ Copied '${file}' to project directory.`);
       } else {
         console.warn(`⚠️  Missing template file: ${file}`);
       }
@@ -96,6 +97,11 @@ export const initCommand = new Command("init")
     copy("start-shiny.R");
     copy("r.sh");
     copy("add-cran-binary-pkgs.R");
+
+    const iconFiles = ["icon.icns", "icon.ico", "icon.png"];
+    iconFiles.forEach((iconFile) => {
+      copy(iconFile);
+    });
 
     process.chdir(projectPath);
 
