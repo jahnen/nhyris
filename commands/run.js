@@ -31,16 +31,19 @@ export const runCommand = new Command("run")
  try {
    if (os.platform() === "win32") { 
     console.log("🔍 Checking for running R.exe and Rterm.exe processes...");
-    // Find and terminate R.exe processes
-  const rProcesses = execSync('tasklist | findstr "Rterm.exe"', { encoding: "utf-8" });
-  if (rProcesses.trim()) {        
-    // taskkill silent: inherit
-    // execSync('taskkill /IM Rterm.exe /F', { stdio: "inherit" });    
-    execSync('taskkill /IM Rterm.exe /F', { stdio: "ignore" });
-    console.log("✅ Rterm.exe processes have been terminated.");
-  } else {
-    console.log("ℹ️ No Rterm.exe processes are currently running.");
-  }
+    try {
+      // Find and terminate R.exe processes
+      const rProcesses = execSync('tasklist | findstr "Rterm.exe"', { encoding: "utf-8" });
+      if (rProcesses.trim()) {
+        // Terminate Rterm.exe processes
+        execSync('taskkill /IM Rterm.exe /F', { stdio: "ignore" });
+        console.log("✅ Rterm.exe processes have been terminated.");
+      } else {
+        console.log("ℹ️ No Rterm.exe processes are currently running.");
+      }
+    } catch (findErr) {
+      console.log("ℹ️ No Rterm.exe processes found or findstr command failed.");
+    }
    }    else{
         console.log("ℹ️ Skipping R process termination as the OS is not Windows.");
 
