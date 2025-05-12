@@ -5,7 +5,11 @@ const { spawn } = require("child_process");
 const path = require("path");
 
 // Helpers
-const rPath = "r-mac";
+
+const os = require("os");
+
+const rPath = os.platform() === "win32" ? "r-win" : "r-mac";
+
 
 // remove axios
 const checkServerStatus = async (url) => {
@@ -67,7 +71,9 @@ const waitFor = (milliseconds) => {
 
 const rpath = path.join(app.getAppPath(), rPath);
 const libPath = path.join(rpath, "library");
+
 const rscript = path.join(rpath, "bin", "R");
+
 const shinyAppPath = path.join(app.getAppPath(), "shiny");
 
 const backgroundColor = "#2c3e50"; // electron
@@ -246,10 +252,11 @@ app.on("ready", async () => {
 
 app.on("window-all-closed", () => {
   shutdown = true;
-  app.quit();
+  console.log('Shutting down...');
   try {
     rShinyProcess.kill();
   } catch (e) {
     console.error("Error killing Shiny process:", e);
   }
+  app.quit();
 });

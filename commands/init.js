@@ -110,8 +110,12 @@ export const initCommand = new Command("init")
       execSync("sh ./r.sh", { stdio: "inherit" });
 
       console.log("📦 Installing R packages...");
-      execSync("Rscript ./add-cran-binary-pkgs.R", { stdio: "inherit" });
-
+      if (process.platform !== "win32") {
+        execSync("Rscript ./add-cran-binary-pkgs.R", { stdio: "inherit" });
+      } else {
+        console.log("⚠️ Skipping R package installation on Windows.");
+      }
+            
       console.log("📦 Installing Node packages...");
       execSync("npm install", { stdio: "inherit" });
 

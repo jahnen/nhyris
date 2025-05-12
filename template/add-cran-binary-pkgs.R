@@ -8,6 +8,9 @@
 
 # Code format changed using styler::style_active_file()
 
+# set cran mirror
+options(repos = "https://cloud.r-project.org")
+
 if (!requireNamespace("automagic", quietly = TRUE)) {
   suppressMessages(suppressWarnings(
     install.packages("automagic", quiet = TRUE)
@@ -15,8 +18,6 @@ if (!requireNamespace("automagic", quietly = TRUE)) {
 }
 
 library(automagic)
-
-options(repos = "https://cloud.r-project.org")
 
 # Check if 'shiny' directory exists and contains R files
 if (!dir.exists("shiny")) {
@@ -95,5 +96,12 @@ if (dir.exists("r-mac")) {
   )
 }
 
-# need to set r-win, r-linux directory
+if( dir.exists("r-win")) {
+  install_bins(
+    cran_pkgs = cran_pkgs, library_path = file.path("r-win", "library"),
+    type = "win.binary", decompress = unzip
+  )
+}
+
+# need to set r-linux directory
 # also it should change into just r-local

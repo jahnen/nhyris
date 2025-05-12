@@ -97,14 +97,9 @@ export const buildCommand = new Command("build")
           process.exit(1);
         }
       }
-    }
-
-    try {
-      console.log(`📦 Building Electron app with maker: ${maker}...`);
 
       const forgeConfigPath = path.join(projectPath, "forge.config.js");
-      console.log("🔧 Updating forge.config.js...");
-      console.log("forgeConfigPath:", forgeConfigPath);
+      console.log("🔧 Updating forge.config.js...");      
 
       try {
         const forgeConfigModule = await import(`file://${forgeConfigPath}`);
@@ -154,15 +149,20 @@ export const buildCommand = new Command("build")
         );
         console.log("✅ Updated forge.config.js.");
 
-        execSync("npx electron-forge make", { stdio: "inherit" });
+        
       } catch (importError) {
         console.error("❌ Error loading forge.config.js:", importError);
         process.exit(1);
       }
+    }
+
+    try {
+      console.log(`📦 Building Electron app with maker: ${maker}...`);
+      execSync("npx electron-forge make", { stdio: "inherit" });
     } catch (err) {
       console.error("❌ Build failed:", err.message);
       process.exit(1);
-    }
+    }    
 
     process.chdir(root);
     console.log(`✅ '${name}' build complete.`);
