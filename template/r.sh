@@ -79,9 +79,8 @@ elif [ "$OS_TYPE" == "windows" ]; then
     ./innoextract_dir/innoextract.exe --silent R-installer.exe
     
     mv app/* ../r-win
-    rm -r app R-installer.exe    
-    rm -r doc tests
-    # rm -r innoextract_dir
+    rm -r app innoextract_dir R-installer.exe 
+    rm -r doc tests    
     echo "R for Windows has been installed to $(pwd)/R"    
 
     echo "pwd: $(pwd)"    
