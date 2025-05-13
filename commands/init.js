@@ -115,7 +115,7 @@ export const initCommand = new Command("init")
       } else {
         console.log("⚠️ Skipping R package installation on Windows.");
       }
-            
+
       console.log("📦 Installing Node packages...");
       execSync("npm install", { stdio: "inherit" });
 
@@ -128,4 +128,5 @@ export const initCommand = new Command("init")
 
     process.chdir(root);
     console.log(`✅ Project '${name}' fully initialized and running.`);
+    console.log("⚠️ Please modify package.json");
   });

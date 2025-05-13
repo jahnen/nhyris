@@ -1,15 +1,32 @@
 // Copyright (c) 2018 Dirk Schumacher, Noam Ross, Rich FitzJohn
 // Copyright (c) 2025 Jinhwan Kim
 const { app, session, BrowserWindow } = require("electron");
-const { spawn } = require("child_process");
+const { spawn, execSync } = require("child_process");
 const path = require("path");
 
 // Helpers
 
+// run this as early in the main process as possible
+// https://github.com/electron/windows-installer?tab=readme-ov-file#handling-squirrel-events
+// https://www.electronforge.io/config/makers/squirrel.windows#handling-startup-events
+try {
+  // Handle creating/removing shortcuts on Windows when installing/uninstalling.
+  if (require("electron-squirrel-startup")) {
+    app.quit();
+    try {
+      execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
+      console.log("✅ Rterm.exe processes have been terminated.");
+    } catch (err) {
+      console.error("❌ Failed to terminate Rterm.exe processes:", err.message);
+    }
+  }
+} catch (err) {
+  console.log("ℹ️ 'electron-squirrel-startup' module is not available.");
+}
+
 const os = require("os");
 
 const rPath = os.platform() === "win32" ? "r-win" : "r-mac";
-
 
 // remove axios
 const checkServerStatus = async (url) => {
@@ -104,6 +121,7 @@ const tryStartWebserver = async (
   let shinyRunning = false;
 
   let shinyProcessAlreadyDead = false;
+
   try {
     rShinyProcess = await startShinyProcess();
   } catch (e) {
@@ -252,7 +270,14 @@ app.on("ready", async () => {
 
 app.on("window-all-closed", () => {
   shutdown = true;
-  console.log('Shutting down...');
+  try {
+    execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
+    console.log("✅ Rterm.exe processes have been terminated.");
+  } catch (err) {
+    console.error("❌ Failed to terminate Rterm.exe processes:", err.message);
+  }
+
+  console.log("Shutting down...");
   try {
     rShinyProcess.kill();
   } catch (e) {
