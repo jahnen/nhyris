@@ -1,7 +1,9 @@
 import { Command } from "commander";
-import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
+import { handleDirectory } from "../utils/directory.js";
+import { copyTemplates } from "../utils/template.js";
+import { installDependencies } from "../utils/install.js";
+import { updateGitignore } from "../utils/zzz.js";
 
 export const initCommand = new Command("init")
   .argument("<name>", "Project name")
@@ -12,121 +14,11 @@ export const initCommand = new Command("init")
     const projectPath = path.join(root, name);
     const templatePath = path.resolve("template");
 
-    if (fs.existsSync(projectPath)) {
-      if (!options.overwrite) {
-        console.log(`⚠️  '${name}' already exists. Use -w to overwrite.`);
-        process.exit(1);
-      } else {
-        console.log(`🧨 Overwriting existing directory: ${name}`);
-        fs.rmSync(projectPath, { recursive: true, force: true });
+    await handleDirectory(projectPath, name, options.overwrite);
+    updateGitignore(root, name);
+    copyTemplates(templatePath, projectPath);
+    installDependencies(projectPath);
 
-        let retries = 5;
-        while (fs.existsSync(projectPath) && retries > 0) {
-          console.log("⏳ Waiting for directory to be fully removed...");
-          await new Promise((resolve) => setTimeout(resolve, 100));
-          retries--;
-        }
-      }
-    }
-
-    fs.mkdirSync(projectPath);
-    console.log(`📁 Created project: ${name}`);
-
-    const gitignorePath = path.join(root, ".gitignore");
-    let gitignoreContent = "";
-
-    if (fs.existsSync(gitignorePath)) {
-      gitignoreContent = fs.readFileSync(gitignorePath, "utf-8");
-    }
-
-    if (!gitignoreContent.includes(`${name}/`)) {
-      fs.appendFileSync(gitignorePath, `\n${name}/\n`);
-      console.log(`✅ Added '${name}/' to .gitignore`);
-    } else {
-      console.log(`⚠️  '${name}/' already exists in .gitignore`);
-    }
-
-    console.log("📂 Copying templates...");
-    execSync(`cp -r ${templatePath}/shiny ${projectPath}`);
-    execSync(`cp -r ${templatePath}/src ${projectPath}`);
-
-    // If name is "ex01", handle app.R and 01-faithful.R
-    if (name === "ex01") {
-      const shinyPath = path.join(projectPath, "shiny");
-      const oldAppPath = path.join(shinyPath, "app.R");
-      const faithfulPath = path.join(shinyPath, "01-faithful.R");
-      const newAppPath = path.join(shinyPath, "app.R");
-
-      // Remove existing app.R if it exists
-      try {
-        fs.rmSync(oldAppPath);
-        console.log("🗑️ Removed existing app.R");
-      } catch (err) {
-        console.error("❌ Error removing existing app.R:", err.message);
-      }
-
-      // Rename 01-faithful.R to app.R
-      if (fs.existsSync(faithfulPath)) {
-        try {
-          fs.renameSync(faithfulPath, newAppPath);
-          console.log("✅ Renamed 01-faithful.R to app.R");
-        } catch (err) {
-          console.error(
-            "❌ Error renaming 01-faithful.R to app.R:",
-            err.message
-          );
-        }
-      } else {
-        console.warn("⚠️  01-faithful.R not found in the shiny directory.");
-      }
-    }
-
-    const copy = (file) => {
-      const from = path.join(templatePath, file);
-      const to = path.join(projectPath, file);
-      if (fs.existsSync(from)) {
-        fs.copyFileSync(from, to);
-        console.log(`✅ Copied '${file}' to project directory.`);
-      } else {
-        console.warn(`⚠️  Missing template file: ${file}`);
-      }
-    };
-
-    copy("package.json");
-    copy("forge.config.js");
-    copy("start-shiny.R");
-    copy("r.sh");
-    copy("add-cran-binary-pkgs.R");
-
-    const iconFiles = ["icon.icns", "icon.ico", "icon.png"];
-    iconFiles.forEach((iconFile) => {
-      copy(iconFile);
-    });
-
-    process.chdir(projectPath);
-
-    try {
-      console.log("📦 Installing standalone R...");
-      execSync("sh ./r.sh", { stdio: "inherit" });
-
-      console.log("📦 Installing R packages...");
-      if (process.platform !== "win32") {
-        execSync("Rscript ./add-cran-binary-pkgs.R", { stdio: "inherit" });
-      } else {
-        console.log("⚠️ Skipping R package installation on Windows.");
-      }
-
-      console.log("📦 Installing Node packages...");
-      execSync("npm install", { stdio: "inherit" });
-
-      console.log("🚀 Starting Electron app...");
-      execSync("npx electron-forge start", { stdio: "inherit" });
-    } catch (err) {
-      console.error("❌ Setup or launch failed:", err.message);
-      process.exit(1);
-    }
-
-    process.chdir(root);
-    console.log(`✅ Project '${name}' fully initialized and running.`);
-    console.log("⚠️ Please modify package.json");
+    console.log(`Project '${name}' fully initialized and running.`);
+    console.log("Please modify package.json as needed.");
   });
