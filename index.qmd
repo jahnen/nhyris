@@ -6,18 +6,32 @@ title: "nhyris"
 
 ## How to use
 
-1. clone repository
+1. clone repository: either fork or clone is OK
 
-2. initialize project with
+2. install dependencies
+
+node version >= 22.13.1 (LTS: 22.15)
+
+```sh
+node -v 
+npm install 
+npm link 
+```
+
+::: {.callout-note}
+please use zsh or git-bash not powershell
+:::
+
+3. initialize project with
 
 ```sh
 nhyris init myapp
 ```
 
-3. modify your shiny application
+4. modify your shiny application
 
 
-4. Modify shiny and Run your application
+5. Modify shiny and Run your application
 
 Code for shiny is in **"myapp/shiny/app.R"**
 
@@ -29,16 +43,15 @@ nhyris run myapp
 nhyris supports single file: not `ui.R` & `server.R`
 :::
 
-4. build application into electron
+6. build application into electron
 
 ```sh
 nhyris build myapp
 ```
 
-5. Share your result
+7. Share your result
 
 results exists in "out"
-
 
 ## app.R template from Shiny Galleries 
 

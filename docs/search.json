@@ -60,7 +60,7 @@
     "href": "index.html#how-to-use",
     "title": "nhyris",
     "section": "How to use",
-    "text": "How to use\n\nclone repository\ninitialize project with\n\nnhyris init myapp\n\nmodify your shiny application\nModify shiny and Run your application\n\nCode for shiny is in “myapp/shiny/app.R”\nnhyris run myapp\n\n\n\n\n\n\nNote\n\n\n\nnhyris supports single file: not ui.R & server.R\n\n\n\nbuild application into electron\n\nnhyris build myapp\n\nShare your result\n\nresults exists in “out”"
+    "text": "How to use\n\nclone repository: either fork or clone is OK\ninstall dependencies\n\nnode version &gt;= 22.13.1 (LTS: 22.15)\nnode -v \nnpm install \nnpm link \n\n\n\n\n\n\nNote\n\n\n\nplease use zsh or git-bash not powershell\n\n\n\ninitialize project with\n\nnhyris init myapp\n\nmodify your shiny application\nModify shiny and Run your application\n\nCode for shiny is in “myapp/shiny/app.R”\nnhyris run myapp\n\n\n\n\n\n\nNote\n\n\n\nnhyris supports single file: not ui.R & server.R\n\n\n\nbuild application into electron\n\nnhyris build myapp\n\nShare your result\n\nresults exists in “out”"
   },
   {
     "objectID": "index.html#app.r-template-from-shiny-galleries",
