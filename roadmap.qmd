@@ -1,0 +1,57 @@
+---
+title: "nhyris Roadmap"
+---
+
+::: {.callout-note}
+If you have ideas, it's always welcome to [submit](https://github.com/jahnen/nhyris/issues/new)
+:::
+
+## Planned features
+
+### Multiple OS
+
+- [x] macOS
+- [x] windows
+- [x] Linux (ubuntu)
+
+### Multiple type of installer
+
+- [x] ZIP 
+- [x] DMG for macOS
+- [ ] deb for ubuntu
+- [x] Squirrel.windows for windows
+ 
+### Advanced shiny
+
+- [x] CRAN
+- [ ] bioconductor
+- [ ] r-universe (github)
+ 
+### Advanced electron
+
+- [ ] Configuration of electron (requires research)
+- [ ] Code signing for macOS or windows
+
+### Example shiny application
+
+See [shiny gallery](https://shiny.posit.co/r/gallery/)
+
+
+## IDEAS
+
+::: {.callout-note}
+These are just ideas, which can be changed as the project evolves.
+:::
+
+### Advanced shiny
+
+`nhyris` only supports one-file: `app.R`
+
+So, frameworks like `rhino`, `golem`, `leprechaun`, ... maybe considered.
+
+### Delivering method
+
+`nhyris` only uses `electron.js`.
+
+But `tauri` (with rust) or utilizing user's already installed R. `npm` (as javascript package) , ... maybe considered.
+
