@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Architecture – nhyris user guide</title>
+<title>Why nhyris? – nhyris user guide</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,11 +81,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./introduction.html"> 
+    <a class="nav-link active" href="./introduction.html" aria-current="page"> 
 <span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./architecture.html" aria-current="page"> 
+    <a class="nav-link" href="./architecture.html"> 
 <span class="menu-text">Architecture</span></a>
   </li>  
   <li class="nav-item">
@@ -115,14 +115,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#architecture-of-nhyris" id="toc-architecture-of-nhyris" class="nav-link active" data-scroll-target="#architecture-of-nhyris">Architecture of nhyris</a>
-  <ul class="collapse">
-  <li><a href="#template" id="toc-template" class="nav-link" data-scroll-target="#template">1. template</a></li>
-  <li><a href="#commamnds" id="toc-commamnds" class="nav-link" data-scroll-target="#commamnds">2. commamnds</a></li>
-  <li><a href="#electrons" id="toc-electrons" class="nav-link" data-scroll-target="#electrons">3. Electrons</a></li>
-  <li><a href="#installings" id="toc-installings" class="nav-link" data-scroll-target="#installings">4. Installings</a></li>
-  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents">5. Documents</a></li>
-  </ul></li>
+  <li><a href="#why-this-is-important" id="toc-why-this-is-important" class="nav-link active" data-scroll-target="#why-this-is-important">Why this is important?</a></li>
+  <li><a href="#how-we-solve-this" id="toc-how-we-solve-this" class="nav-link" data-scroll-target="#how-we-solve-this">How we solve this?</a></li>
+  <li><a href="#why-nhyris" id="toc-why-nhyris" class="nav-link" data-scroll-target="#why-nhyris">Why nhyris?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -131,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Architecture</h1>
+<h1 class="title">Why nhyris?</h1>
 </div>
 
 
@@ -148,93 +143,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>These are for developers who want to contribute or make modification.</p>
-</div>
-</div>
-<section id="architecture-of-nhyris" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-of-nhyris">Architecture of nhyris</h2>
-<p>nhyris is consisted with 4 parts: <strong>template</strong>, <strong>commands</strong>, <strong>Electrons</strong>, <strong>Installings</strong> and <strong>Documents</strong></p>
-<section id="template" class="level3">
-<h3 class="anchored" data-anchor-id="template">1. template</h3>
-<section id="shiny" class="level4">
-<h4 class="anchored" data-anchor-id="shiny">shiny</h4>
-<p>If name is not predefined: like <strong>ex01</strong></p>
-<ul>
-<li><strong>app.R</strong>: shiny code for show simple shiny application.</li>
-<li><strong>nn-x.R(pattern)</strong>: shiny code used in shiny gallery. If predefined template name used, it will replace previous <strong>app.R </strong></li>
-</ul>
+<p><code>nhyris</code> (an anagram of <code>rshiny</code>, pronounced <em>nai-riss</em>), is a framework for transform R shiny application into desktop standalone app.</p>
+<p>Which mean, <strong>you can run shiny application, with only ZIP file</strong> (without R or Rstudio installed)</p>
+<section id="why-this-is-important" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-is-important">Why this is important?</h3>
+<p>R shiny let R developer to build interactive web application with R. but as shiny, it requires dependency for engineering concepts like <strong>server</strong> &amp; <strong>infrastructure</strong> to response user’s action interactively.</p>
+<p>So, even one of main target user of R shiny is non-technical like Statisticans, or Decision maker. But they don’t have experience or don’t want to maintain R shiny.</p>
+<p>Also, utilizing shiny application involves infrastructure complexity like offline access, run in separated environment, handle data security and complicance concerns even for R developer.</p>
+<p>Therefore we suggest as build R shiny application completely independent and self-contained way. Which doesn’t require any dependency to run (<em>and build / maintain more easier than before</em>)</p>
+<p><img src="images/fig-1.png" width="70%"></p>
+<p>This issue will affect to <code>R shiny developers</code>, <code>organization</code> users, <code>SAS</code> users transitioning to R, and <code>academics</code>, all of whom need self-contained, server-free shiny applications accessible without technical setup.</p>
+<p>Also, Real-world adoption of R and Shiny in regulated and enterprise settings, as shown by <a href="https://www.youtube.com/live/t33dS17QHuA?si=bQB4w_NCoi0XQBIj">Novo Nordisk</a> and the <a href="https://rconsortium.github.io/submissions-wg/">Submission Working Group</a>, highlights the growing need for seamless, accessible deployment solutions beyond academia.</p>
 </section>
-<section id="src" class="level4">
-<h4 class="anchored" data-anchor-id="src">src</h4>
-<p>These are codes for running electron application.</p>
-<ul>
-<li><strong>index.js</strong>: The main code, it will show <strong>loading.html</strong> and call <strong>start-shiny.R</strong> that run shiny application in port 1124. and as shiny is ready, it will show shiny application.</li>
-<li><strong>loading.html</strong>: temporary file that show loading screen to electron</li>
-<li><strong>start-shiny.R</strong>: R code to launch shiny.</li>
-</ul>
+<section id="how-we-solve-this" class="level3">
+<h3 class="anchored" data-anchor-id="how-we-solve-this">How we solve this?</h3>
+<p>Previously, there was try to build application based on <code>Electron.js</code>, commonly used technique for building cross-platform application. See this <a href="https://www.electronjs.org/apps">link</a> for showcase.</p>
+<p><img src="images/showcase.png" width="70%"></p>
+<p>However, electron is not R (but javascript), it also brings some challenge to R developer who only familliar with R or shiny.</p>
+<p>Since few years ago, we tried to make this process simple and reproducible with instructions. See this <a href="https://github.com/zarathucorp/shiny-electron-template-m1">repository</a>. and It worked well.</p>
+<p><img src="images/fig-4.png" width="70%"></p>
 </section>
-</section>
-<section id="commamnds" class="level3">
-<h3 class="anchored" data-anchor-id="commamnds">2. commamnds</h3>
-<p>These are codes for utilizing <code>nhyris</code> as CLI commands.</p>
-<ul>
-<li><strong>bin/nhyris.js</strong> will manage these commands.</li>
-<li><strong>init.js</strong> will activate <code>nhyris init</code></li>
-<li><strong>build.js</strong> will activate <code>nhyris build</code></li>
-</ul>
-<p>Also if you have issue on these, please set a label as <code>commands</code></p>
-</section>
-<section id="electrons" class="level3">
-<h3 class="anchored" data-anchor-id="electrons">3. Electrons</h3>
-<p>These are code for configuration about manage electron application. Some configuration exists in <strong>src/index.js</strong></p>
-<ul>
-<li><strong>template/forge.config.js</strong>: electron forge configuration file.</li>
-<li><strong>template/package.json</strong>: node package information for electron.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>/packages.json</strong> is node package information for <code>nhyris</code></p>
-</div>
-</div>
-</section>
-<section id="installings" class="level3">
-<h3 class="anchored" data-anchor-id="installings">4. Installings</h3>
-<p>These are codes for installing local R</p>
-<ul>
-<li><strong>add-cran-binary-pkgs.R</strong>: R code to install cran packages into local R</li>
-<li><strong>r.sh</strong>: shell script that install local R</li>
-</ul>
-</section>
-<section id="documents" class="level3">
-<h3 class="anchored" data-anchor-id="documents">5. Documents</h3>
-<ul>
-<li><strong>_quarto.yml</strong>: quarto configuration</li>
-<li><strong>*.qmd</strong>: quarto document files</li>
-<li><strong>brand/</strong>: quarto configuration</li>
-<li><strong>docs/</strong>: quarto destination</li>
-<li><strong>images/</strong>: nhyris logo</li>
-</ul>
+<section id="why-nhyris" class="level3">
+<h3 class="anchored" data-anchor-id="why-nhyris">Why nhyris?</h3>
+<p>Previous trial was targeted to make most-minimal application, which doesn’t have guide about more detailed configuration even it has ability for do that.</p>
+<p>As enhanced version, <code>nhyris</code> will expand beyond the <strong>macOS</strong> prototype to support <strong>Windows</strong> and <strong>Linux</strong>, reduce deployment overhead, offer customizable design options, and provide comprehensive documentation and tutorials for R developers.</p>
+<p>so it’s mainly designed as CLI tool, which generates application as a desktop wrapper, with a bundled R runtime for standalone execution.</p>
 
 
-</section>
 </section>
 
 <p>Made by <a href="https://jahnen.io">jahnen</a></p></main> <!-- /main -->

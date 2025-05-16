@@ -14,6 +14,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: introduction.qmd
+        text: Introduction
       - href: architecture.qmd
         text: Architecture
       - href: customization.qmd
