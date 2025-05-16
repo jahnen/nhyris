@@ -21,11 +21,25 @@
     "text": "Architecture of nhyris\nnhyris is consisted with 4 parts: template, commands, Electrons, Installings and Documents\n\n1. template\n\nshiny\nIf name is not predefined: like ex01\n\napp.R: shiny code for show simple shiny application.\nnn-x.R(pattern): shiny code used in shiny gallery. If predefined template name used, it will replace previous app.R \n\n\n\nsrc\nThese are codes for running electron application.\n\nindex.js: The main code, it will show loading.html and call start-shiny.R that run shiny application in port 1124. and as shiny is ready, it will show shiny application.\nloading.html: temporary file that show loading screen to electron\nstart-shiny.R: R code to launch shiny.\n\n\n\n\n2. commamnds\nThese are codes for utilizing nhyris as CLI commands.\n\nbin/nhyris.js will manage these commands.\ninit.js will activate nhyris init\nbuild.js will activate nhyris build\n\nAlso if you have issue on these, please set a label as commands\n\n\n3. Electrons\nThese are code for configuration about manage electron application. Some configuration exists in src/index.js\n\ntemplate/forge.config.js: electron forge configuration file.\ntemplate/package.json: node package information for electron.\n\n\n\n\n\n\n\nNote\n\n\n\n/packages.json is node package information for nhyris\n\n\n\n\n4. Installings\nThese are codes for installing local R\n\nadd-cran-binary-pkgs.R: R code to install cran packages into local R\nr.sh: shell script that install local R\n\n\n\n5. Documents\n\n_quarto.yml: quarto configuration\n*.qmd: quarto document files\nbrand/: quarto configuration\ndocs/: quarto destination\nimages/: nhyris logo"
   },
   {
-    "objectID": "customization.html",
-    "href": "customization.html",
-    "title": "Customize nhyris",
+    "objectID": "roadmap.html",
+    "href": "roadmap.html",
+    "title": "nhyris Roadmap",
     "section": "",
-    "text": "Icon\nnhyris uses nhyris logo, as icon of electron application.\n\n\nWhere it should be located?\nImage file for icon must exist in each project. For example(myapp), myapp/icon.png will used for electron application’s icon in out directory.\n\n\n\n\n\n\nNote\n\n\n\nIn template, there’s 3 example image file: icon.png, icon.icns, icon.ico\nHowever, these are basically same file. (make icon.png and copy and renamed)\n\n\nIn macOS, all of png, icns, ico will work. but in official guide of electron-forge, it’s recommended to use icns for mac, ico for windows, png for linux.\n\n\nHow to make custom icon file?\nTo make custom icon file in macOS you can use nhyris.key template file in repository.\nModify image as you want ans export that page as Image (png).\n\n\n\n\n\n\nMade by jahnen"
+    "text": "Note\n\n\n\nIf you have ideas, it’s always welcome to submit\nMade by jahnen"
+  },
+  {
+    "objectID": "roadmap.html#planned-features",
+    "href": "roadmap.html#planned-features",
+    "title": "nhyris Roadmap",
+    "section": "Planned features",
+    "text": "Planned features\n\nMultiple OS\n\nmacOS\nwindows\nLinux (ubuntu)\n\n\n\nMultiple type of installer\n\nZIP\nDMG for macOS\ndeb for ubuntu\nSquirrel.windows for windows\n\n\n\nAdvanced shiny\n\nCRAN\nbioconductor\nr-universe (github)\n\n\n\nAdvanced electron\n\nConfiguration of electron (requires research)\nCode signing for macOS or windows\n\n\n\nExample shiny application\nSee shiny gallery"
+  },
+  {
+    "objectID": "roadmap.html#ideas",
+    "href": "roadmap.html#ideas",
+    "title": "nhyris Roadmap",
+    "section": "IDEAS",
+    "text": "IDEAS\n\n\n\n\n\n\nNote\n\n\n\nThese are just ideas, which can be changed as the project evolves.\n\n\n\nAdvanced shiny\nnhyris only supports one-file: app.R\nSo, frameworks like rhino, golem, leprechaun, … maybe considered.\n\n\nDelivering method\nnhyris only uses electron.js.\nBut tauri (with rust) or utilizing user’s already installed R. npm (as javascript package) , … maybe considered."
   },
   {
     "objectID": "CODE_OF_CONDUCT.html",
@@ -82,6 +96,13 @@
     "title": "Contributor Covenant Code of Conduct",
     "section": "",
     "text": "This Code of Conduct is adapted from the Contributor Covenant, version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.\nCommunity Impact Guidelines were inspired by Mozilla’s code of conduct enforcement ladder.\nFor answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations."
+  },
+  {
+    "objectID": "customization.html",
+    "href": "customization.html",
+    "title": "Customize nhyris",
+    "section": "",
+    "text": "Icon\nnhyris uses nhyris logo, as icon of electron application.\n\n\nWhere it should be located?\nImage file for icon must exist in each project. For example(myapp), myapp/icon.png will used for electron application’s icon in out directory.\n\n\n\n\n\n\nNote\n\n\n\nIn template, there’s 3 example image file: icon.png, icon.icns, icon.ico\nHowever, these are basically same file. (make icon.png and copy and renamed)\n\n\nIn macOS, all of png, icns, ico will work. but in official guide of electron-forge, it’s recommended to use icns for mac, ico for windows, png for linux.\n\n\nHow to make custom icon file?\nTo make custom icon file in macOS you can use nhyris.key template file in repository.\nModify image as you want ans export that page as Image (png).\n\n\n\n\n\n\nMade by jahnen"
   },
   {
     "objectID": "index.html",

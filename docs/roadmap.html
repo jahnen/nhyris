@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nhyris – nhyris user guide</title>
+<title>nhyris Roadmap – nhyris user guide</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -120,7 +85,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./roadmap.html"> 
+    <a class="nav-link active" href="./roadmap.html" aria-current="page"> 
 <span class="menu-text">Project Roadmap</span></a>
   </li>  
   <li class="nav-item">
@@ -154,8 +119,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link active" data-scroll-target="#how-to-use">How to use</a></li>
-  <li><a href="#app.r-template-from-shiny-galleries" id="toc-app.r-template-from-shiny-galleries" class="nav-link" data-scroll-target="#app.r-template-from-shiny-galleries">app.R template from Shiny Galleries</a></li>
+  <li><a href="#planned-features" id="toc-planned-features" class="nav-link active" data-scroll-target="#planned-features">Planned features</a>
+  <ul class="collapse">
+  <li><a href="#multiple-os" id="toc-multiple-os" class="nav-link" data-scroll-target="#multiple-os">Multiple OS</a></li>
+  <li><a href="#multiple-type-of-installer" id="toc-multiple-type-of-installer" class="nav-link" data-scroll-target="#multiple-type-of-installer">Multiple type of installer</a></li>
+  <li><a href="#advanced-shiny" id="toc-advanced-shiny" class="nav-link" data-scroll-target="#advanced-shiny">Advanced shiny</a></li>
+  <li><a href="#advanced-electron" id="toc-advanced-electron" class="nav-link" data-scroll-target="#advanced-electron">Advanced electron</a></li>
+  <li><a href="#example-shiny-application" id="toc-example-shiny-application" class="nav-link" data-scroll-target="#example-shiny-application">Example shiny application</a></li>
+  </ul></li>
+  <li><a href="#ideas" id="toc-ideas" class="nav-link" data-scroll-target="#ideas">IDEAS</a>
+  <ul class="collapse">
+  <li><a href="#advanced-shiny-1" id="toc-advanced-shiny-1" class="nav-link" data-scroll-target="#advanced-shiny-1">Advanced shiny</a></li>
+  <li><a href="#delivering-method" id="toc-delivering-method" class="nav-link" data-scroll-target="#delivering-method">Delivering method</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -164,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">nhyris</h1>
+<h1 class="title">nhyris Roadmap</h1>
 </div>
 
 
@@ -181,17 +157,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>nhyris</code> is minimal framework to transform R Shiny application into standalone.</p>
-<section id="how-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
-<ol type="1">
-<li><p>clone repository: either fork or clone is OK</p></li>
-<li><p>install dependencies</p></li>
-</ol>
-<p>node version &gt;= 22.13.1 (LTS: 22.15)</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">-v</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> link </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -202,46 +167,75 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>please use zsh or git-bash not powershell</p>
+<p>If you have ideas, it’s always welcome to <a href="https://github.com/jahnen/nhyris/issues/new">submit</a></p>
 </div>
 </div>
-<ol start="3" type="1">
-<li>initialize project with</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> init myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="4" type="1">
-<li><p>modify your shiny application</p></li>
-<li><p>Modify shiny and Run your application</p></li>
-</ol>
-<p>Code for shiny is in <strong>“myapp/shiny/app.R”</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> run myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>nhyris supports single file: not <code>ui.R</code> &amp; <code>server.R</code></p>
-</div>
-</div>
-<ol start="6" type="1">
-<li>build application into electron</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> build myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="7" type="1">
-<li>Share your result</li>
-</ol>
-<p>results exists in “out”</p>
+<section id="planned-features" class="level2">
+<h2 class="anchored" data-anchor-id="planned-features">Planned features</h2>
+<section id="multiple-os" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-os">Multiple OS</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">macOS</label></li>
+<li><label><input type="checkbox" checked="">windows</label></li>
+<li><label><input type="checkbox" checked="">Linux (ubuntu)</label></li>
+</ul>
 </section>
-<section id="app.r-template-from-shiny-galleries" class="level2">
-<h2 class="anchored" data-anchor-id="app.r-template-from-shiny-galleries">app.R template from Shiny Galleries</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> init ex01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="multiple-type-of-installer" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-type-of-installer">Multiple type of installer</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">ZIP</label></li>
+<li><label><input type="checkbox" checked="">DMG for macOS</label></li>
+<li><label><input type="checkbox">deb for ubuntu</label></li>
+<li><label><input type="checkbox" checked="">Squirrel.windows for windows</label></li>
+</ul>
+</section>
+<section id="advanced-shiny" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-shiny">Advanced shiny</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">CRAN</label></li>
+<li><label><input type="checkbox">bioconductor</label></li>
+<li><label><input type="checkbox">r-universe (github)</label></li>
+</ul>
+</section>
+<section id="advanced-electron" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-electron">Advanced electron</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Configuration of electron (requires research)</label></li>
+<li><label><input type="checkbox">Code signing for macOS or windows</label></li>
+</ul>
+</section>
+<section id="example-shiny-application" class="level3">
+<h3 class="anchored" data-anchor-id="example-shiny-application">Example shiny application</h3>
+<p>See <a href="https://shiny.posit.co/r/gallery/">shiny gallery</a></p>
+</section>
+</section>
+<section id="ideas" class="level2">
+<h2 class="anchored" data-anchor-id="ideas">IDEAS</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These are just ideas, which can be changed as the project evolves.</p>
+</div>
+</div>
+<section id="advanced-shiny-1" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-shiny-1">Advanced shiny</h3>
+<p><code>nhyris</code> only supports one-file: <code>app.R</code></p>
+<p>So, frameworks like <code>rhino</code>, <code>golem</code>, <code>leprechaun</code>, … maybe considered.</p>
+</section>
+<section id="delivering-method" class="level3">
+<h3 class="anchored" data-anchor-id="delivering-method">Delivering method</h3>
+<p><code>nhyris</code> only uses <code>electron.js</code>.</p>
+<p>But <code>tauri</code> (with rust) or utilizing user’s already installed R. <code>npm</code> (as javascript package) , … maybe considered.</p>
 
 
+</section>
 </section>
 
 <p>Made by <a href="https://jahnen.io">jahnen</a></p></main> <!-- /main -->
