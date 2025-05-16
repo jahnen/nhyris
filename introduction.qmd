@@ -1,0 +1,47 @@
+---
+title: "Why nhyris?"
+---
+
+`nhyris` (an anagram of `rshiny`, pronounced *nai-riss*), is a framework for transform R shiny application into desktop standalone app.
+
+Which mean, **you can run shiny application, with only ZIP file** (without R or Rstudio installed)
+
+### Why this is important?
+
+R shiny let R developer to build interactive web application with R. 
+but as shiny, it requires dependency for engineering concepts like **server** & **infrastructure** to response user's action interactively.
+
+So, even one of main target user of R shiny is non-technical like Statisticans, or Decision maker. But they don't have experience or don't want to maintain R shiny.
+
+Also, utilizing shiny application involves infrastructure complexity like offline access, run in separated environment, handle data security and complicance concerns even for R developer.
+
+Therefore we suggest as build R shiny application completely independent and self-contained way. Which doesn't require any dependency to run (*and build / maintain more easier than before*)
+
+<img src='images/fig-1.png' width='70%'>
+
+This issue will affect to `R shiny developers`, `organization` users, `SAS` users transitioning to R, and `academics`, all of whom need self-contained, server-free shiny applications accessible without technical setup.
+
+Also, Real-world adoption of R and Shiny in regulated and enterprise settings, as shown by [Novo Nordisk](https://www.youtube.com/live/t33dS17QHuA?si=bQB4w_NCoi0XQBIj) and the [Submission Working Group](https://rconsortium.github.io/submissions-wg/), highlights the growing need for seamless, accessible deployment solutions beyond academia.
+
+
+### How we solve this?
+
+Previously, there was try to build application based on `Electron.js`, commonly used technique for building cross-platform application. See this [link](https://www.electronjs.org/apps) for showcase.
+
+<img src='images/showcase.png' width='70%'>
+
+However, electron is not R (but javascript), it also brings some challenge to R developer who only familliar with R or shiny. 
+
+Since few years ago, we tried to make this process simple and reproducible with instructions. See this [repository](https://github.com/zarathucorp/shiny-electron-template-m1). and It worked well.
+
+<img src='images/fig-4.png' width='70%'>
+
+### Why nhyris?
+
+Previous trial was targeted to make most-minimal application, which doesn't have guide about more detailed configuration even it has ability for do that.
+
+As enhanced version, `nhyris` will expand beyond the **macOS** prototype to support **Windows** and **Linux**, reduce deployment overhead, offer customizable design options, and provide comprehensive documentation and tutorials for R developers.
+
+so it's mainly designed as CLI tool, which generates application as a desktop
+wrapper, with a bundled R runtime for standalone execution.
+
