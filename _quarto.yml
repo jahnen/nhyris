@@ -16,6 +16,8 @@ website:
         text: Home
       - href: introduction.qmd
         text: Introduction
+      - href: roadmap.qmd
+        text: Project Roadmap
       - href: architecture.qmd
         text: Architecture
       - href: customization.qmd
