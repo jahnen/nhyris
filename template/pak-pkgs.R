@@ -20,7 +20,7 @@ cat('Setting library path to:', library_path, '\n')
 
 # assumes pak package is not installed with r-local
 suppressMessages(suppressWarnings(
-    install.packages("pak", quiet = TRUE)
+    install.packages(c("pak", "formatR"), quiet = TRUE)
 ))
 
 library(pak)
@@ -142,18 +142,8 @@ install_with_pak <- function(
     invisible(NULL)
 }
 
-if (dir.exists("r-mac")) {
-    install_with_pak(
-        cran_pkgs = cran_pkgs,
-        github_pkgs = github_pkgs,
-        library_path = file.path("r-mac", "library")
-    )
-}
-
-if (dir.exists("r-win")) {
-    install_with_pak(
-        cran_pkgs = cran_pkgs,
-        github_pkgs = github_pkgs,
-        library_path = file.path("r-win", "library")
-    )
-}
+install_with_pak(
+    cran_pkgs = cran_pkgs,
+    github_pkgs = github_pkgs,
+    library_path = library_path
+)
