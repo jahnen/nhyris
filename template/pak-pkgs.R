@@ -4,6 +4,9 @@
 
 # Script to install R packages with pak
 
+# set cran mirror
+options(repos = "https://cloud.r-project.org")
+
 if (dir.exists("r-mac")) {
     library_path <- file.path("r-mac", "library")
 }
