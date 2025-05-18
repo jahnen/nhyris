@@ -1,9 +1,16 @@
 import fs from "fs";
 import path from "path";
 
-const gallery = JSON.parse(
-  fs.readFileSync(new URL("../gallery.json", import.meta.url), "utf-8")
-);
+let gallery = {};
+try {
+  const galleryPath = new URL("../gallery.json", import.meta.url);
+  const content = fs.readFileSync(galleryPath, "utf-8");
+  gallery = JSON.parse(content);
+} catch (err) {
+  console.warn(
+    `Failed to load or parse gallery.json: ${err.message}\nProceeding with an empty gallery.`
+  );
+}
 
 export function copyTemplates(templatePath, projectPath, name) {
   console.log("Copying templates...");
@@ -21,37 +28,41 @@ export function copyTemplates(templatePath, projectPath, name) {
   let fromPath, toPath;
   if (gallery[name]) {
     fromPath = path.join(templatePath, "shiny", gallery[name]);
-
     toPath = path.join(shinyPath, "app.R");
     if (fs.existsSync(fromPath)) {
       try {
         fs.copyFileSync(fromPath, toPath);
-        console.log(`✅ Copied '${gallery[name]}' to 'app.R'`);
+        console.log(`Copied '${gallery[name]}' to 'app.R'`);
       } catch (err) {
         console.error(
-          `❌ Error copying '${gallery[name]}' to 'app.R':`,
+          `Error copying '${gallery[name]}' to 'app.R':`,
           err.message
         );
+        throw err;
       }
     } else {
-      console.warn(`⚠️  '${gallery[name]}' not found in the shiny directory.`);
+      const msg = `'${gallery[name]}' not found in the shiny directory.`;
+      console.warn(msg);
+      throw new Error(msg);
     }
   } else {
-    fromPath = path.join(shinyPath, "app.R");
+    fromPath = path.join(templatePath, "shiny", "app.R");
     toPath = path.join(shinyPath, "app.R");
     if (fs.existsSync(fromPath)) {
       try {
         fs.copyFileSync(fromPath, toPath);
-        console.log(`✅ Copied 'app.R' to 'app.R' (default)`);
+        console.log(`Copied 'app.R' to 'app.R' (default)`);
       } catch (err) {
-        console.error(`❌ Error copying 'app.R' to 'app.R':`, err.message);
+        console.error(`Error copying 'app.R' to 'app.R':`, err.message);
+        throw err;
       }
     } else {
-      console.warn(`⚠️  'app.R' not found in the shiny directory.`);
+      const msg = `'app.R' not found in the shiny directory.`;
+      console.warn(msg);
+      throw new Error(msg);
     }
   }
 
-  // Copy specific files
   const filesToCopy = [
     "package.json",
     "forge.config.js",
@@ -67,10 +78,17 @@ export function copyTemplates(templatePath, projectPath, name) {
     const from = path.join(templatePath, file);
     const to = path.join(projectPath, file);
     if (fs.existsSync(from)) {
-      fs.copyFileSync(from, to);
-      console.log(`Copied '${file}' to project directory.`);
+      try {
+        fs.copyFileSync(from, to);
+        console.log(`Copied '${file}' to project directory.`);
+      } catch (err) {
+        console.error(`Error copying '${file}':`, err.message);
+        throw err;
+      }
     } else {
-      console.warn(`Missing template file: ${file}`);
+      const msg = `Missing template file: ${file}`;
+      console.warn(msg);
+      throw new Error(msg);
     }
   });
 }

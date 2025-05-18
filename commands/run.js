@@ -5,19 +5,27 @@ import path from "path";
 import os from "os";
 
 function terminateExecRProcesses() {
-  exec("ps aux | grep exec/R | grep -v grep", (err, stdout) => {
-    if (err) return;
-    const lines = stdout.split("\n").filter(Boolean);
-    lines.forEach((line) => {
-      const parts = line.trim().split(/\s+/);
-      const pid = parts[1];
-      if (pid) {
-        try {
-          process.kill(pid, "SIGKILL");
-          console.log(`Terminated exec/R process (PID: ${pid})`);
-        } catch (e) {
-          console.warn(`Failed to terminate PID ${pid}: ${e.message}`);
-        }
+  exec('pgrep -f "exec/R"', (err, stdout) => {
+    if (err) {
+      if (err.code !== 1) {
+        console.error(`Failed to execute pgrep: ${err.message}`);
+      }
+      return;
+    }
+    const pids = stdout.split("\n").filter(Boolean);
+    pids.forEach((pid) => {
+      try {
+        process.kill(pid, "SIGTERM");
+        console.log(`Sent SIGTERM to exec/R process (PID: ${pid})`);
+        setTimeout(() => {
+          try {
+            process.kill(pid, 0);
+            process.kill(pid, "SIGKILL");
+            console.log(`Sent SIGKILL to exec/R process (PID: ${pid})`);
+          } catch (e) {}
+        }, 2000);
+      } catch (e) {
+        console.warn(`Failed to terminate PID ${pid}: ${e.message}`);
       }
     });
   });
