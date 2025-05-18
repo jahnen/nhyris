@@ -69,6 +69,7 @@ export function copyTemplates(templatePath, projectPath, name) {
     "start-shiny.R",
     "r.sh",
     "add-cran-binary-pkgs.R",
+    "pak-pkgs.R",
     "icon.icns",
     "icon.ico",
     "icon.png",
