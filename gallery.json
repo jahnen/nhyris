@@ -5,5 +5,6 @@
   "ex04": "04-telephones.R",
   "ex07": "07-googlecharts.R",
   "ex10": "10-datatable.R",
-  "ex26": "26-absolute.R"
+  "ex26": "26-absolute.R",
+  "ex36": "36-dynamic.R"
 }
