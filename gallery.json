@@ -2,5 +2,6 @@
   "ex01": "01-faithful.R",
   "ex02": "02-kmeans.R",
   "ex03": "03-single.R",
-  "ex04": "04-telephones.R"
+  "ex04": "04-telephones.R",
+  "ex07": "07-googlecharts.R"
 }
