@@ -12,7 +12,7 @@ if (dir.exists("r-win")) {
     library_path <- file.path("r-win", "library")
 }
 
-.libPaths <- .libPaths(library_path)
+.libPaths(library_path)
 cat('Setting library path to:', library_path, '\n')
 
 # assumes pak package is not installed with r-local
