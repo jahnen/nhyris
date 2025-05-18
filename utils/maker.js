@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
-import { updatePackageJson, installDependencies } from "./install.js";
-import { updateForgeConfig } from "./zzz.js";
+import { installDependencies } from "./install.js";
+import { updatePackageJson, updateForgeConfig } from "./zzz.js";
 
 export async function handleDmgMaker(root, projectPath, name) {
   const backgroundSource = path.join(

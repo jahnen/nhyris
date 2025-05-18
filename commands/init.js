@@ -16,7 +16,7 @@ export const initCommand = new Command("init")
 
     await handleDirectory(projectPath, name, options.overwrite);
     updateGitignore(root, name);
-    copyTemplates(templatePath, projectPath);
+    copyTemplates(templatePath, projectPath, name);
     installDependencies(projectPath);
 
     console.log(`Project '${name}' fully initialized and running.`);
