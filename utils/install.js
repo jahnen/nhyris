@@ -19,7 +19,8 @@ export function installRPackages() {
   console.log("Installing R packages...");
   try {
     if (process.platform !== "win32") {
-      execSync("Rscript ./add-cran-binary-pkgs.R", { stdio: "inherit" });
+      //execSync("Rscript ./add-cran-binary-pkgs.R", { stdio: "inherit" });
+      execSync("Rscript ./pak-pkgs.R", { stdio: "inherit" });
     } else {
       console.log("Skipping R package installation on Windows.");
     }

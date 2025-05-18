@@ -5,7 +5,7 @@ import path from "path";
 import os from "os";
 
 function terminateExecRProcesses() {
-  exec('pgrep -f "exec/R"', (err, stdout) => {
+  exec('pgrep -f "nhyris/.*/exec/R"', (err, stdout) => {
     if (err) {
       if (err.code !== 1) {
         console.error(`Failed to execute pgrep: ${err.message}`);
