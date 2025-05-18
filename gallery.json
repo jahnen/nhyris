@@ -4,5 +4,6 @@
   "ex03": "03-single.R",
   "ex04": "04-telephones.R",
   "ex07": "07-googlecharts.R",
-  "ex10": "10-datatable.R"
+  "ex10": "10-datatable.R",
+  "ex26": "26-absolute.R"
 }
