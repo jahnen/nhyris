@@ -187,14 +187,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="r-packages" class="level3">
 <h3 class="anchored" data-anchor-id="r-packages">R Packages</h3>
-<p><code>nhyris</code> will detect R package and it’s dependency in <code>shiny</code> directory’s every R file.</p>
+<p><code>nhyris</code> automatically detects R packages and their dependencies in every R file within the <code>shiny</code> directory.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PKGNAME)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(PKGNAME)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>And if this R packages are available with CRAN and possible to install witn <code>install.packages</code>, <code>nhyris</code> will install them.</p>
+<p>If these R packages are available on CRAN and can be installed with <code>install.packages</code>, <code>nhyris</code> will handle their installation.</p>
 <section id="default-r-packages" class="level4">
-<h4 class="anchored" data-anchor-id="default-r-packages">Default R packages</h4>
-<p><code>nhyris</code> uses <code>shiny</code> and it’s dependecy R packages.</p>
-<p>below are R packages with version installed by default.</p>
+<h4 class="anchored" data-anchor-id="default-r-packages">Default R Packages</h4>
+<p><code>nhyris</code> uses <code>shiny</code> and its dependency R packages.</p>
+<p>The following R packages (with their versions) are installed by default:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R6</span> 2.6.1 </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">base64enc</span> 0.1-3</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">cachem</span> 1.1.0</span>
@@ -226,33 +226,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ex">withr</span> 3.0.2 </span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="ex">xtable</span> 1.8-4 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="how-to-utilize-r-packages-from-github" class="level4">
-<h4 class="anchored" data-anchor-id="how-to-utilize-r-packages-from-github">How to utilize R packages from GitHub</h4>
-<p><code>nhyris</code> uses <a href="https://github.com/r-lib/pak"><code>pak</code></a> to install R packages. The CRAN packages will installed as example.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>However, GitHub packages should mentioned as format of <code>REPO/PKGNAME</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"jcheng5/googleCharts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>to pass this information to <code>nhyris</code>, you should follow two steps</p>
+<section id="using-r-packages-from-github" class="level4">
+<h4 class="anchored" data-anchor-id="using-r-packages-from-github">Using R Packages from GitHub</h4>
+<p><code>nhyris</code> uses <a href="https://github.com/r-lib/pak"><code>pak</code></a> to install R packages.</p>
+<ul>
+<li>To install CRAN packages:<br>
+<code>r     pak::pak("ggplot2")</code></li>
+<li>To install GitHub packages, use the <code>OWNER/REPO</code> format (e.g., <code>jcheng5/googleCharts</code>):<br>
+<code>r     pak::pak("jcheng5/googleCharts")</code></li>
+</ul>
+<p>To specify GitHub packages for <code>nhyris</code>, follow these steps:</p>
 <ol type="1">
-<li>Add infomation in <code>pak-pkgs.R</code> in project.</li>
+<li>Add the required package information to the <code>pak-pkgs.R</code> file in your project: <code>r     github_pkgs &lt;- c(         "jcheng5/googleCharts",         ...     )</code></li>
+<li>Run the following command: <code>nhyris update PROJECT</code> This will install the specified GitHub R packages.</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>github_pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"jcheng5/googleCharts"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="2" type="1">
-<li>run <code>nhyris update PROJECT</code> command</li>
-</ol>
-<p>and this will install GitHub R packages.</p>
+<hr>
 </section>
 </section>
 <section id="icon" class="level3">
 <h3 class="anchored" data-anchor-id="icon">Icon</h3>
-<p><code>nhyris</code> uses nhyris logo, as icon of electron application.</p>
+<p><code>nhyris</code> uses its logo as the icon for the Electron application.</p>
 <p><img src="images/app.png" width="70%"></p>
-<section id="where-it-should-be-located" class="level4">
-<h4 class="anchored" data-anchor-id="where-it-should-be-located">Where it should be located?</h4>
-<p>Image file for icon must exist in each project. For example(myapp), <strong>myapp/icon.png</strong> will used for electron application’s icon in <code>out</code> directory.</p>
+<section id="icon-file-location" class="level4">
+<h4 class="anchored" data-anchor-id="icon-file-location">Icon File Location</h4>
+<p>The icon image file must exist in each project.<br>
+For example, in a project named <code>myapp</code>, the file <strong>myapp/icon.png</strong> will be used as the Electron application’s icon in the <code>out</code> directory.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -263,16 +261,20 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In template, there’s 3 example image file: <code>icon.png</code>, <code>icon.icns</code>, <code>icon.ico</code></p>
-<p>However, these are basically same file. (make <code>icon.png</code> and copy and renamed)</p>
+<p>The template includes three example image files: <code>icon.png</code>, <code>icon.icns</code>, and <code>icon.ico</code>.<br>
+These files are essentially the same image, just copied and renamed.</p>
 </div>
 </div>
-<p>In macOS, all of <code>png</code>, <code>icns</code>, <code>ico</code> will work. but in official <a href="https://www.electronforge.io/guides/create-and-add-icons">guide</a> of electron-forge, it’s recommended to use <code>icns</code> for mac, <code>ico</code> for windows, <code>png</code> for linux.</p>
+<p>On macOS, all of <code>png</code>, <code>icns</code>, and <code>ico</code> formats are supported.<br>
+However, according to the official <a href="https://www.electronforge.io/guides/create-and-add-icons">Electron Forge guide</a>, it is recommended to use: - <code>icns</code> for macOS - <code>ico</code> for Windows - <code>png</code> for Linux</p>
 </section>
-<section id="how-to-make-custom-icon-file" class="level4">
-<h4 class="anchored" data-anchor-id="how-to-make-custom-icon-file">How to make custom icon file?</h4>
-<p>To make custom icon file in <strong>macOS</strong> you can use <code>nhyris.key</code> template file in repository.</p>
-<p>Modify image as you want ans export that page as Image (<code>png</code>).</p>
+<section id="creating-a-custom-icon" class="level4">
+<h4 class="anchored" data-anchor-id="creating-a-custom-icon">Creating a Custom Icon</h4>
+<p>To create a custom icon on <strong>macOS</strong>, you can use the <code>nhyris.key</code> template file provided in the repository.</p>
+<ol type="1">
+<li>Edit the image as desired.</li>
+<li>Export the relevant page as a <code>png</code> image.</li>
+</ol>
 <p><img src="images/keynote.png" width="70%"></p>
 
 
