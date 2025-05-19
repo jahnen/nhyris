@@ -1,0 +1,143 @@
+---
+title: "Troubleshooting"
+---
+
+### nhyris project successfully built, but not started
+
+In most case, running shiny code with `nhyris` has problem. 
+
+Because `nhyris` uses independent R environment even if your shiny worked well in your environment like Positron, Rstudio or vscode shiny may not work in `nhyris`. 
+
+For example: using different version of R or dependency problem from not installed R package and so on.
+
+To check R problem, follow these steps.
+
+1. move to inside your project <Myapp>
+
+2. find `src/index.js`
+
+3. in L60~L62, modify code.
+
+```js
+// stdio: "ignore",
+// terminal output for debug
+stdio: "inherit",
+```
+
+::: {.callout-note}
+This will show log from shiny application to your IDE's terminal
+:::
+
+### Example logs
+
+Here's example log
+
+```bash
+> 
+> .libPaths(r_lib_paths) # Temporarily set library paths to R_LIB_PATHS
+> 
+> if (!requireNamespace("shiny", quietly = TRUE)) {
++   stop("The 'shiny' package is not installed in R_LIB_PATHS: ", r_lib_paths)
++ }
+> shiny_dir <- Sys.getenv("RE_SHINY_PATH")
+> 
+> shiny::runApp(
++   appDir = shiny_dir,
++   host = "127.0.0.1",
++   launch.browser = FALSE,
++   port = 1124
++ )
+Loading required package: shiny
+
+...
+
+Error: `server` must be a function
+
+...
+
+Error checking server status: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async checkServerStatus (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:34:17)
+    at async tryStartWebserver (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:139:24)
+    at async App.<anonymous> (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:253:5) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:1124
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -61,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 1124
+  }
+}
+```
+
+This log can be considered as 3 part.
+
+1. R execution part: log from running R and shiny. This is not error.
+
+```r
+> 
+> .libPaths(r_lib_paths) # Temporarily set library paths to R_LIB_PATHS
+> 
+> if (!requireNamespace("shiny", quietly = TRUE)) {
++   stop("The 'shiny' package is not installed in R_LIB_PATHS: ", r_lib_paths)
++ }
+> shiny_dir <- Sys.getenv("RE_SHINY_PATH")
+> 
+> shiny::runApp(
++   appDir = shiny_dir,
++   host = "127.0.0.1",
++   launch.browser = FALSE,
++   port = 1124
++ )
+Loading required package: shiny
+
+...
+```
+
+2. Error part: you need to investigate where it's from.
+
+```r
+Error: `server` must be a function
+```
+
+Tn this shiny application, I used server as ui.
+```r
+ui <- fluidPage(...)
+server <- ui
+shinyApp(ui = ui, server = server)
+```
+
+3. Connection part: the most important you should notice.
+
+`nhyris` has mechanism with 2 part:
+- Run shiny application with R script to port localhost:1124
+- Connect shiny application in electron.
+
+the run part, will takes some time (shiny requires time to load).
+
+However both part are initiated almost same time, so Connect part may generate error like below.
+
+But after some trial, (around ~ 10) it will connected with shiny application and open electron application.
+
+So if you see this log with few, it's fine. but if you see this more than 10 time: you should fix the shiny application.
+
+```bash
+Error checking server status: TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async checkServerStatus (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:34:17)
+    at async tryStartWebserver (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:139:24)
+    at async App.<anonymous> (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:253:5) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:1124
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
+    errno: -61,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 1124
+  }
+}
+```
+
