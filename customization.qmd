@@ -4,20 +4,20 @@ title: "Customize nhyris"
 
 ### R Packages
 
-`nhyris` will detect R package and it's dependency in `shiny` directory's every R file.
+`nhyris` automatically detects R packages and their dependencies in every R file within the `shiny` directory.
 
 ```r
 library(PKGNAME)
 require(PKGNAME)
 ```
 
-And if this R packages are available with CRAN and possible to install witn `install.packages`, `nhyris` will install them.
+If these R packages are available on CRAN and can be installed with `install.packages`, `nhyris` will handle their installation.
 
-#### Default R packages
+#### Default R Packages
 
-`nhyris` uses `shiny` and it's dependecy R packages.
+`nhyris` uses `shiny` and its dependency R packages.
 
-below are R packages with version installed by default.
+The following R packages (with their versions) are installed by default:  
 
 ```bash
 R6 2.6.1 
@@ -52,62 +52,64 @@ withr 3.0.2
 xtable 1.8-4 
 ```
 
-#### How to utilize R packages from GitHub
+#### Using R Packages from GitHub
 
 `nhyris` uses [`pak`](https://github.com/r-lib/pak) to install R packages.
-The CRAN packages will installed as example.
 
-```r
-pak::pak("ggplot2")
-```
+- To install CRAN packages:  
+    ```r
+    pak::pak("ggplot2")
+    ```
+- To install GitHub packages, use the `OWNER/REPO` format (e.g., `jcheng5/googleCharts`):  
+    ```r
+    pak::pak("jcheng5/googleCharts")
+    ```
 
-However, GitHub packages should mentioned as format of `REPO/PKGNAME`
+To specify GitHub packages for `nhyris`, follow these steps:
 
-```r
-pak::pak("jcheng5/googleCharts")
-```
+1. Add the required package information to the `pak-pkgs.R` file in your project:
+    ```r
+    github_pkgs <- c(
+        "jcheng5/googleCharts",
+        ...
+    )
+    ```
+2. Run the following command:
+    ```
+    nhyris update PROJECT
+    ```
+    This will install the specified GitHub R packages.
 
-to pass this information to `nhyris`, you should follow two steps
-
-1. Add infomation in `pak-pkgs.R` in project.
-
-```r
-github_pkgs <- c(
-    "jcheng5/googleCharts",
-    ...
-)
-```
-
-2. run `nhyris update PROJECT` command
-
-and this will install GitHub R packages.
-
+---
 
 ### Icon
 
-`nhyris` uses nhyris logo, as icon of electron application.
+`nhyris` uses its logo as the icon for the Electron application.
 
 <img src='images/app.png' width='70%'>
 
-#### Where it should be located?
+#### Icon File Location
 
-Image file for icon must exist in each project. For example(myapp), **myapp/icon.png** will used for electron application's icon in `out` directory.
+The icon image file must exist in each project.  
+For example, in a project named `myapp`, the file **myapp/icon.png** will be used as the Electron application's icon in the `out` directory.
 
 ::: {.callout-note}
-In template, there's 3 example image file: `icon.png`, `icon.icns`, `icon.ico`
-
-However, these are basically same file. (make `icon.png` and copy and renamed)
+The template includes three example image files: `icon.png`, `icon.icns`, and `icon.ico`.  
+These files are essentially the same image, just copied and renamed.
 :::
 
-In macOS, all of `png`, `icns`, `ico` will work.
-but in official [guide](https://www.electronforge.io/guides/create-and-add-icons) of electron-forge, it's recommended to use
-`icns` for mac, `ico` for windows, `png` for linux.
+On macOS, all of `png`, `icns`, and `ico` formats are supported.  
+However, according to the official [Electron Forge guide](https://www.electronforge.io/guides/create-and-add-icons), it is recommended to use:
+- `icns` for macOS
+- `ico` for Windows
+- `png` for Linux
 
-#### How to make custom icon file?
+#### Creating a Custom Icon
 
-To make custom icon file in **macOS** you can use `nhyris.key` template file in repository. 
+To create a custom icon on **macOS**, you can use the `nhyris.key` template file provided in the repository.
 
-Modify image as you want ans export that page as Image (`png`).
+1. Edit the image as desired.
+2. Export the relevant page as a `png` image.
 
 <img src='images/keynote.png' width='70%'>
 
