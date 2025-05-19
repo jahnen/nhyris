@@ -7,5 +7,6 @@
   "ex10": "10-datatable.R",
   "ex26": "26-absolute.R",
   "ex36": "36-dynamic.R",
-  "ex39": "39-observer.R"
+  "ex39": "39-observer.R",
+  "ex46": "46-bookmark.R"
 }
