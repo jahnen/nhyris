@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
-    "commander": "^13.1.0"
+    "commander": "^14.0.0"
   },
   "engines": {
     "node": ">=22.13.1"
