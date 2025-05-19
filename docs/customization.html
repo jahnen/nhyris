@@ -230,16 +230,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="using-r-packages-from-github">Using R Packages from GitHub</h4>
 <p><code>nhyris</code> uses <a href="https://github.com/r-lib/pak"><code>pak</code></a> to install R packages.</p>
 <ul>
-<li>To install CRAN packages:<br>
-<code>r     pak::pak("ggplot2")</code></li>
-<li>To install GitHub packages, use the <code>OWNER/REPO</code> format (e.g., <code>jcheng5/googleCharts</code>):<br>
-<code>r     pak::pak("jcheng5/googleCharts")</code></li>
+<li>To install CRAN packages:</li>
 </ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>To install GitHub packages, use the <code>OWNER/REPO</code> format (e.g., <code>jcheng5/googleCharts</code>):</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"jcheng5/googleCharts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To specify GitHub packages for <code>nhyris</code>, follow these steps:</p>
 <ol type="1">
-<li>Add the required package information to the <code>pak-pkgs.R</code> file in your project: <code>r     github_pkgs &lt;- c(         "jcheng5/googleCharts",         ...     )</code></li>
-<li>Run the following command: <code>nhyris update PROJECT</code> This will install the specified GitHub R packages.</li>
+<li>Add the required package information to the <code>pak-pkgs.R</code> file in your project:</li>
 </ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>github_pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"jcheng5/googleCharts"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Run the following command:</li>
+</ol>
+<pre><code>nhyris update PROJECT</code></pre>
+<p>This will install the specified GitHub R packages.</p>
 <hr>
 </section>
 </section>
