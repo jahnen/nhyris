@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>contributing – nhyris user guide</title>
+<title>Troubleshooting – nhyris user guide</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -97,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Customization</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./troubleshooting.html"> 
+    <a class="nav-link active" href="./troubleshooting.html" aria-current="page"> 
 <span class="menu-text">Troubleshooting</span></a>
   </li>  
 </ul>
@@ -123,185 +158,155 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#contributing-to-nhyris" id="toc-contributing-to-nhyris" class="nav-link active" data-scroll-target="#contributing-to-nhyris">Contributing to nhyris</a>
-  <ul class="collapse">
-  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
-  <li><a href="#i-have-a-question" id="toc-i-have-a-question" class="nav-link" data-scroll-target="#i-have-a-question">I Have a Question</a></li>
-  <li><a href="#i-want-to-contribute" id="toc-i-want-to-contribute" class="nav-link" data-scroll-target="#i-want-to-contribute">I Want To Contribute</a>
-  <ul class="collapse">
-  <li><a href="#reporting-bugs" id="toc-reporting-bugs" class="nav-link" data-scroll-target="#reporting-bugs">Reporting Bugs</a></li>
-  <li><a href="#suggesting-enhancements" id="toc-suggesting-enhancements" class="nav-link" data-scroll-target="#suggesting-enhancements">Suggesting Enhancements</a></li>
-  <li><a href="#your-first-code-contribution" id="toc-your-first-code-contribution" class="nav-link" data-scroll-target="#your-first-code-contribution">Your First Code Contribution</a></li>
-  <li><a href="#improving-the-documentation" id="toc-improving-the-documentation" class="nav-link" data-scroll-target="#improving-the-documentation">Improving The Documentation</a></li>
-  </ul></li>
-  <li><a href="#styleguides" id="toc-styleguides" class="nav-link" data-scroll-target="#styleguides">Styleguides</a>
-  <ul class="collapse">
-  <li><a href="#commit-messages" id="toc-commit-messages" class="nav-link" data-scroll-target="#commit-messages">Commit Messages</a></li>
-  </ul></li>
-  <li><a href="#join-the-project-team" id="toc-join-the-project-team" class="nav-link" data-scroll-target="#join-the-project-team">Join The Project Team</a></li>
-  <li><a href="#attribution" id="toc-attribution" class="nav-link" data-scroll-target="#attribution">Attribution</a></li>
-  </ul></li>
+  <li><a href="#nhyris-project-successfully-built-but-not-started" id="toc-nhyris-project-successfully-built-but-not-started" class="nav-link active" data-scroll-target="#nhyris-project-successfully-built-but-not-started">nhyris project successfully built, but not started</a></li>
+  <li><a href="#example-logs" id="toc-example-logs" class="nav-link" data-scroll-target="#example-logs">Example logs</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Troubleshooting</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<!-- omit in toc -->
-<section id="contributing-to-nhyris" class="level1">
-<h1>Contributing to nhyris</h1>
-<p>First off, thanks for taking the time to contribute! ❤️</p>
-<p>All types of contributions are encouraged and valued. See the <a href="#table-of-contents">Table of Contents</a> for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉</p>
-<blockquote class="blockquote">
-<p>And if you like the project, but just don’t have time to contribute, that’s fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about: - Star the project - Tweet about it - Refer this project in your project’s readme - Mention the project at local meetups and tell your friends/colleagues</p>
-</blockquote>
-<!-- omit in toc -->
-<section id="table-of-contents" class="level2">
-<h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
-<ul>
-<li><a href="#i-have-a-question">I Have a Question</a></li>
-<li><a href="#i-want-to-contribute">I Want To Contribute</a></li>
-<li><a href="#reporting-bugs">Reporting Bugs</a></li>
-<li><a href="#suggesting-enhancements">Suggesting Enhancements</a></li>
-<li><a href="#your-first-code-contribution">Your First Code Contribution</a></li>
-<li><a href="#improving-the-documentation">Improving The Documentation</a></li>
-<li><a href="#styleguides">Styleguides</a></li>
-<li><a href="#commit-messages">Commit Messages</a></li>
-<li><a href="#join-the-project-team">Join The Project Team</a></li>
-</ul>
-</section>
-<section id="i-have-a-question" class="level2">
-<h2 class="anchored" data-anchor-id="i-have-a-question">I Have a Question</h2>
-<blockquote class="blockquote">
-<p>If you want to ask a question, we assume that you have read the available <a href="https://jahnen.github.io/nhyris/">Documentation</a>.</p>
-</blockquote>
-<p>Before you ask a question, it is best to search for existing <a href="https://github.com/jahnen/nhyris/issues">Issues</a> that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.</p>
-<p>If you then still feel the need to ask a question and need clarification, we recommend the following:</p>
-<ul>
-<li>Open an <a href="https://github.com/jahnen/nhyris/issues/new">Issue</a>.</li>
-<li>Provide as much context as you can about what you’re running into.</li>
-<li>Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.</li>
-</ul>
-<p>We will then take care of the issue as soon as possible.</p>
-<!--
-You might want to create a separate issue tag for questions and include it in this description. People should then tag their issues accordingly.
-
-Depending on how large the project is, you may want to outsource the questioning, e.g. to Stack Overflow or Gitter. You may add additional contact and information possibilities:
-- IRC
-- Slack
-- Gitter
-- Stack Overflow tag
-- Blog
-- FAQ
-- Roadmap
-- E-Mail List
-- Forum
--->
-</section>
-<section id="i-want-to-contribute" class="level2">
-<h2 class="anchored" data-anchor-id="i-want-to-contribute">I Want To Contribute</h2>
-<blockquote class="blockquote">
-<h3 id="legal-notice" class="anchored">Legal Notice <!-- omit in toc --></h3>
-<p>When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project licence.</p>
-</blockquote>
-<section id="reporting-bugs" class="level3">
-<h3 class="anchored" data-anchor-id="reporting-bugs">Reporting Bugs</h3>
-<!-- omit in toc -->
-<section id="before-submitting-a-bug-report" class="level4">
-<h4 class="anchored" data-anchor-id="before-submitting-a-bug-report">Before Submitting a Bug Report</h4>
-<p>A good bug report shouldn’t leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.</p>
-<ul>
-<li>Make sure that you are using the latest version.</li>
-<li>Determine if your bug is really a bug and not an error on your side e.g.&nbsp;using incompatible environment components/versions (Make sure that you have read the <a href="https://jahnen.github.io/nhyris/">documentation</a>. If you are looking for support, you might want to check <a href="#i-have-a-question">this section</a>).</li>
-<li>To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the <a href="https://github.com/jahnen/nhyris/issues?q=label%3Abug">bug tracker</a>.</li>
-<li>Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.</li>
-<li>Collect information about the bug:</li>
-<li>Stack trace (Traceback)</li>
-<li>OS, Platform and Version (Windows, Linux, macOS, x86, ARM)</li>
-<li>Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.</li>
-<li>Possibly your input and the output</li>
-<li>Can you reliably reproduce the issue? And can you also reproduce it with older versions?</li>
-</ul>
-<!-- omit in toc -->
-</section>
-<section id="how-do-i-submit-a-good-bug-report" class="level4">
-<h4 class="anchored" data-anchor-id="how-do-i-submit-a-good-bug-report">How Do I Submit a Good Bug Report?</h4>
-<blockquote class="blockquote">
-<p>You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to . <!-- You may add a PGP key to allow the messages to be sent encrypted as well. --></p>
-</blockquote>
-<p>We use GitHub issues to track bugs and errors. If you run into an issue with the project:</p>
-<ul>
-<li>Open an <a href="https://github.com/jahnen/nhyris/issues/new">Issue</a>. (Since we can’t be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)</li>
-<li>Explain the behavior you would expect and the actual behavior.</li>
-<li>Please provide as much context as possible and describe the <em>reproduction steps</em> that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.</li>
-<li>Provide the information you collected in the previous section.</li>
-</ul>
-<p>Once it’s filed:</p>
-<ul>
-<li>The project team will label the issue accordingly.</li>
-<li>A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as <code>needs-repro</code>. Bugs with the <code>needs-repro</code> tag will not be addressed until they are reproduced.</li>
-<li>If the team is able to reproduce the issue, it will be marked <code>needs-fix</code>, as well as possibly other tags (such as <code>critical</code>), and the issue will be left to be <a href="#your-first-code-contribution">implemented by someone</a>.</li>
-</ul>
-<!-- You might want to create an issue template for bugs and errors that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
-</section>
-</section>
-<section id="suggesting-enhancements" class="level3">
-<h3 class="anchored" data-anchor-id="suggesting-enhancements">Suggesting Enhancements</h3>
-<p>This section guides you through submitting an enhancement suggestion for nhyris, <strong>including completely new features and minor improvements to existing functionality</strong>. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.</p>
-<!-- omit in toc -->
-<section id="before-submitting-an-enhancement" class="level4">
-<h4 class="anchored" data-anchor-id="before-submitting-an-enhancement">Before Submitting an Enhancement</h4>
-<ul>
-<li>Make sure that you are using the latest version.</li>
-<li>Read the <a href="https://jahnen.github.io/nhyris/">documentation</a> carefully and find out if the functionality is already covered, maybe by an individual configuration.</li>
-<li>Perform a <a href="https://github.com/jahnen/nhyris/issues">search</a> to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.</li>
-<li>Find out whether your idea fits with the scope and aims of the project. It’s up to you to make a strong case to convince the project’s developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you’re just targeting a minority of users, consider writing an add-on/plugin library.</li>
-</ul>
-<!-- omit in toc -->
-</section>
-<section id="how-do-i-submit-a-good-enhancement-suggestion" class="level4">
-<h4 class="anchored" data-anchor-id="how-do-i-submit-a-good-enhancement-suggestion">How Do I Submit a Good Enhancement Suggestion?</h4>
-<p>Enhancement suggestions are tracked as <a href="https://github.com/jahnen/nhyris/issues">GitHub issues</a>.</p>
-<ul>
-<li>Use a <strong>clear and descriptive title</strong> for the issue to identify the suggestion.</li>
-<li>Provide a <strong>step-by-step description of the suggested enhancement</strong> in as many details as possible.</li>
-<li><strong>Describe the current behavior</strong> and <strong>explain which behavior you expected to see instead</strong> and why. At this point you can also tell which alternatives do not work for you.</li>
-<li>You may want to <strong>include screenshots or screen recordings</strong> which help you demonstrate the steps or point out the part which the suggestion is related to. You can use <a href="https://www.cockos.com/licecap/">LICEcap</a> to record GIFs on macOS and Windows, and the built-in <a href="https://help.gnome.org/users/gnome-help/stable/screen-shot-record.html.en">screen recorder in GNOME</a> or <a href="https://github.com/MaartenBaert/ssr">SimpleScreenRecorder</a> on Linux. <!-- this should only be included if the project has a GUI --></li>
-<li><strong>Explain why this enhancement would be useful</strong> to most nhyris users. You may also want to point out the other projects that solved it better and which could serve as inspiration.</li>
-</ul>
-<!-- You might want to create an issue template for enhancement suggestions that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
-</section>
-</section>
-<section id="your-first-code-contribution" class="level3">
-<h3 class="anchored" data-anchor-id="your-first-code-contribution">Your First Code Contribution</h3>
-<p>Start with <a href="https://github.com/jahnen/nhyris/fork">fork this repository</a>.</p>
-</section>
-<section id="improving-the-documentation" class="level3">
-<h3 class="anchored" data-anchor-id="improving-the-documentation">Improving The Documentation</h3>
-<p>We’re still working on the prototype, so we won’t cover this part yet.</p>
-</section>
-</section>
-<section id="styleguides" class="level2">
-<h2 class="anchored" data-anchor-id="styleguides">Styleguides</h2>
-<section id="commit-messages" class="level3">
-<h3 class="anchored" data-anchor-id="commit-messages">Commit Messages</h3>
-<p>Use <a href="https://commitlint.io/#Conventional">Commitlint.io</a></p>
-</section>
-</section>
-<section id="join-the-project-team" class="level2">
-<h2 class="anchored" data-anchor-id="join-the-project-team">Join The Project Team</h2>
-<p>Email me: jinhwan@jahnen.io</p>
-<!-- omit in toc -->
-</section>
-<section id="attribution" class="level2">
-<h2 class="anchored" data-anchor-id="attribution">Attribution</h2>
-<p>This guide is based on the <a href="https://contributing.md/generator">contributing.md</a>!</p>
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<section id="nhyris-project-successfully-built-but-not-started" class="level3">
+<h3 class="anchored" data-anchor-id="nhyris-project-successfully-built-but-not-started">nhyris project successfully built, but not started</h3>
+<p>In most case, running shiny code with <code>nhyris</code> has problem.</p>
+<p>Because <code>nhyris</code> uses independent R environment even if your shiny worked well in your environment like Positron, Rstudio or vscode shiny may not work in <code>nhyris</code>.</p>
+<p>For example: using different version of R or dependency problem from not installed R package and so on.</p>
+<p>To check R problem, follow these steps.</p>
+<ol type="1">
+<li><p>move to inside your project <myapp></myapp></p></li>
+<li><p>find <code>src/index.js</code></p></li>
+<li><p>in L60~L62, modify code.</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// stdio: "ignore",</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// terminal output for debug</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stdio<span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This will show log from shiny application to your IDE’s terminal</p>
+</div>
+</div>
 </section>
+<section id="example-logs" class="level3">
+<h3 class="anchored" data-anchor-id="example-logs">Example logs</h3>
+<p>Here’s example log</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> .libPaths<span class="kw">(</span><span class="ex">r_lib_paths</span><span class="kw">)</span> <span class="co"># Temporarily set library paths to R_LIB_PATHS</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> if <span class="kw">(</span><span class="ex">!requireNamespace</span><span class="er">(</span><span class="st">"shiny"</span><span class="ex">,</span> quietly = TRUE<span class="kw">))</span> <span class="kw">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   stop<span class="er">(</span><span class="st">"The 'shiny' package is not installed in R_LIB_PATHS: "</span><span class="ex">,</span> r_lib_paths<span class="kw">)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> shiny_dir <span class="op">&lt;</span>- <span class="ex">Sys.getenv</span><span class="er">(</span><span class="st">"RE_SHINY_PATH"</span><span class="kw">)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> shiny::runApp<span class="kw">(</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   appDir = shiny_dir,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   host = <span class="st">"127.0.0.1"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   launch.browser = FALSE,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   port = 1124</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> <span class="kw">)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Loading</span> required package: shiny</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> <span class="kw">`</span><span class="ex">server</span><span class="kw">`</span> must be a function</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Error</span> checking server status: TypeError: fetch failed</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> node:internal/deps/undici/undici:13510:13</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> process.processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async checkServerStatus <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:34:17</span><span class="kw">)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async tryStartWebserver <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:139:24</span><span class="kw">)</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async App.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:253:5</span><span class="kw">)</span> <span class="kw">{</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[cause]:</span> Error: connect ECONNREFUSED 127.0.0.1:1124</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> TCPConnectWrap.afterConnect [as oncomplete] <span class="er">(</span><span class="ex">node:net:1611:16</span><span class="kw">)</span> <span class="kw">{</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="ex">errno:</span> <span class="at">-61,</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="ex">code:</span> <span class="st">'ECONNREFUSED'</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="ex">syscall:</span> <span class="st">'connect'</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">address:</span> <span class="st">'127.0.0.1'</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">port:</span> 1124</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This log can be considered as 3 part.</p>
+<ol type="1">
+<li>R execution part: log from running R and shiny. This is not error.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">.libPaths</span>(r_lib_paths) <span class="co"># Temporarily set library paths to R_LIB_PATHS</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"shiny"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">stop</span>(<span class="st">"The 'shiny' package is not installed in R_LIB_PATHS: "</span>, r_lib_paths)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> shiny_dir <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"RE_SHINY_PATH"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> shiny<span class="sc">::</span><span class="fu">runApp</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="at">appDir =</span> shiny_dir,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="at">host =</span> <span class="st">"127.0.0.1"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="at">launch.browser =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="at">port =</span> <span class="dv">1124</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> )</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Loading required package<span class="sc">:</span> shiny</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Error part: you need to investigate where it’s from.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> <span class="st">`</span><span class="at">server</span><span class="st">`</span> must be a <span class="cf">function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tn this shiny application, I used server as ui.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(...)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> ui</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Connection part: the most important you should notice.</li>
+</ol>
+<p><code>nhyris</code> has mechanism with 2 part: - Run shiny application with R script to port localhost:1124 - Connect shiny application in electron.</p>
+<p>the run part, will takes some time (shiny requires time to load).</p>
+<p>However both part are initiated almost same time, so Connect part may generate error like below.</p>
+<p>But after some trial, (around ~ 10) it will connected with shiny application and open electron application.</p>
+<p>So if you see this log with few, it’s fine. but if you see this more than 10 time: you should fix the shiny application.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error</span> checking server status: TypeError: fetch failed</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> node:internal/deps/undici/undici:13510:13</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> process.processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async checkServerStatus <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:34:17</span><span class="kw">)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async tryStartWebserver <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:139:24</span><span class="kw">)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async App.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:253:5</span><span class="kw">)</span> <span class="kw">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[cause]:</span> Error: connect ECONNREFUSED 127.0.0.1:1124</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> TCPConnectWrap.afterConnect [as oncomplete] <span class="er">(</span><span class="ex">node:net:1611:16</span><span class="kw">)</span> <span class="kw">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">errno:</span> <span class="at">-61,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">code:</span> <span class="st">'ECONNREFUSED'</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">syscall:</span> <span class="st">'connect'</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">address:</span> <span class="st">'127.0.0.1'</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">port:</span> 1124</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
 </section>
 
 <p>Made by <a href="https://jahnen.io">jahnen</a></p></main> <!-- /main -->

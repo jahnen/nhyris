@@ -22,6 +22,8 @@ website:
         text: Architecture
       - href: customization.qmd
         text: Customization
+      - href: troubleshooting.qmd
+        text: Troubleshooting
     right:
       - icon: github
         href: https://github.com/jahnen/nhyris
