@@ -70,6 +70,8 @@ elif [ "$OS_TYPE" == "windows" ]; then
         unzip innoextract.zip -d innoextract_dir
         rm innoextract.zip    
         ./innoextract_dir/innoextract.exe --silent R-installer.exe
+
+        mv app/* .          
         rm -r innoextract_dir
     fi    
 
