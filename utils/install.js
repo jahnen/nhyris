@@ -17,16 +17,26 @@ export function installDependencies(projectPath) {
 
 export function installRPackages() {
   console.log("Installing R packages...");
-  try {
-    if (process.platform !== "win32") {
-      //execSync("Rscript ./add-cran-binary-pkgs.R", { stdio: "inherit" });
-      execSync("Rscript ./pak-pkgs.R", { stdio: "inherit" });
-    } else {
-      console.log("Skipping R package installation on Windows.");
+
+  if (process.platform === "win32") {
+    // Rscript path define
+    const rscriptPath = `${process.cwd()}\\r-win\\bin\\Rscript.exe`;
+    const rscriptCmd = `"${rscriptPath}" ./pak-pkgs.R`; // 공백 추가
+
+    try {
+      execSync(rscriptCmd, { stdio: "inherit" });
+    } catch (err) {
+      console.error("Failed to install R packages:", err.message);
+      throw err;
     }
-  } catch (err) {
-    console.error("Failed to install R packages:", err.message);
-    throw err;
+  } else {
+    // For Linux and MacOS
+    try {
+      execSync("Rscript ./pak-pkgs.R", { stdio: "inherit" });
+    } catch (err) {
+      console.error("Failed to install R packages:", err.message);
+      throw err;
+    }
   }
 }
 
