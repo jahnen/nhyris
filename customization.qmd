@@ -83,7 +83,27 @@ github_pkgs <- c(
 ```
 nhyris update PROJECT
 ```
+
 This will install the specified GitHub R packages.
+
+#### Using R Packages from Bioconductor
+
+To specify Bioconductor packages for `nhyris`, follow these steps:
+
+1. Add the required package information to the `pak-pkgs.R` file in your project:
+    
+```r
+github_pkgs <- c(
+    "AnnotationDbi", 
+    ...
+)
+```
+
+2. Run the following command:
+
+```
+nhyris update PROJECT
+```
 
 ---
 
