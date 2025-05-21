@@ -93,7 +93,7 @@ To specify Bioconductor packages for `nhyris`, follow these steps:
 1. Add the required package information to the `pak-pkgs.R` file in your project:
     
 ```r
-github_pkgs <- c(
+bioconductor_pkgs <- c(
     "AnnotationDbi", 
     ...
 )

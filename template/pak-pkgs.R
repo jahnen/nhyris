@@ -161,5 +161,6 @@ install_with_pak <- function(
 install_with_pak(
     cran_pkgs = cran_pkgs,
     github_pkgs = github_pkgs,
+    bioconductor_pkgs = bioconductor_pkgs,
     library_path = library_path
 )
