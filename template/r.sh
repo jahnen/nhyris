@@ -61,44 +61,22 @@ elif [ "$OS_TYPE" == "windows" ]; then
     mkdir -p r-win
     cd r-win
 
-    # Download R installer
-    echo "Downloading R installer from $R_WIN_URL"
+    # Download R installer    
     curl -L -o R-installer.exe "$R_WIN_URL"
 
-    # Innoextract for Windows (unzip the installer)
-    echo "Checking if innoextract_dir already exists..."
-    if [ ! -d "innoextract_dir" ]; then
-        echo "Downloading innoextract for Windows"
+    # Innoextract for Windows (unzip the installer)    
+    if [ ! -d "innoextract_dir" ]; then        
         curl -L -o innoextract.zip "https://constexpr.org/innoextract/files/innoextract-1.9-windows.zip"
         unzip innoextract.zip -d innoextract_dir
-        rm innoextract.zip
-    else
-        echo "innoextract_dir already exists. Skipping download."
-    fi
+        rm innoextract.zip    
+        ./innoextract_dir/innoextract.exe --silent R-installer.exe
 
-    ./innoextract_dir/innoextract.exe --silent R-installer.exe
+        mv app/* .          
+        rm -r innoextract_dir
+    fi    
 
-    mv app/* ../r-win
-    rm -r app innoextract_dir R-installer.exe
-    rm -r doc tests
-    echo "R for Windows has been installed to $(pwd)/R"
-
-    echo "pwd: $(pwd)"
-
-    # Check if Rscript exists in the expected directory
-    echo "Checking Rscript location in r-win/bin:"
-    ls -l "$(pwd)/bin"
-
-    export PATH="$(pwd)/bin:$PATH"
-
-    echo "Rscript version"
-    Rscript --version
-
-    echo "Current working directory: $(pwd)"
-    cd ..
-
-    echo "Current working directory: $(pwd)"
-    Rscript ./add-cran-binary-pkgs.R
+    rm -r app R-installer.exe
+    rm -r doc tests Tcl        
 fi
 
 echo "R installation completed for $OS_TYPE"

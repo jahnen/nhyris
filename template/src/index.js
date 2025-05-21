@@ -15,13 +15,13 @@ try {
     app.quit();
     try {
       execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
-      console.log("✅ Rterm.exe processes have been terminated.");
+      console.log("Rterm.exe processes have been terminated.");
     } catch (err) {
-      console.error("❌ Failed to terminate Rterm.exe processes:", err.message);
+      console.error("Failed to terminate Rterm.exe processes:", err.message);
     }
   }
 } catch (err) {
-  console.log("ℹ️ 'electron-squirrel-startup' module is not available.");
+  console.log("'electron-squirrel-startup' module is not available.");
 }
 
 const os = require("os");
@@ -272,9 +272,9 @@ app.on("window-all-closed", () => {
   shutdown = true;
   try {
     execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
-    console.log("✅ Rterm.exe processes have been terminated.");
+    console.log("term.exe processes have been terminated.");
   } catch (err) {
-    console.error("❌ Failed to terminate Rterm.exe processes:", err.message);
+    console.error("Failed to terminate Rterm.exe processes:", err.message);
   }
 
   console.log("Shutting down...");

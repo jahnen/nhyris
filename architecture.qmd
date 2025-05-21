@@ -54,7 +54,7 @@ Some configuration exists in **src/index.js**
 
 These are codes for installing local R
 
-- **add-cran-binary-pkgs.R**: R code to install cran packages into local R
+- **pak-pkgs.R**: R code to install cran packages into local R
 - **r.sh**: shell script that install local R
 
 ### 5. Documents
