@@ -104,9 +104,25 @@ github_pkgs <- c(
     # "tidyverse/ggplot2"
 )
 
+bioconductor_pkgs <- c(
+    # "airway",
+    # "AnnotationDbi"
+)
+
+cran_pkgs <- paste0("cran::", cran_pkgs)
+
+if (length(github_pkgs) > 0) {
+    github_pkgs <- paste0("github::", github_pkgs)
+}
+
+if (length(bioconductor_pkgs) > 0) {
+    bioconductor_pkgs <- paste0("bioc::", bioconductor_pkgs)
+}
+
 install_with_pak <- function(
     cran_pkgs,
     github_pkgs = NULL,
+    bioconductor_pkgs = NULL,
     library_path = library_path,
     remove_dirs = c(
         "help",
@@ -120,7 +136,7 @@ install_with_pak <- function(
 ) {
     dir.create(library_path, showWarnings = FALSE, recursive = TRUE)
 
-    pkgs <- c(cran_pkgs, github_pkgs)
+    pkgs <- c(cran_pkgs, github_pkgs, bioconductor_pkgs)
     if (length(pkgs) == 0) {
         message("No packages to install")
         return(invisible(NULL))
@@ -145,5 +161,6 @@ install_with_pak <- function(
 install_with_pak(
     cran_pkgs = cran_pkgs,
     github_pkgs = github_pkgs,
+    bioconductor_pkgs = bioconductor_pkgs,
     library_path = library_path
 )
