@@ -8,5 +8,6 @@
   "ex26": "26-absolute.R",
   "ex36": "36-dynamic.R",
   "ex39": "39-observer.R",
-  "ex46": "46-bookmark.R"
+  "ex46": "46-bookmark.R",
+  "ex58": "58-img-interaction.R"
 }
