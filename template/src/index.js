@@ -7,6 +7,7 @@ const ErrorHandler = require("./error-handler");
 const ProcessManager = require("./process-manager"); // <-- import ProcessManager
 const ServerUtils = require("./server-utils"); // 추가
 const AppState = require("./app-state");
+const WindowManager = require("./window-manager");
 
 // Initialize global state
 const appState = new AppState();
@@ -140,66 +141,14 @@ app.on("ready", async () => {
     callback(false);
   });
 
-  // Create the main window for the Shiny app
-  const createWindow = (shinyUrl) => {
-    return ErrorHandler.handleSyncError("createWindow", () => {
-      const mainWindow = new BrowserWindow({
-        width: appState.config.mainWindow.width,
-        height: appState.config.mainWindow.height,
-        show: false,
-        autoHideMenuBar: true,
-        webPreferences: {
-          nodeIntegration: false,
-          contextIsolation: true,
-        },
-      });
-
-      mainWindow.loadURL(shinyUrl);
-
-      mainWindow.on("closed", () => {
-        appState.setMainWindow(null);
-      });
-
-      mainWindow.on("unresponsive", () => {
-        ErrorHandler.logError(
-          "MainWindow",
-          new Error("Window became unresponsive")
-        );
-      });
-
-      appState.setMainWindow(mainWindow);
-      return mainWindow;
-    });
-  };
-
-  // Options for splash screens
-  const splashScreenOptions = {
-    width: appState.config.mainWindow.width,
-    height: appState.config.mainWindow.height,
-    backgroundColor: appState.config.backgroundColor,
-  };
-
-  // Create a splash screen window
-  const createSplashScreen = (filename) => {
-    let splashScreen = new BrowserWindow(splashScreenOptions);
-    splashScreen.loadURL(`file://${__dirname}/${filename}.html`);
-    splashScreen.on("closed", () => {
-      splashScreen = null;
-    });
-    return splashScreen;
-  };
-
-  // Show loading splash screen
-  const createLoadingSplashScreen = () => {
-    const loadingSplashScreen = createSplashScreen("loading");
-    appState.setLoadingSplashScreen(loadingSplashScreen);
-  };
-
-  // Show error splash screen
-  const createErrorScreen = () => {
-    const errorSplashScreen = createSplashScreen("failed");
-    appState.setErrorSplashScreen(errorSplashScreen);
-  };
+  // Use WindowManager for window and splash screen creation
+  const createWindow = (shinyUrl) =>
+    WindowManager.createWindow(appState, shinyUrl);
+  const createSplashScreen = (filename) =>
+    WindowManager.createSplashScreen(appState, filename);
+  const createLoadingSplashScreen = () =>
+    WindowManager.createLoadingSplashScreen(appState);
+  const createErrorScreen = () => WindowManager.createErrorScreen(appState);
 
   createLoadingSplashScreen();
 
