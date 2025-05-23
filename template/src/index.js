@@ -18,7 +18,7 @@ class ErrorHandler {
 
     console.error(`[${context}] Error:`, errorInfo);
 
-    // TODO: 나중에 에러 리포팅 서비스 연동 가능
+    // TODO: Integrate with error reporting service in the future
     // this.reportToService(errorInfo);
   }
 
@@ -103,7 +103,7 @@ class ProcessManager {
         }
       });
 
-      // 성공적으로 시작된 경우
+      // Resolve after successful start
       setTimeout(() => resolve(rShinyProcess), 100);
     });
   }
@@ -311,39 +311,59 @@ class ServerUtils {
   }
 }
 
-// Updated tryStartWebserver function
-const tryStartWebserver = async (
+// 1. Start R process
+async function startShinyProcessWithState(appState) {
+  try {
+    const rShinyProcess = await ProcessManager.startShinyProcess(appState);
+    appState.setShinyProcess(rShinyProcess);
+    return true;
+  } catch (e) {
+    ErrorHandler.logError("startShinyProcessWithState", e);
+    return false;
+  }
+}
+
+// 2. Check if server is ready
+async function waitForServerReady(appState, strategy = "exponential") {
+  const url = appState.getServerUrl();
+  return await ServerUtils.waitForServerSmart(url, strategy);
+}
+
+// 3. Calculate retry delay
+function getRetryDelay(attempt, base = 1000, factor = 1.5, max = 10000) {
+  return Math.min(base * Math.pow(factor, attempt), max);
+}
+
+// 4. Terminate process and reset state
+async function cleanupShinyProcess(appState) {
+  await ProcessManager.killProcess(appState.rShinyProcess, "ShinyProcess");
+  appState.setShinyProcess(null);
+}
+
+// 5. Main retry loop for starting webserver
+async function tryStartWebserver(
   attempt,
   progressCallback,
   onErrorStartup,
   onErrorLater,
   onSuccess
-) => {
+) {
   if (attempt > appState.config.maxRetryAttempts) {
-    await progressCallback({ attempt: attempt, code: "failed" });
+    await progressCallback({ attempt, code: "failed" });
     await onErrorStartup();
     return;
   }
 
   if (appState.rShinyProcess !== null) {
-    await onErrorStartup(); // Should not happen
+    await onErrorStartup();
     return;
   }
 
-  await progressCallback({ attempt: attempt, code: "start" });
+  await progressCallback({ attempt, code: "start" });
 
-  let shinyProcessAlreadyDead = false;
-
-  try {
-    const rShinyProcess = await ProcessManager.startShinyProcess(appState);
-    appState.setShinyProcess(rShinyProcess);
-  } catch (e) {
-    shinyProcessAlreadyDead = true;
-    ErrorHandler.logError("tryStartWebserver", e);
-  }
-
-  if (shinyProcessAlreadyDead) {
-    await progressCallback({ attempt: attempt, code: "process_failed" });
+  const started = await startShinyProcessWithState(appState);
+  if (!started) {
+    await progressCallback({ attempt, code: "process_failed" });
     return tryStartWebserver(
       attempt + 1,
       progressCallback,
@@ -353,23 +373,17 @@ const tryStartWebserver = async (
     );
   }
 
-  // Use optimized server checking
-  const url = appState.getServerUrl();
-  const serverReady = await ServerUtils.waitForServerSmart(url, "exponential");
-
+  const serverReady = await waitForServerReady(appState, "exponential");
   if (serverReady) {
-    await progressCallback({ attempt: attempt, code: "success" });
-    onSuccess(url);
+    await progressCallback({ attempt, code: "success" });
+    onSuccess(appState.getServerUrl());
     return;
   }
 
-  // Server didn't respond, clean up and retry
-  await progressCallback({ attempt: attempt, code: "notresponding" });
-  await ProcessManager.killProcess(appState.rShinyProcess, "ShinyProcess");
-  appState.setShinyProcess(null);
+  await progressCallback({ attempt, code: "notresponding" });
+  await cleanupShinyProcess(appState);
 
-  // Recursive retry with exponential backoff for the main retry logic too
-  const retryDelay = Math.min(1000 * Math.pow(1.5, attempt), 10000);
+  const retryDelay = getRetryDelay(attempt);
   await ServerUtils.waitFor(retryDelay);
 
   return tryStartWebserver(
@@ -379,10 +393,14 @@ const tryStartWebserver = async (
     onErrorLater,
     onSuccess
   );
-};
+}
 
 // Squirrel startup handling with better error handling
+// Handle Squirrel startup only on Windows
 const handleSquirrelStartup = () => {
+  if (os.platform() !== "win32") {
+    return false;
+  }
   return ErrorHandler.handleSyncError(
     "handleSquirrelStartup",
     () => {
@@ -397,7 +415,7 @@ const handleSquirrelStartup = () => {
   );
 };
 
-// Handle squirrel events
+// Handle Squirrel events only on Windows
 if (handleSquirrelStartup()) {
   // App is quitting due to squirrel event
   process.exit(0);
@@ -422,6 +440,7 @@ app.on("ready", async () => {
     callback(false);
   });
 
+  // Create the main window for the Shiny app
   const createWindow = (shinyUrl) => {
     return ErrorHandler.handleSyncError("createWindow", () => {
       const mainWindow = new BrowserWindow({
@@ -453,12 +472,14 @@ app.on("ready", async () => {
     });
   };
 
+  // Options for splash screens
   const splashScreenOptions = {
     width: appState.config.mainWindow.width,
     height: appState.config.mainWindow.height,
     backgroundColor: appState.config.backgroundColor,
   };
 
+  // Create a splash screen window
   const createSplashScreen = (filename) => {
     let splashScreen = new BrowserWindow(splashScreenOptions);
     splashScreen.loadURL(`file://${__dirname}/${filename}.html`);
@@ -468,11 +489,13 @@ app.on("ready", async () => {
     return splashScreen;
   };
 
+  // Show loading splash screen
   const createLoadingSplashScreen = () => {
     const loadingSplashScreen = createSplashScreen("loading");
     appState.setLoadingSplashScreen(loadingSplashScreen);
   };
 
+  // Show error splash screen
   const createErrorScreen = () => {
     const errorSplashScreen = createSplashScreen("failed");
     appState.setErrorSplashScreen(errorSplashScreen);
@@ -480,6 +503,7 @@ app.on("ready", async () => {
 
   createLoadingSplashScreen();
 
+  // Emit events to the splash screen
   const emitSpashEvent = async (event, data) => {
     try {
       await appState.loadingSplashScreen.webContents.send(event, data);
@@ -488,10 +512,12 @@ app.on("ready", async () => {
     }
   };
 
+  // Callback for progress updates
   const progressCallback = async (event) => {
     await emitSpashEvent("start-webserver-event", event);
   };
 
+  // Callback for errors after startup
   const onErrorLater = async () => {
     if (!appState.mainWindow) {
       return;
@@ -501,6 +527,7 @@ app.on("ready", async () => {
     appState.mainWindow.destroy();
   };
 
+  // Callback for errors during startup
   const onErrorStartup = async () => {
     await ServerUtils.waitFor(appState.config.serverStartTimeout); // TODO: hack, only emit if the loading screen is ready
     await emitSpashEvent("failed");
