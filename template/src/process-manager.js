@@ -1,3 +1,4 @@
+const { app } = require("electron"); // <-- add this line
 const { spawn, execSync } = require("child_process");
 const path = require("path");
 const os = require("os");
