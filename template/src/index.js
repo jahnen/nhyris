@@ -144,8 +144,6 @@ app.on("ready", async () => {
   // Use WindowManager for window and splash screen creation
   const createWindow = (shinyUrl) =>
     WindowManager.createWindow(appState, shinyUrl);
-  const createSplashScreen = (filename) =>
-    WindowManager.createSplashScreen(appState, filename);
   const createLoadingSplashScreen = () =>
     WindowManager.createLoadingSplashScreen(appState);
   const createErrorScreen = () => WindowManager.createErrorScreen(appState);
