@@ -199,7 +199,7 @@ app.on("ready", async () => {
   }
 });
 
-app.on("window-all-closed", () => {
+app.on("window-all-closed", async () => {
   appState.setShutdown(true);
   try {
     execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
@@ -209,6 +209,6 @@ app.on("window-all-closed", () => {
   }
 
   console.log("Shutting down...");
-  appState.cleanup();
+  await appState.cleanup();
   app.quit();
 });
