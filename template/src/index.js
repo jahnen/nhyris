@@ -201,12 +201,8 @@ app.on("ready", async () => {
 
 app.on("window-all-closed", async () => {
   appState.setShutdown(true);
-  try {
-    execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
-    console.log("term.exe processes have been terminated.");
-  } catch (err) {
-    console.error("Failed to terminate Rterm.exe processes:", err.message);
-  }
+
+  await ProcessManager.terminateRProcesses();
 
   console.log("Shutting down...");
   await appState.cleanup();
