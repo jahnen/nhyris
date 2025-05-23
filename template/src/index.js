@@ -3,101 +3,315 @@
 const { app, session, BrowserWindow } = require("electron");
 const { spawn, execSync } = require("child_process");
 const path = require("path");
-
-// Helpers
-
-// run this as early in the main process as possible
-// https://github.com/electron/windows-installer?tab=readme-ov-file#handling-squirrel-events
-// https://www.electronforge.io/config/makers/squirrel.windows#handling-startup-events
-try {
-  // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-  if (require("electron-squirrel-startup")) {
-    app.quit();
-    try {
-      execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
-      console.log("Rterm.exe processes have been terminated.");
-    } catch (err) {
-      console.error("Failed to terminate Rterm.exe processes:", err.message);
-    }
-  }
-} catch (err) {
-  console.log("'electron-squirrel-startup' module is not available.");
-}
-
 const os = require("os");
 
-const rPath = os.platform() === "win32" ? "r-win" : "r-mac";
+// Error Handling System
+class ErrorHandler {
+  static logError(context, error, metadata = {}) {
+    const errorInfo = {
+      context,
+      message: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+      ...metadata,
+    };
 
-// remove axios
-const checkServerStatus = async (url) => {
-  try {
-    const res = await fetch(url, { method: "HEAD", timeout: 3000 });
-    return res.status === 200;
-  } catch (e) {
-    console.error("Error checking server status:", e);
-    return false;
+    console.error(`[${context}] Error:`, errorInfo);
+
+    // TODO: 나중에 에러 리포팅 서비스 연동 가능
+    // this.reportToService(errorInfo);
   }
-};
 
-// remove execa
-const startShinyProcess = () => {
-  return new Promise((resolve, reject) => {
-    const rShinyProcess = spawn(
-      rscript,
-      ["--vanilla", "-f", path.join(app.getAppPath(), "start-shiny.R")],
-      {
-        env: {
-          WITHIN_ELECTRON: "1",
-          RE_SHINY_PATH: shinyAppPath,
-          R_LIB_PATHS: libPath,
-          R_HOME_DIR: rpath,
-          RHOME: rpath,
-          RE_SHINY_PORT: 1124,
-          R_LIBS: libPath,
-          R_LIBS_USER: libPath,
-          R_LIBS_SITE: libPath,
-        },
-        stdio: "ignore",
-        // terminal output for debug
-        // stdio: "inherit",
+  static async handleAsyncError(context, asyncFn, fallbackValue = null) {
+    try {
+      return await asyncFn();
+    } catch (error) {
+      this.logError(context, error);
+      return fallbackValue;
+    }
+  }
+
+  static handleSyncError(context, syncFn, fallbackValue = null) {
+    try {
+      return syncFn();
+    } catch (error) {
+      this.logError(context, error);
+      return fallbackValue;
+    }
+  }
+}
+
+// Process Management with better error handling
+class ProcessManager {
+  static async terminateRProcesses() {
+    if (os.platform() !== "win32") {
+      return;
+    }
+
+    return ErrorHandler.handleAsyncError(
+      "ProcessManager.terminateRProcesses",
+      async () => {
+        execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
+        console.log("Rterm.exe processes have been terminated.");
       }
     );
+  }
 
-    rShinyProcess.on("error", (err) => {
-      console.error("Shiny process failed:", err);
-      reject(err);
+  static async startShinyProcess(appState) {
+    return new Promise((resolve, reject) => {
+      const rShinyProcess = spawn(
+        appState.paths.rscript,
+        ["--vanilla", "-f", path.join(app.getAppPath(), "start-shiny.R")],
+        {
+          env: {
+            WITHIN_ELECTRON: "1",
+            RE_SHINY_PATH: appState.paths.shinyAppPath,
+            R_LIB_PATHS: appState.paths.libPath,
+            R_HOME_DIR: appState.paths.rpath,
+            RHOME: appState.paths.rpath,
+            RE_SHINY_PORT: appState.config.serverPort,
+            R_LIBS: appState.paths.libPath,
+            R_LIBS_USER: appState.paths.libPath,
+            R_LIBS_SITE: appState.paths.libPath,
+          },
+          stdio: "ignore",
+        }
+      );
+
+      rShinyProcess.on("error", (err) => {
+        ErrorHandler.logError("ProcessManager.startShinyProcess", err, {
+          pid: rShinyProcess.pid,
+          command: appState.paths.rscript,
+        });
+        reject(err);
+      });
+
+      rShinyProcess.on("exit", (code, signal) => {
+        const exitInfo = { code, signal, pid: rShinyProcess.pid };
+
+        if (code === 0) {
+          console.log("Shiny process exited normally");
+          resolve(rShinyProcess);
+        } else {
+          const error = new Error(`Shiny process exited with code ${code}`);
+          ErrorHandler.logError(
+            "ProcessManager.startShinyProcess",
+            error,
+            exitInfo
+          );
+          reject(error);
+        }
+      });
+
+      // 성공적으로 시작된 경우
+      setTimeout(() => resolve(rShinyProcess), 100);
     });
+  }
 
-    rShinyProcess.on("exit", (code) => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(new Error(`Shiny process exited with code ${code}`));
+  static async killProcess(process, processName = "process") {
+    if (!process) {
+      return;
+    }
+
+    return ErrorHandler.handleAsyncError(
+      `ProcessManager.killProcess.${processName}`,
+      async () => {
+        process.kill();
+        console.log(`${processName} killed successfully`);
       }
+    );
+  }
+}
+
+// Application State Management with better error handling
+class AppState {
+  constructor() {
+    this.shutdown = false;
+    this.rShinyProcess = null;
+    this.mainWindow = null;
+    this.loadingSplashScreen = null;
+    this.errorSplashScreen = null;
+
+    // Configuration
+    this.config = {
+      rPath: os.platform() === "win32" ? "r-win" : "r-mac",
+      backgroundColor: "#2c3e50",
+      serverPort: 1124,
+      maxRetryAttempts: 100,
+      serverCheckTimeout: 3000,
+      serverStartTimeout: 10000,
+      mainWindow: {
+        width: 1600,
+        height: 900,
+      },
+    };
+
+    // Computed paths
+    this.paths = {
+      rpath: path.join(app.getAppPath(), this.config.rPath),
+      get libPath() {
+        return path.join(this.rpath, "library");
+      },
+      get rscript() {
+        return path.join(this.rpath, "bin", "R");
+      },
+      shinyAppPath: path.join(app.getAppPath(), "shiny"),
+    };
+  }
+
+  setShinyProcess(process) {
+    this.rShinyProcess = process;
+  }
+
+  setMainWindow(window) {
+    this.mainWindow = window;
+  }
+
+  setLoadingSplashScreen(screen) {
+    this.loadingSplashScreen = screen;
+  }
+
+  setErrorSplashScreen(screen) {
+    this.errorSplashScreen = screen;
+  }
+
+  setShutdown(value) {
+    this.shutdown = value;
+  }
+
+  getServerUrl() {
+    return `http://127.0.0.1:${this.config.serverPort}`;
+  }
+
+  async cleanup() {
+    this.shutdown = true;
+
+    if (this.rShinyProcess) {
+      await ProcessManager.killProcess(this.rShinyProcess, "ShinyProcess");
+      this.rShinyProcess = null;
+    }
+
+    // Clean up windows
+    if (this.loadingSplashScreen && !this.loadingSplashScreen.isDestroyed()) {
+      this.loadingSplashScreen.destroy();
+    }
+
+    if (this.errorSplashScreen && !this.errorSplashScreen.isDestroyed()) {
+      this.errorSplashScreen.destroy();
+    }
+  }
+}
+
+// Initialize global state
+const appState = new AppState();
+
+// Server utilities with optimized retry logic
+class ServerUtils {
+  static async checkServerStatus(url, timeout = 3000) {
+    return ErrorHandler.handleAsyncError(
+      "ServerUtils.checkServerStatus",
+      async () => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        try {
+          const res = await fetch(url, {
+            method: "HEAD",
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          return res.status === 200;
+        } catch (error) {
+          clearTimeout(timeoutId);
+          throw error;
+        }
+      },
+      false
+    );
+  }
+
+  static async waitFor(milliseconds) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, milliseconds);
     });
+  }
 
-    resolve(rShinyProcess);
-  });
-};
+  // Optimized retry logic with exponential backoff
+  static async waitForServerWithExponentialBackoff(
+    url,
+    maxAttempts = 10,
+    initialDelay = 1000,
+    maxDelay = 5000,
+    backoffFactor = 1.5
+  ) {
+    let currentDelay = initialDelay;
 
-const waitFor = (milliseconds) => {
-  return new Promise((resolve, _reject) => {
-    setTimeout(resolve, milliseconds);
-  });
-};
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      // First attempt happens immediately
+      if (attempt > 1) {
+        await this.waitFor(currentDelay);
+      }
 
-const rpath = path.join(app.getAppPath(), rPath);
-const libPath = path.join(rpath, "library");
+      const isUp = await this.checkServerStatus(url);
+      if (isUp) {
+        console.log(
+          `Server responded on attempt ${attempt} after ${currentDelay}ms delay`
+        );
+        return true;
+      }
 
-const rscript = path.join(rpath, "bin", "R");
+      // Calculate next delay with exponential backoff
+      currentDelay = Math.min(currentDelay * backoffFactor, maxDelay);
 
-const shinyAppPath = path.join(app.getAppPath(), "shiny");
+      console.log(
+        `Server check attempt ${attempt}/${maxAttempts} failed. Next delay: ${currentDelay}ms`
+      );
+    }
 
-const backgroundColor = "#2c3e50"; // electron
+    return false;
+  }
 
-let shutdown = false;
-let rShinyProcess = null;
+  // Alternative: Smart retry with jitter to prevent thundering herd
+  static async waitForServerWithJitter(
+    url,
+    maxAttempts = 10,
+    baseDelay = 100,
+    maxDelay = 3000
+  ) {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      if (attempt > 1) {
+        // Add randomness to prevent multiple instances hitting server simultaneously
+        const jitter = Math.random() * 0.3; // 30% jitter
+        const delay = Math.min(
+          baseDelay * Math.pow(2, attempt - 2) * (1 + jitter),
+          maxDelay
+        );
+        await this.waitFor(delay);
+      }
 
+      const isUp = await this.checkServerStatus(url);
+      if (isUp) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // Enhanced server startup with multiple strategies
+  static async waitForServerSmart(url, strategy = "exponential") {
+    switch (strategy) {
+      case "exponential":
+        return await this.waitForServerWithExponentialBackoff(url);
+      case "jitter":
+        return await this.waitForServerWithJitter(url);
+      default:
+        return await this.waitForServerWithExponentialBackoff(url);
+    }
+  }
+}
+
+// Updated tryStartWebserver function
 const tryStartWebserver = async (
   attempt,
   progressCallback,
@@ -105,104 +319,91 @@ const tryStartWebserver = async (
   onErrorLater,
   onSuccess
 ) => {
-  if (attempt > 100) {
+  if (attempt > appState.config.maxRetryAttempts) {
     await progressCallback({ attempt: attempt, code: "failed" });
     await onErrorStartup();
     return;
   }
 
-  if (rShinyProcess !== null) {
-    await onErrorStartup(); // should not happen
+  if (appState.rShinyProcess !== null) {
+    await onErrorStartup(); // Should not happen
     return;
   }
 
   await progressCallback({ attempt: attempt, code: "start" });
 
-  let shinyRunning = false;
-
   let shinyProcessAlreadyDead = false;
 
   try {
-    rShinyProcess = await startShinyProcess();
+    const rShinyProcess = await ProcessManager.startShinyProcess(appState);
+    appState.setShinyProcess(rShinyProcess);
   } catch (e) {
     shinyProcessAlreadyDead = true;
-    console.error("Error starting Shiny process:", e);
+    ErrorHandler.logError("tryStartWebserver", e);
   }
 
-  let url = `http://127.0.0.1:1124`;
-  for (let i = 0; i <= 10; i++) {
-    if (shinyProcessAlreadyDead) {
-      break;
-    }
-    await waitFor(1000);
-    try {
-      const serverUp = await checkServerStatus(url);
-      if (serverUp) {
-        await progressCallback({ attempt: attempt, code: "success" });
-        shinyRunning = true;
-        onSuccess(url);
-        return;
-      }
-    } catch (e) {
-      console.error("Error checking server status:", e);
-    }
+  if (shinyProcessAlreadyDead) {
+    await progressCallback({ attempt: attempt, code: "process_failed" });
+    return tryStartWebserver(
+      attempt + 1,
+      progressCallback,
+      onErrorStartup,
+      onErrorLater,
+      onSuccess
+    );
   }
+
+  // Use optimized server checking
+  const url = appState.getServerUrl();
+  const serverReady = await ServerUtils.waitForServerSmart(url, "exponential");
+
+  if (serverReady) {
+    await progressCallback({ attempt: attempt, code: "success" });
+    onSuccess(url);
+    return;
+  }
+
+  // Server didn't respond, clean up and retry
   await progressCallback({ attempt: attempt, code: "notresponding" });
+  await ProcessManager.killProcess(appState.rShinyProcess, "ShinyProcess");
+  appState.setShinyProcess(null);
 
-  try {
-    rShinyProcess.kill();
-  } catch (e) {
-    console.error("Error killing Shiny process:", e);
-  }
+  // Recursive retry with exponential backoff for the main retry logic too
+  const retryDelay = Math.min(1000 * Math.pow(1.5, attempt), 10000);
+  await ServerUtils.waitFor(retryDelay);
+
+  return tryStartWebserver(
+    attempt + 1,
+    progressCallback,
+    onErrorStartup,
+    onErrorLater,
+    onSuccess
+  );
 };
 
-let mainWindow;
-let loadingSplashScreen;
-let errorSplashScreen;
-
-const createWindow = (shinyUrl) => {
-  mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    show: false,
-    // icon: __dirname + '/favicon.ico',
-    autoHideMenuBar: true,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
+// Squirrel startup handling with better error handling
+const handleSquirrelStartup = () => {
+  return ErrorHandler.handleSyncError(
+    "handleSquirrelStartup",
+    () => {
+      if (require("electron-squirrel-startup")) {
+        app.quit();
+        ProcessManager.terminateRProcesses();
+        return true;
+      }
+      return false;
     },
-  });
-
-  mainWindow.loadURL(shinyUrl);
-
-  mainWindow.on("closed", () => {
-    mainWindow = null;
-  });
+    false
+  );
 };
 
-const splashScreenOptions = {
-  width: 1600,
-  height: 900,
-  backgroundColor: backgroundColor,
-};
+// Handle squirrel events
+if (handleSquirrelStartup()) {
+  // App is quitting due to squirrel event
+  process.exit(0);
+}
 
-const createSplashScreen = (filename) => {
-  let splashScreen = new BrowserWindow(splashScreenOptions);
-  splashScreen.loadURL(`file://${__dirname}/${filename}.html`);
-  splashScreen.on("closed", () => {
-    splashScreen = null;
-  });
-  return splashScreen;
-};
-
-const createLoadingSplashScreen = () => {
-  loadingSplashScreen = createSplashScreen("loading");
-};
-
-const createErrorScreen = () => {
-  errorSplashScreen = createSplashScreen("failed");
-};
-
+// Application bootstrap
 app.on("ready", async () => {
   // Set a content security policy
   session.defaultSession.webRequest.onHeadersReceived((_, callback) => {
@@ -221,11 +422,67 @@ app.on("ready", async () => {
     callback(false);
   });
 
+  const createWindow = (shinyUrl) => {
+    return ErrorHandler.handleSyncError("createWindow", () => {
+      const mainWindow = new BrowserWindow({
+        width: appState.config.mainWindow.width,
+        height: appState.config.mainWindow.height,
+        show: false,
+        autoHideMenuBar: true,
+        webPreferences: {
+          nodeIntegration: false,
+          contextIsolation: true,
+        },
+      });
+
+      mainWindow.loadURL(shinyUrl);
+
+      mainWindow.on("closed", () => {
+        appState.setMainWindow(null);
+      });
+
+      mainWindow.on("unresponsive", () => {
+        ErrorHandler.logError(
+          "MainWindow",
+          new Error("Window became unresponsive")
+        );
+      });
+
+      appState.setMainWindow(mainWindow);
+      return mainWindow;
+    });
+  };
+
+  const splashScreenOptions = {
+    width: appState.config.mainWindow.width,
+    height: appState.config.mainWindow.height,
+    backgroundColor: appState.config.backgroundColor,
+  };
+
+  const createSplashScreen = (filename) => {
+    let splashScreen = new BrowserWindow(splashScreenOptions);
+    splashScreen.loadURL(`file://${__dirname}/${filename}.html`);
+    splashScreen.on("closed", () => {
+      splashScreen = null;
+    });
+    return splashScreen;
+  };
+
+  const createLoadingSplashScreen = () => {
+    const loadingSplashScreen = createSplashScreen("loading");
+    appState.setLoadingSplashScreen(loadingSplashScreen);
+  };
+
+  const createErrorScreen = () => {
+    const errorSplashScreen = createSplashScreen("failed");
+    appState.setErrorSplashScreen(errorSplashScreen);
+  };
+
   createLoadingSplashScreen();
 
   const emitSpashEvent = async (event, data) => {
     try {
-      await loadingSplashScreen.webContents.send(event, data);
+      await appState.loadingSplashScreen.webContents.send(event, data);
     } catch (e) {
       console.error("Error emitting splash event:", e);
     }
@@ -236,16 +493,16 @@ app.on("ready", async () => {
   };
 
   const onErrorLater = async () => {
-    if (!mainWindow) {
+    if (!appState.mainWindow) {
       return;
     }
     createErrorScreen();
-    await errorSplashScreen.show();
-    mainWindow.destroy();
+    await appState.errorSplashScreen.show();
+    appState.mainWindow.destroy();
   };
 
   const onErrorStartup = async () => {
-    await waitFor(10000); // TODO: hack, only emit if the loading screen is ready
+    await ServerUtils.waitFor(appState.config.serverStartTimeout); // TODO: hack, only emit if the loading screen is ready
     await emitSpashEvent("failed");
   };
 
@@ -257,9 +514,9 @@ app.on("ready", async () => {
       onErrorLater,
       (url) => {
         createWindow(url);
-        loadingSplashScreen.destroy();
-        loadingSplashScreen = null;
-        mainWindow.show();
+        appState.loadingSplashScreen.destroy();
+        appState.setLoadingSplashScreen(null);
+        appState.mainWindow.show();
       }
     );
   } catch (e) {
@@ -269,7 +526,7 @@ app.on("ready", async () => {
 });
 
 app.on("window-all-closed", () => {
-  shutdown = true;
+  appState.setShutdown(true);
   try {
     execSync("taskkill /IM Rterm.exe /F", { stdio: "ignore" });
     console.log("term.exe processes have been terminated.");
@@ -278,10 +535,6 @@ app.on("window-all-closed", () => {
   }
 
   console.log("Shutting down...");
-  try {
-    rShinyProcess.kill();
-  } catch (e) {
-    console.error("Error killing Shiny process:", e);
-  }
+  appState.cleanup();
   app.quit();
 });
