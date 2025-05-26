@@ -33,7 +33,7 @@ export async function handleDmgMaker(root, projectPath, name) {
     config: {
       name,
       background: "background-DMG.png",
-      icon: "icon.icns",
+      icon: "assets/icon.icns",
       iconSize: 200,
       format: "UDZO",
       contents: [
@@ -64,8 +64,9 @@ export async function handleSquirrelMaker(root, projectPath) {
   const squirrelMakerConfig = {
     name: "@electron-forge/maker-squirrel",
     config: {
-      setupIcon: "../template/setupIcon.ico",
-      iconUrl: "https://github.com/jahnen/nhyris/raw/main/template/icon.ico",
+      setupIcon: "../template/assets/setupIcon.ico",
+      iconUrl:
+        "https://github.com/jahnen/nhyris/raw/main/template/assets/icon.ico",
     },
   };
 

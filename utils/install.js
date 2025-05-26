@@ -5,7 +5,7 @@ export function installDependencies(projectPath) {
 
   try {
     console.log("Installing standalone R...");
-    execSync("sh ./r.sh", { stdio: "inherit" });
+    execSync("sh ../utils/r.sh", { stdio: "inherit" });
 
     installRPackages();
     installNodePackages();
@@ -21,7 +21,7 @@ export function installRPackages() {
   if (process.platform === "win32") {
     // Rscript path define
     const rscriptPath = `${process.cwd()}\\r-win\\bin\\Rscript.exe`;
-    const rscriptCmd = `"${rscriptPath}" ./pak-pkgs.R`; // 공백 추가
+    const rscriptCmd = `"${rscriptPath}" ../utils/pak-pkgs.R`; // 경로 수정
 
     try {
       execSync(rscriptCmd, { stdio: "inherit" });
@@ -32,7 +32,7 @@ export function installRPackages() {
   } else {
     // For Linux and MacOS
     try {
-      execSync("Rscript ./pak-pkgs.R", { stdio: "inherit" });
+      execSync("Rscript ../utils/pak-pkgs.R", { stdio: "inherit" }); // 경로 수정
     } catch (err) {
       console.error("Failed to install R packages:", err.message);
       throw err;
