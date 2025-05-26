@@ -64,7 +64,7 @@ export async function handleSquirrelMaker(root, projectPath) {
   const squirrelMakerConfig = {
     name: "@electron-forge/maker-squirrel",
     config: {
-      setupIcon: "../template/assets/setupIcon.ico",
+      setupIcon: "assets/setupIcon.ico",
       iconUrl:
         "https://github.com/jahnen/nhyris/raw/main/template/assets/icon.ico",
     },

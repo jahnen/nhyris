@@ -1,11 +1,17 @@
 import { execSync } from "child_process";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function installDependencies(projectPath) {
   process.chdir(projectPath);
 
   try {
     console.log("Installing standalone R...");
-    execSync("sh ../utils/r.sh", { stdio: "inherit" });
+    const rShellScriptPath = path.join(__dirname, "r.sh");
+    execSync(`sh "${rShellScriptPath}"`, { stdio: "inherit" });
 
     installRPackages();
     installNodePackages();
@@ -18,10 +24,12 @@ export function installDependencies(projectPath) {
 export function installRPackages() {
   console.log("Installing R packages...");
 
+  const pakPkgsPath = path.join(__dirname, "pak-pkgs.R");
+
   if (process.platform === "win32") {
     // Rscript path define
-    const rscriptPath = `${process.cwd()}\\r-win\\bin\\Rscript.exe`;
-    const rscriptCmd = `"${rscriptPath}" ../utils/pak-pkgs.R`; // 경로 수정
+    const rscriptPath = path.join(process.cwd(), "r-win", "bin", "Rscript.exe");
+    const rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
 
     try {
       execSync(rscriptCmd, { stdio: "inherit" });
@@ -32,7 +40,7 @@ export function installRPackages() {
   } else {
     // For Linux and MacOS
     try {
-      execSync("Rscript ../utils/pak-pkgs.R", { stdio: "inherit" }); // 경로 수정
+      execSync(`Rscript "${pakPkgsPath}"`, { stdio: "inherit" });
     } catch (err) {
       console.error("Failed to install R packages:", err.message);
       throw err;
