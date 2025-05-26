@@ -26,7 +26,7 @@ class ProcessManager {
 
       const rShinyProcess = spawn(
         appState.paths.rscript,
-        ["--vanilla", "-f", path.join(app.getAppPath(), "start-shiny.R")],
+        ["--vanilla", "-f", path.join(app.getAppPath(), "src", "start-shiny.R")],
         {
           env: {
             WITHIN_ELECTRON: "1",

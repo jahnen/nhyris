@@ -63,16 +63,7 @@ export function copyTemplates(templatePath, projectPath, name) {
     }
   }
 
-  const filesToCopy = [
-    "package.json",
-    "forge.config.js",
-    "start-shiny.R",
-    "r.sh",
-    "pak-pkgs.R",
-    "icon.icns",
-    "icon.ico",
-    "icon.png",
-  ];
+  const filesToCopy = ["package.json", "forge.config.js"];
 
   filesToCopy.forEach((file) => {
     const from = path.join(templatePath, file);
