@@ -94,6 +94,7 @@ class ServerUtils {
     statusCallback = null
   ) {
     switch (strategy) {
+      default:
       case "exponential":
         return await this.waitForServerWithExponentialBackoff(
           url,
@@ -105,15 +106,6 @@ class ServerUtils {
         );
       case "jitter":
         return await this.waitForServerWithJitter(url);
-      default:
-        return await this.waitForServerWithExponentialBackoff(
-          url,
-          10,
-          1000,
-          5000,
-          1.5,
-          statusCallback
-        );
     }
   }
 }

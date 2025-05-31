@@ -70,10 +70,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         animation-delay: -0.9s;
       }
 
-      .spinner .rect5 {
-        animation-delay: -0.8s;
-      }
-
       /* Keyframes for spinner animation */
       @keyframes sk-stretchdelay {
         0%,
@@ -121,7 +117,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <script>
       // Function to dynamically update the server status message
       function updateServerStatus(msg) {
-        document.getElementById("server-status").innerText = msg;
+        document.getElementById("server-status").textContent = msg;
       }
 
       // Listen for server status messages from main process via preload

@@ -93,12 +93,7 @@ async function tryStartWebserver(
   await progressCallback({
     attempt,
     code: "notresponding",
-    message:
-      "Server check attempt " +
-      attempt +
-      " failed. Next delay: " +
-      retryDelay +
-      "ms",
+    message: `Server check attempt ${attempt} failed. Next delay: ${retryDelay}ms`,
   });
   await cleanupShinyProcess(appState);
 

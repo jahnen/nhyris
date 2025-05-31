@@ -61,15 +61,15 @@ function createLoadingSplashScreen(appState) {
     height: 600,
     show: false,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"), // <-- add this
-      contextIsolation: true, // <-- recommended
-      nodeIntegration: false, // <-- recommended
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false,
     },
   });
 
   win.loadFile(path.join(__dirname, "loading.html"));
   win.once("ready-to-show", () => win.show());
-  appState.loadingSplashScreen = win;
+  appState.setLoadingSplashScreen(win); // Use the setter method here
   return win;
 }
 
