@@ -35,7 +35,8 @@ class ServerUtils {
     maxAttempts = 10,
     initialDelay = 1000,
     maxDelay = 5000,
-    backoffFactor = 1.5
+    backoffFactor = 1.5,
+    statusCallback = null
   ) {
     let currentDelay = initialDelay;
 
@@ -46,17 +47,17 @@ class ServerUtils {
 
       const isUp = await this.checkServerStatus(url);
       if (isUp) {
-        console.log(
-          `Server responded on attempt ${attempt} after ${currentDelay}ms delay`
-        );
+        const msg = `Server responded on attempt ${attempt} after ${currentDelay}ms delay`;
+        console.log(msg);
+        if (statusCallback) statusCallback(msg);
         return true;
       }
 
       currentDelay = Math.min(currentDelay * backoffFactor, maxDelay);
 
-      console.log(
-        `Server check attempt ${attempt}/${maxAttempts} failed. Next delay: ${currentDelay}ms`
-      );
+      const msg = `Server check attempt ${attempt}/${maxAttempts} failed. Next delay: ${currentDelay}ms`;
+      console.log(msg);
+      if (statusCallback) statusCallback(msg);
     }
 
     return false;
@@ -87,14 +88,24 @@ class ServerUtils {
     return false;
   }
 
-  static async waitForServerSmart(url, strategy = "exponential") {
+  static async waitForServerSmart(
+    url,
+    strategy = "exponential",
+    statusCallback = null
+  ) {
     switch (strategy) {
+      default:
       case "exponential":
-        return await this.waitForServerWithExponentialBackoff(url);
+        return await this.waitForServerWithExponentialBackoff(
+          url,
+          10,
+          1000,
+          5000,
+          1.5,
+          statusCallback
+        );
       case "jitter":
         return await this.waitForServerWithJitter(url);
-      default:
-        return await this.waitForServerWithExponentialBackoff(url);
     }
   }
 }

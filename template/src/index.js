@@ -27,7 +27,15 @@ async function startShinyProcessWithState(appState) {
 // 2. Check if server is ready
 async function waitForServerReady(appState, strategy = "exponential") {
   const url = appState.getServerUrl();
-  return await ServerUtils.waitForServerSmart(url, strategy);
+  const statusCallback = (msg) => {
+    if (appState.loadingSplashScreen) {
+      appState.loadingSplashScreen.webContents.send(
+        "server-status-message",
+        msg
+      );
+    }
+  };
+  return await ServerUtils.waitForServerSmart(url, strategy, statusCallback);
 }
 
 // 3. Calculate retry delay
@@ -81,10 +89,14 @@ async function tryStartWebserver(
     return;
   }
 
-  await progressCallback({ attempt, code: "notresponding" });
+  const retryDelay = getRetryDelay(attempt);
+  await progressCallback({
+    attempt,
+    code: "notresponding",
+    message: `Server check attempt ${attempt} failed. Next delay: ${retryDelay}ms`,
+  });
   await cleanupShinyProcess(appState);
 
-  const retryDelay = getRetryDelay(attempt);
   await ServerUtils.waitFor(retryDelay);
 
   return tryStartWebserver(
@@ -162,6 +174,10 @@ app.on("ready", async () => {
   // Callback for progress updates
   const progressCallback = async (event) => {
     await emitSpashEvent("start-webserver-event", event);
+
+    if (event && event.message) {
+      await emitSpashEvent("server-status-message", event.message);
+    }
   };
 
   // Callback for errors after startup
