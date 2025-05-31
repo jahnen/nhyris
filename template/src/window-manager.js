@@ -1,5 +1,6 @@
 const { BrowserWindow } = require("electron");
 const ErrorHandler = require("./error-handler");
+const path = require("path");
 
 // Create the main window for the Shiny app
 function createWindow(appState, shinyUrl) {
@@ -55,8 +56,21 @@ function createSplashScreen(appState, filename) {
 
 // Show loading splash screen
 function createLoadingSplashScreen(appState) {
-  const loadingSplashScreen = createSplashScreen(appState, "loading");
-  appState.setLoadingSplashScreen(loadingSplashScreen);
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"), // <-- add this
+      contextIsolation: true, // <-- recommended
+      nodeIntegration: false, // <-- recommended
+    },
+  });
+
+  win.loadFile(path.join(__dirname, "loading.html"));
+  win.once("ready-to-show", () => win.show());
+  appState.loadingSplashScreen = win;
+  return win;
 }
 
 // Show error splash screen

@@ -22,89 +22,114 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Loading...</title>
     <style>
+      body {
+        background: #3a4351;
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Spinner container style */
       .spinner {
-        margin: 100px auto;
+        margin: 40px auto 30px auto;
         width: 50px;
         height: 40px;
         text-align: center;
-        font-size: 10px;
       }
 
+      /* Spinner bar style */
       .spinner > div {
         background-color: white;
         height: 100%;
         width: 6px;
         display: inline-block;
+        margin-right: 2px;
 
-        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
         animation: sk-stretchdelay 1.2s infinite ease-in-out;
       }
 
+      /* Animation delays for each bar */
       .spinner .rect2 {
-        -webkit-animation-delay: -1.1s;
         animation-delay: -1.1s;
       }
 
       .spinner .rect3 {
-        -webkit-animation-delay: -1s;
         animation-delay: -1s;
       }
 
       .spinner .rect4 {
-        -webkit-animation-delay: -0.9s;
         animation-delay: -0.9s;
       }
 
       .spinner .rect5 {
-        -webkit-animation-delay: -0.8s;
         animation-delay: -0.8s;
       }
 
-      @-webkit-keyframes sk-stretchdelay {
-        0%,
-        40%,
-        100% {
-          -webkit-transform: scaleY(0.4);
-        }
-        20% {
-          -webkit-transform: scaleY(1);
-        }
-      }
-
+      /* Keyframes for spinner animation */
       @keyframes sk-stretchdelay {
         0%,
         40%,
         100% {
           transform: scaleY(0.4);
-          -webkit-transform: scaleY(0.4);
         }
         20% {
           transform: scaleY(1);
-          -webkit-transform: scaleY(1);
         }
       }
 
-      #status {
+      /* Main loading message style */
+      #loading-message {
         text-align: center;
         color: white;
-        font-size: 10px;
+        font-size: 28px;
         font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        margin-bottom: 20px;
+      }
+
+      /* Server status message area style */
+      #server-status {
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        margin-top: 10px;
+        min-height: 24px;
       }
     </style>
   </head>
   <body>
+    <!-- Spinner animation -->
     <div id="loading-spinner" class="spinner">
       <div class="rect1"></div>
       <div class="rect2"></div>
       <div class="rect3"></div>
       <div class="rect4"></div>
-      <div class="rect5"></div>
     </div>
-    <div id="status"></div>
+    <!-- Main loading message -->
+    <div id="loading-message">Loading, please wait...</div>
+    <!-- Server status message area -->
+    <div id="server-status"></div>
+    <script>
+      // Function to dynamically update the server status message
+      function updateServerStatus(msg) {
+        document.getElementById("server-status").innerText = msg;
+      }
+
+      // Listen for server status messages from main process via preload
+      if (window.electronAPI) {
+        window.electronAPI.onServerStatus((msg) => {
+          updateServerStatus(msg);
+        });
+      }
+    </script>
   </body>
 </html>
