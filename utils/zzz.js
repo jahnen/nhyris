@@ -75,3 +75,35 @@ export function updateGitignore(root, name) {
     console.error(`Failed to update .gitignore: ${err.message}`);
   }
 }
+
+function serializeObject(obj, indent = 2) {
+  const isValidIdentifier = (key) => /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key);
+  if (Array.isArray(obj)) {
+    return (
+      "[\n" +
+      obj
+        .map((v) => " ".repeat(indent) + serializeObject(v, indent + 2))
+        .join(",\n") +
+      "\n" +
+      " ".repeat(indent - 2) +
+      "]"
+    );
+  } else if (obj && typeof obj === "object") {
+    return (
+      "{\n" +
+      Object.entries(obj)
+        .map(([k, v]) => {
+          const key = isValidIdentifier(k) ? k : JSON.stringify(k);
+          return (
+            " ".repeat(indent) + `${key}: ${serializeObject(v, indent + 2)}`
+          );
+        })
+        .join(",\n") +
+      "\n" +
+      " ".repeat(indent - 2) +
+      "}"
+    );
+  } else {
+    return JSON.stringify(obj);
+  }
+}
