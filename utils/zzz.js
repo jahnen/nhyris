@@ -49,10 +49,7 @@ export async function updateForgeConfig(projectPath, makerConfig) {
       console.log(`Added ${makerConfig.name} maker configuration.`);
     }
 
-    const updatedConfigString = JSON.stringify(forgeConfig, null, 2).replace(
-      /"([^(")"]+)":/g,
-      "$1:"
-    );
+    const updatedConfigString = serializeObject(forgeConfig, 2);
 
     fs.writeFileSync(
       forgeConfigPath,
@@ -76,5 +73,42 @@ export function updateGitignore(root, name) {
     }
   } catch (err) {
     console.error(`Failed to update .gitignore: ${err.message}`);
+  }
+}
+
+const INDENT_STEP = 2;
+
+function serializeObject(obj, indent = INDENT_STEP) {
+  const isValidIdentifier = (key) => /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key);
+  if (Array.isArray(obj)) {
+    return (
+      "[\n" +
+      obj
+        .map(
+          (v) => " ".repeat(indent) + serializeObject(v, indent + INDENT_STEP)
+        )
+        .join(",\n") +
+      "\n" +
+      " ".repeat(indent - INDENT_STEP) +
+      "]"
+    );
+  } else if (obj && typeof obj === "object") {
+    return (
+      "{\n" +
+      Object.entries(obj)
+        .map(([k, v]) => {
+          const key = isValidIdentifier(k) ? k : JSON.stringify(k);
+          return (
+            " ".repeat(indent) +
+            `${key}: ${serializeObject(v, indent + INDENT_STEP)}`
+          );
+        })
+        .join(",\n") +
+      "\n" +
+      " ".repeat(indent - INDENT_STEP) +
+      "}"
+    );
+  } else {
+    return JSON.stringify(obj);
   }
 }
