@@ -68,7 +68,7 @@ Some configuration is also present in **src/index.js**.
 
 ### 4. Installings
 
-₩These files are for installing a local R environment.
+These files are for installing a local R environment.
 
 - **pak-pkgs.R**: Installs CRAN packages into the local R environment.
 - **r.sh**: Shell script to install a local R distribution.
