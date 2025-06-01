@@ -3,65 +3,81 @@ title: "Architecture"
 ---
 
 ::: {.callout-note}
-These are for developers who want to contribute or make modification.
+This documentation is for developers who want to contribute or make modifications.
 :::
 
 ## Architecture of nhyris
 
-nhyris is consisted with 4 parts: **template**, **commands**, **Electrons**, **Installings** and **Documents**
+nhyris consists of five parts: **template**, **commands**, **Electrons**, **Installings**, and **Documents**.
 
 ### 1. template
 
 #### shiny
 
-If name is not predefined: like **ex01**
+If the name is not predefined (e.g., **ex01**):
 
-- **app.R**: shiny code for show simple shiny application.
-- **nn-x.R(pattern)**: shiny code used in shiny gallery. If predefined template name used, it will replace previous **app.R **
+- **app.R**: R script for a simple Shiny application.
+- **nn-x.R (pattern)**: R scripts used in the Shiny gallery. If a predefined template name is used, it will replace the previous **app.R**.
 
 #### src
 
-These are codes for running electron application.
+These files are responsible for running the Electron application and managing its lifecycle:
 
-- **index.js**: The main code, it will show **loading.html** and call **start-shiny.R** that run shiny application in port 1124.
-and as shiny is ready, it will show shiny application.
-- **loading.html**: temporary file that show loading screen to electron
-- **start-shiny.R**: R code to launch shiny.
+- **index.js**:  
+  The main entry point for the Electron app. Handles application state, creates and manages windows (loading, main, error), launches and monitors the R process via **start-shiny.R**, and switches to the Shiny app view when ready.
+- **app-state.js**:  
+  Manages global application state, such as window references, configuration, and paths.
+- **window-manager.js**:  
+  Contains functions for creating and controlling different Electron windows (splash, main, error).
+- **process-manager.js**:  
+  Handles launching, monitoring, and terminating external processes (e.g., R).
+- **server-utils.js**:  
+  Provides utilities for checking Shiny server status, port availability, and related server tasks.
+- **error-handler.js**:  
+  Handles errors during app execution and displays error windows.
+- **loading.html**:  
+  The HTML file shown as a splash/loading screen while the Shiny server is starting.
+- **preload.js**:  
+  Preload script for secure IPC communication between Electron’s main and renderer processes.
+- **start-shiny.R**:  
+  R script that launches the Shiny app on a specified port (default: 1124).
 
 ### 2. commands
 
-These are codes for utilizing `nhyris` as CLI commands.
+These files provide CLI commands for managing `nhyris` projects.
 
-- **bin/nhyris.js** will manage these commands.
-- **init.js** will activate `nhyris init` 
-- **build.js** will activate `nhyris build`
+- **bin/nhyris.js**: Entry point for all CLI commands.
+- **init.js**: Implements the `nhyris init` command. Initializes a new project, copies templates, installs dependencies, and updates `.gitignore`.
+- **build.js**: Implements the `nhyris build` command. Builds a nhyris app using Electron Forge, supporting makers like `zip`, `dmg`, and `squirrel`.
+- **run.js**: Implements the `nhyris run` command. Runs a specified nhyris app using Electron Forge, and ensures proper process cleanup.
+- **update.js**: Implements the `nhyris update` command. Updates R and Node packages for a specified nhyris project.
 
-Also if you have issue on these, please set a label as `commands`
+If you have issues with these, please set the label as `commands`.
 
 ### 3. Electrons
 
-These are code for configuration about manage electron application.
-Some configuration exists in **src/index.js**
+These files contain configuration for managing the Electron application.
+Some configuration is also present in **src/index.js**.
 
-- **template/forge.config.js**: electron forge configuration file.
-- **template/package.json**: node package information for electron.
+- **template/forge.config.js**: Electron Forge configuration file.
+- **template/package.json**: Node package information for Electron.
 
 ::: {.callout-note}
-**/packages.json** is node package information for `nhyris`
+**/package.json** is the Node package information for `nhyris`.
 :::
 
 ### 4. Installings
 
-These are codes for installing local R
+₩These files are for installing a local R environment.
 
-- **pak-pkgs.R**: R code to install cran packages into local R
-- **r.sh**: shell script that install local R
+- **pak-pkgs.R**: Installs CRAN packages into the local R environment.
+- **r.sh**: Shell script to install a local R distribution.
 
 ### 5. Documents
 
-- **\_quarto.yml**: quarto configuration
-- **\*.qmd**: quarto document files
-- **brand/**: quarto configuration
-- **docs/**: quarto destination
-- **images/**: nhyris logo
+- **\_quarto.yml**: Quarto configuration.
+- **\*.qmd**: Quarto document files.
+- **brand/**: Quarto configuration.
+- **docs/**: Quarto output destination.
+- **images/**: nhyris logos and images.
 
