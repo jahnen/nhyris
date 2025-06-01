@@ -28,7 +28,7 @@ and as shiny is ready, it will show shiny application.
 - **loading.html**: temporary file that show loading screen to electron
 - **start-shiny.R**: R code to launch shiny.
 
-### 2. commamnds
+### 2. commands
 
 These are codes for utilizing `nhyris` as CLI commands.
 

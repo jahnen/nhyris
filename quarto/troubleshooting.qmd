@@ -19,9 +19,10 @@ To check R problem, follow these steps.
 3. in L42, modify code.
 
 ```js
-// BEFORE
+// To enable terminal output for debugging the R Shiny process:
+// Change this line in src/process-manager.js (around L42):
 // stdio: "ignore",
-// AFTER
+// To this:
 stdio: "inherit",
 ```
 
