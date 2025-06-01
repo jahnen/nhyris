@@ -14,13 +14,15 @@ To check R problem, follow these steps.
 
 1. move to inside your project <Myapp>
 
-2. find `src/index.js`
+2. find `src/process-manager.js`
 
-3. in L60~L62, modify code.
+3. in L42, modify code.
 
 ```js
+// To enable terminal output for debugging the R Shiny process:
+// Change this line in src/process-manager.js (around L42):
 // stdio: "ignore",
-// terminal output for debug
+// To this:
 stdio: "inherit",
 ```
 
