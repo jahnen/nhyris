@@ -49,10 +49,7 @@ export async function updateForgeConfig(projectPath, makerConfig) {
       console.log(`Added ${makerConfig.name} maker configuration.`);
     }
 
-    const updatedConfigString = JSON.stringify(forgeConfig, null, 2).replace(
-      /"([^(")"]+)":/g,
-      "$1:"
-    );
+    const updatedConfigString = serializeObject(forgeConfig, 2);
 
     fs.writeFileSync(
       forgeConfigPath,
