@@ -3,7 +3,12 @@ import fs from "fs";
 import { installDependencies } from "./install.js";
 import { updatePackageJson, updateForgeConfig } from "./zzz.js";
 
-export async function handleDmgMaker(root, projectPath, name) {
+export async function handleDmgMaker(
+  root,
+  projectPath,
+  name,
+  targetArch = "x64"
+) {
   const backgroundSource = path.join(
     root,
     "template",
@@ -28,12 +33,16 @@ export async function handleDmgMaker(root, projectPath, name) {
     installDependencies(projectPath);
   }
 
+  const appName = name; // passed as argument
+
   const dmgMakerConfig = {
     name: "@electron-forge/maker-dmg",
     config: {
-      name,
+      name: `${appName} installer`,
       background: "background-DMG.png",
       icon: "assets/icon.icns",
+      // overwrite: true,
+      // debug: true,
       iconSize: 200,
       format: "UDZO",
       contents: [
@@ -41,7 +50,7 @@ export async function handleDmgMaker(root, projectPath, name) {
           x: 140,
           y: 276,
           type: "file",
-          path: `${process.cwd()}/out/${name}-darwin-arm64/${name}.app`,
+          path: `${process.cwd()}/out/${appName}-darwin-${targetArch}/${appName}.app`,
         },
         { x: 518, y: 276, type: "link", path: "/Applications" },
       ],
