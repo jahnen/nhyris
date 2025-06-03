@@ -3,7 +3,12 @@ import fs from "fs";
 import { installDependencies } from "./install.js";
 import { updatePackageJson, updateForgeConfig } from "./zzz.js";
 
-export async function handleDmgMaker(root, projectPath, name) {
+export async function handleDmgMaker(
+  root,
+  projectPath,
+  name,
+  targetArch = "x64"
+) {
   const backgroundSource = path.join(
     root,
     "template",
@@ -28,8 +33,6 @@ export async function handleDmgMaker(root, projectPath, name) {
     installDependencies(projectPath);
   }
 
-  const arch = process.arch; // e.g., 'arm64' or 'x64'
-  const platform = process.platform; // e.g., 'darwin'
   const appName = name; // passed as argument
 
   const dmgMakerConfig = {
@@ -42,13 +45,12 @@ export async function handleDmgMaker(root, projectPath, name) {
       // debug: true,
       iconSize: 200,
       format: "UDZO",
-      // iconSize, windowPositionOptions, windowSizeOptions can be added as needed
       contents: [
         {
           x: 140,
           y: 276,
           type: "file",
-          path: `${process.cwd()}/out/${appName}-${platform}-${arch}/${appName}.app`,
+          path: `${process.cwd()}/out/${appName}-darwin-${targetArch}/${appName}.app`,
         },
         { x: 518, y: 276, type: "link", path: "/Applications" },
       ],
