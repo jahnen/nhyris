@@ -28,20 +28,27 @@ export async function handleDmgMaker(root, projectPath, name) {
     installDependencies(projectPath);
   }
 
+  const arch = process.arch; // e.g., 'arm64' or 'x64'
+  const platform = process.platform; // e.g., 'darwin'
+  const appName = name; // passed as argument
+
   const dmgMakerConfig = {
     name: "@electron-forge/maker-dmg",
     config: {
-      name,
+      name: `${appName} installer`,
       background: "background-DMG.png",
       icon: "assets/icon.icns",
+      // overwrite: true,
+      // debug: true,
       iconSize: 200,
       format: "UDZO",
+      // iconSize, windowPositionOptions, windowSizeOptions can be added as needed
       contents: [
         {
           x: 140,
           y: 276,
           type: "file",
-          path: `${process.cwd()}/out/${name}-darwin-arm64/${name}.app`,
+          path: `${process.cwd()}/out/${appName}-${platform}-${arch}/${appName}.app`,
         },
         { x: 518, y: 276, type: "link", path: "/Applications" },
       ],
