@@ -15,6 +15,10 @@ if (dir.exists("r-win")) {
     library_path <- file.path("r-win", "library")
 }
 
+if (dir.exists("r-linux")) {    
+    library_path <- file.path("r-linux", "library")
+}
+
 .libPaths(library_path)
 cat('Setting library path to:', library_path, '\n')
 

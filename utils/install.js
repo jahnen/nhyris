@@ -21,31 +21,36 @@ export function installDependencies(projectPath) {
   }
 }
 
+function runRscriptCommand(rscriptCmd, platformLabel = "") {
+  try {
+    execSync(rscriptCmd, { stdio: "inherit" });
+  } catch (err) {
+    console.error(`Failed to install R packages${platformLabel ? " on " + platformLabel : ""}:`, err.message);
+    throw err;
+  }
+}
+
 export function installRPackages() {
   console.log("Installing R packages...");
 
   const pakPkgsPath = path.join(__dirname, "pak-pkgs.R");
+  let rscriptCmd, platformLabel;
 
   if (process.platform === "win32") {
-    // Rscript path define
     const rscriptPath = path.join(process.cwd(), "r-win", "bin", "Rscript.exe");
-    const rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
-
-    try {
-      execSync(rscriptCmd, { stdio: "inherit" });
-    } catch (err) {
-      console.error("Failed to install R packages:", err.message);
-      throw err;
-    }
+    rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
+    platformLabel = "Windows";
+  } else if (process.platform === "linux") {
+    const rscriptPath = path.join(process.cwd(), "r-linux", "bin", "Rscript");
+    rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
+    platformLabel = "Linux";
   } else {
-    // For Linux and MacOS
-    try {
-      execSync(`Rscript "${pakPkgsPath}"`, { stdio: "inherit" });
-    } catch (err) {
-      console.error("Failed to install R packages:", err.message);
-      throw err;
-    }
+    // For MacOS and fallback
+    rscriptCmd = `Rscript "${pakPkgsPath}"`;
+    platformLabel = "macOS";
   }
+
+  runRscriptCommand(rscriptCmd, platformLabel);
 }
 
 export function installNodePackages() {
