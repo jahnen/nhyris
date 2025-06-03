@@ -5,14 +5,17 @@
 set -e
 
 # Detect operating system
+
 OS_TYPE="unknown"
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [ "$OSTYPE" != "" ] && echo "$OSTYPE" | grep -q "^darwin"; then
     OS_TYPE="macos"
-elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win"* ]]; then
+elif [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "cygwin" ] || echo "$OSTYPE" | grep -q "^win"; then
     OS_TYPE="windows"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+elif [ "$(uname)" = "Linux" ]; then
     OS_TYPE="linux"
 fi
+
+
 
 echo "Detected OS: $OS_TYPE"
 
@@ -20,7 +23,7 @@ echo "Detected OS: $OS_TYPE"
 # Chosen for compatibility with specific dependencies
 R_VERSION="4.5.0"
 
-if [ "$OS_TYPE" == "macos" ]; then
+if [ "$OS_TYPE" = "macos" ]; then
     # macOS installation
     R_URL="https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-${R_VERSION}-arm64.pkg"
 
@@ -50,7 +53,7 @@ if [ "$OS_TYPE" == "macos" ]; then
     rm -r doc tests
     rm -r lib/*.dSYM
 
-elif [ "$OS_TYPE" == "windows" ]; then
+elif [ "$OS_TYPE" = "windows" ]; then
     # Windows installation
     R_WIN_VERSION="${R_VERSION//./}" # Remove dots from version number
     R_WIN_URL="https://cloud.r-project.org/bin/windows/base/R-${R_VERSION}-win.exe"
@@ -77,6 +80,45 @@ elif [ "$OS_TYPE" == "windows" ]; then
 
     rm -r app R-installer.exe
     rm -r doc tests Tcl        
+elif [ "$OS_TYPE" = "linux" ]; then
+    # Linux (Ubuntu) local R installation
+    echo "Installing R version: $R_VERSION for Linux (Ubuntu) (local build)"
+
+    # Create a directory for the local R
+    mkdir -p r-linux
+    cd r-linux
+
+    # Install the necessary build dependencies
+    sudo sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list
+    sudo apt-get update
+    sudo apt-get build-dep -y r-base
+    sudo apt-get install -y --no-install-recommends curl build-essential gfortran libreadline-dev libx11-dev libxt-dev libpng-dev libjpeg-dev libcairo2-dev libssl-dev libbz2-dev libzstd-dev liblzma-dev libcurl4-openssl-dev libicu-dev
+        
+    # Download and extract the version of R that you want to install
+    R_MAJOR=$(echo "$R_VERSION" | cut -d. -f1)
+    curl -O https://cran.rstudio.com/src/base/R-${R_MAJOR}/R-${R_VERSION}.tar.gz
+    tar -xzvf R-${R_VERSION}.tar.gz
+    cd R-${R_VERSION}
+
+    # Build and install R
+    ./configure \
+        --prefix="$(pwd)/.." \
+        --enable-memory-profiling \
+        --enable-R-shlib \
+        --with-blas \
+        --with-lapack
+
+    make
+    make install
+
+    # Test that R was successfully installed
+    ../bin/R --version
+
+    # Remove downloaded tar.gz file
+    cd ..
+    rm -f R-${R_VERSION}.tar.gz
+
+    cd ../..
 fi
 
 echo "R installation completed for $OS_TYPE"

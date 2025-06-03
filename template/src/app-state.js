@@ -13,7 +13,7 @@ class AppState {
 
     // Configuration
     this.config = {
-      rPath: os.platform() === "win32" ? "r-win" : "r-mac",
+      rPath: os.platform() === "win32" ? "r-win" : os.platform() === "linux" ? "r-linux" : "r-mac",
       backgroundColor: "#2c3e50",
       serverPort: 1124,
       maxRetryAttempts: 100,

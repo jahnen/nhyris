@@ -37,8 +37,20 @@ export function installRPackages() {
       console.error("Failed to install R packages:", err.message);
       throw err;
     }
-  } else {
-    // For Linux and MacOS
+  } else if (process.platform === "linux") {  
+    // For Linux
+    const rscriptPath = path.join(process.cwd(), "r-linux", "bin", "Rscript");
+    const rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
+
+    try {
+      execSync(rscriptCmd, { stdio: "inherit" });
+    } catch (err) {
+      console.error("Failed to install R packages:", err.message);
+      throw err;
+    }
+  }  
+  else {
+    // For MacOS
     try {
       execSync(`Rscript "${pakPkgsPath}"`, { stdio: "inherit" });
     } catch (err) {

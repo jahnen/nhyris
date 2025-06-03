@@ -46,7 +46,7 @@ export const runCommand = new Command("run")
 
     try {
       console.log("Starting Electron app...");
-      execSync("electron-forge start", { stdio: "inherit" });
+      execSync("npx electron-forge start", { stdio: "inherit" });
 
       // Mac/Linux: exec/R 프로세스 종료
       if (os.platform() !== "win32") {
