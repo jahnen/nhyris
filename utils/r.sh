@@ -94,6 +94,16 @@ elif [ "$OS_TYPE" = "linux" ]; then
     sudo apt-get build-dep -y r-base
     sudo apt-get install -y --no-install-recommends curl build-essential gfortran libreadline-dev libx11-dev libxt-dev libpng-dev libjpeg-dev libcairo2-dev libssl-dev libbz2-dev libzstd-dev liblzma-dev libcurl4-openssl-dev libicu-dev
         
+    # Check for missing packages
+    missing_pkgs=""
+    for pkg in build-essential gfortran libreadline-dev libx11-dev libxt-dev libpng-dev libjpeg-dev libcairo2-dev libssl-dev libbz2-dev libzstd-dev liblzma-dev libcurl4-openssl-dev libicu-dev; do
+        dpkg -s $pkg &> /dev/null || missing_pkgs="$missing_pkgs $pkg"
+    done
+    if [ -n "$missing_pkgs" ]; then
+        echo "The following packages are missing and will be installed: $missing_pkgs"
+        sudo apt-get install -y --no-install-recommends $missing_pkgs
+    fi
+
     # Download and extract the version of R that you want to install
     R_MAJOR=$(echo "$R_VERSION" | cut -d. -f1)
     curl -O https://cran.rstudio.com/src/base/R-${R_MAJOR}/R-${R_VERSION}.tar.gz
