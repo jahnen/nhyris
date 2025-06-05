@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8fe4f3ddd7dff2fd0857a3817e664efd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -99,9 +99,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./brand/logo.png" alt="" class="navbar-logo">
-    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">nhyris user guide</span>
     </a>
@@ -160,6 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#r-packages" id="toc-r-packages" class="nav-link active" data-scroll-target="#r-packages">R Packages</a></li>
   <li><a href="#icon" id="toc-icon" class="nav-link" data-scroll-target="#icon">Icon</a></li>
+  <li><a href="#squirrel.windows" id="toc-squirrel.windows" class="nav-link" data-scroll-target="#squirrel.windows">squirrel.windows</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -301,6 +299,40 @@ However, according to the official <a href="https://www.electronforge.io/guides/
 <li>Export the relevant page as a <code>png</code> image.</li>
 </ol>
 <p><img src="images/keynote.png" width="70%"></p>
+</section>
+</section>
+<section id="squirrel.windows" class="level3">
+<h3 class="anchored" data-anchor-id="squirrel.windows">squirrel.windows</h3>
+<p><code>nhyris</code> provides a feature for building a Windows executable installer using <code>squirrel.windows</code>.</p>
+<p>To build the installer, use the following command:</p>
+<pre><code>nhyris build -m squirrel</code></pre>
+<p>You can see an example result <a href="https://github.com/jahnen/nhyris/issues/43">here</a>.</p>
+<p>For more details for squirrel.windows, see the <a href="https://github.com/Squirrel/Squirrel.Windows/blob/de5baa93a134ac24fd5bf9172d3e457ac27e0b7a/docs/using/nuget-package-metadata.md">NuGet Package Metadata documentation</a>.</p>
+<section id="metadata-configuration" class="level4">
+<h4 class="anchored" data-anchor-id="metadata-configuration">Metadata Configuration</h4>
+<p>In <code>nhyris</code>, you can modify the <code>squirrelMakerConfig</code> object inside the <code>handleSquirrelMaker</code> function in <code>maker.js</code>.</p>
+<p>Before using this code, you must build the project first.</p>
+<p>Example for setting the installer icon and URL:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>config<span class="op">:</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">setupIcon</span><span class="op">:</span> <span class="st">"assets/setupIcon.ico"</span><span class="op">,</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">iconUrl</span><span class="op">:</span> <span class="st">"https://github.com/jahnen/nhyris/raw/main/template/assets/icon.ico"</span><span class="op">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="installer-icon-not-displaying" class="level4">
+<h4 class="anchored" data-anchor-id="installer-icon-not-displaying">Installer Icon Not Displaying</h4>
+<p>The <code>setupIcon</code> is used as the installer icon, but due to caching issues, it may not appear immediately.<br>
+You can check the icon in the file properties or after rebooting your PC.<br>
+See the related <a href="https://github.com/electron/forge/issues/2148#issuecomment-913028556">issue</a> for more details.</p>
+</section>
+<section id="iconurl" class="level4">
+<h4 class="anchored" data-anchor-id="iconurl">iconUrl</h4>
+<p>When using <code>iconUrl</code>, you <strong>must</strong> provide a URL from the web (not a local file path).<br>
+This is an Electron policy and cannot be changed by <code>nhyris</code>.</p>
+</section>
+<section id="creating-ico-files" class="level4">
+<h4 class="anchored" data-anchor-id="creating-ico-files">Creating ICO Files</h4>
+<p>Simply renaming a file to <code>.ico</code> may not work properly.<br>
+To convert a PNG to ICO, it is recommended to use an online converter such as <a href="https://www.icoconverter.com/">icoconverter.com</a>.</p>
 
 
 </section>
