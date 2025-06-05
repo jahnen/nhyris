@@ -138,3 +138,51 @@ To create a custom icon on **macOS**, you can use the `nhyris.key` template file
 
 <img src='images/keynote.png' width='70%'>
 
+### squirrel.windows
+
+`nhyris` provides a feature for building a Windows executable installer using `squirrel.windows`.
+
+To build the installer, use the following command:
+
+```
+nhyris build -m squirrel
+```
+
+You can see an example result [here](https://github.com/jahnen/nhyris/issues/43).
+
+For more details for squirrel.windows, see the [NuGet Package Metadata documentation](https://github.com/Squirrel/Squirrel.Windows/blob/de5baa93a134ac24fd5bf9172d3e457ac27e0b7a/docs/using/nuget-package-metadata.md).
+
+#### Metadata Configuration
+
+In `nhyris`, you can modify the `squirrelMakerConfig` object inside the `handleSquirrelMaker` function in `maker.js`.
+
+Before using this code, you must build the project first.
+
+Example for setting the installer icon and URL:
+
+```js
+config: {
+    setupIcon: "assets/setupIcon.ico",
+    iconUrl: "https://github.com/jahnen/nhyris/raw/main/template/assets/icon.ico",
+},
+```
+
+#### Installer Icon Not Displaying
+
+The `setupIcon` is used as the installer icon, but due to caching issues, it may not appear immediately.  
+You can check the icon in the file properties or after rebooting your PC.  
+See the related [issue](https://github.com/electron/forge/issues/2148#issuecomment-913028556) for more details.
+
+#### iconUrl
+
+When using `iconUrl`, you **must** provide a URL from the web (not a local file path).  
+This is an Electron policy and cannot be changed by `nhyris`.
+
+#### Creating ICO Files
+
+Simply renaming a file to `.ico` may not work properly.  
+To convert a PNG to ICO, it is recommended to use an online converter such as [icoconverter.com](https://www.icoconverter.com/).
+
+
+
+
