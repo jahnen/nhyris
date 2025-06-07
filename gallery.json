@@ -29,7 +29,14 @@
   "ex38": "38-conditionalpanel.R",
   "ex39": "39-observer.R",
   "ex40": "40-reactive-poll.R",
+  "ex41": "41-reactivity.R",
+  "ex42": "42-timer.R",
+  "ex43": "43-actionbutton.R",
+  "ex44": "44-isolate.R",
+  "ex45": "45-submit.R",
   "ex46": "46-bookmark.R",
+  "ex47": "47-bookmarking-updatequerystring.R",
+  "ex48": "48-client-data-and-query-string.R",
   "ex58": "58-img-interaction.R",
   "ex63": "63-i18n.R"
 }
