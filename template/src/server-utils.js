@@ -33,8 +33,8 @@ class ServerUtils {
   static async waitForServerWithExponentialBackoff(
     url,
     maxAttempts = 10,
-    initialDelay = 1000,
-    maxDelay = 5000,
+    initialDelay = 2000,
+    maxDelay = 10000,
     backoffFactor = 1.5,
     statusCallback = null
   ) {
