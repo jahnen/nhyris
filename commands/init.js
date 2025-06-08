@@ -17,7 +17,7 @@ export const initCommand = new Command("init")
     await handleDirectory(projectPath, name, options.overwrite);
     updateGitignore(root, name);
     copyTemplates(templatePath, projectPath, name);
-    installStandaloneR();
+    installStandaloneR(projectPath);
     installDependencies(projectPath);
 
     console.log(`Project '${name}' fully initialized.`);
