@@ -60,7 +60,7 @@ export async function handleDmgMaker(
   await updateForgeConfig(projectPath, dmgMakerConfig);
 }
 
-export async function handleSquirrelMaker(root, projectPath) {
+export async function handleSquirrelMaker(projectPath) {
   const dependenciesUpdated = updatePackageJson(projectPath, {
     dependencies: { "electron-squirrel-startup": "^1.0.1" },
     devDependencies: { "@electron-forge/maker-squirrel": "^7.8.0" },
@@ -80,4 +80,20 @@ export async function handleSquirrelMaker(root, projectPath) {
   };
 
   await updateForgeConfig(projectPath, squirrelMakerConfig);
+}
+
+export async function handleDebMaker(projectPath) {
+  const dependenciesUpdated = updatePackageJson(projectPath, {
+    devDependencies: { "@electron-forge/maker-deb": "^7.8.1" },
+  });
+
+  if (dependenciesUpdated) {
+    installDependencies(projectPath);
+  }
+
+  const debMakerConfig = {
+    name: "@electron-forge/maker-deb",
+  };
+
+  await updateForgeConfig(projectPath, debMakerConfig);
 }

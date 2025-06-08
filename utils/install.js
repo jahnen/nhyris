@@ -8,17 +8,19 @@ const __dirname = path.dirname(__filename);
 export function installDependencies(projectPath) {
   process.chdir(projectPath);
 
-  try {
-    console.log("Installing standalone R...");
-    const rShellScriptPath = path.join(__dirname, "r.sh");
-    execSync(`sh "${rShellScriptPath}"`, { stdio: "inherit" });
-
+  try {    
     installRPackages();
     installNodePackages();
   } catch (err) {
     console.error("Setup or launch failed:", err.message);
     process.exit(1);
   }
+}
+
+export function installStandaloneR() {
+  console.log("Installing standalone R...");
+  const rShellScriptPath = path.join(__dirname, "r.sh");
+  execSync(`sh "${rShellScriptPath}"`, { stdio: "inherit" });
 }
 
 function runRscriptCommand(rscriptCmd, platformLabel = "") {
