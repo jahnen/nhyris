@@ -20,7 +20,13 @@ export function installDependencies(projectPath) {
 export function installStandaloneR(projectPath) {
   console.log("Installing standalone R...");
   const rShellScriptPath = path.join(__dirname, "r.sh");
-  execSync(`sh "${rShellScriptPath}"`, { stdio: "inherit", cwd: projectPath });
+  try {
+    execSync(`sh "${rShellScriptPath}"`, { stdio: "inherit", cwd: projectPath });
+  } catch (error) {
+    console.error(`Failed to install standalone R: ${error.message}`);
+    // Optionally halt the process if this step is critical
+    process.exit(1);
+  }
 }
 
 function runRscriptCommand(rscriptCmd, platformLabel = "") {
