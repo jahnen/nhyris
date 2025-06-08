@@ -2,7 +2,7 @@ import { Command } from "commander";
 import path from "path";
 import { handleDirectory } from "../utils/directory.js";
 import { copyTemplates } from "../utils/template.js";
-import { installDependencies } from "../utils/install.js";
+import { installDependencies, installStandaloneR } from "../utils/install.js";
 import { updateGitignore } from "../utils/zzz.js";
 
 export const initCommand = new Command("init")
@@ -17,6 +17,7 @@ export const initCommand = new Command("init")
     await handleDirectory(projectPath, name, options.overwrite);
     updateGitignore(root, name);
     copyTemplates(templatePath, projectPath, name);
+    installStandaloneR(projectPath);
     installDependencies(projectPath);
 
     console.log(`Project '${name}' fully initialized.`);

@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import path from "path";
 import fs from "fs";
 import { exitWithError } from "../utils/zzz.js";
-import { handleDmgMaker, handleSquirrelMaker } from "../utils/maker.js";
+import { handleDmgMaker, handleSquirrelMaker, handleDebMaker } from "../utils/maker.js"; // updated import
 
 export const buildCommand = new Command("build")
   .argument("<name>", "Project name")
@@ -22,7 +22,7 @@ export const buildCommand = new Command("build")
     }
 
     const maker = options.maker;
-    const supportedMakers = ["dmg", "zip", "squirrel"];
+    const supportedMakers = ["dmg", "zip", "squirrel", "deb"]; // add "deb"
     if (!supportedMakers.includes(maker)) {
       return exitWithError(
         `Invalid maker type specified: '${maker}'. Supported types are: ${supportedMakers.join(
@@ -37,7 +37,9 @@ export const buildCommand = new Command("build")
       if (maker === "dmg") {
         await handleDmgMaker(root, projectPath, name);
       } else if (maker === "squirrel") {
-        await handleSquirrelMaker(root, projectPath);
+        await handleSquirrelMaker(projectPath);
+      } else if (maker === "deb") {
+        await handleDebMaker(projectPath);
       }
 
       console.log(`Building Electron app with maker: ${maker}...`);
