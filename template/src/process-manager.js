@@ -1,4 +1,4 @@
-const { app } = require("electron"); // <-- add this line
+const { app } = require("electron");
 const { spawn, execSync } = require("child_process");
 const path = require("path");
 const os = require("os");
@@ -26,7 +26,11 @@ class ProcessManager {
 
       const rShinyProcess = spawn(
         appState.paths.rscript,
-        ["--vanilla", "-f", path.join(app.getAppPath(), "src", "start-shiny.R")],
+        [
+          "--vanilla",
+          "-f",
+          path.join(app.getAppPath(), "src", "start-shiny.R"),
+        ],
         {
           env: {
             WITHIN_ELECTRON: "1",

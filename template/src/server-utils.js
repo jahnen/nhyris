@@ -99,8 +99,8 @@ class ServerUtils {
         return await this.waitForServerWithExponentialBackoff(
           url,
           10,
-          1000,
-          5000,
+          2000,
+          10000,
           1.5,
           statusCallback
         );

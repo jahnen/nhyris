@@ -1,5 +1,4 @@
 const path = require("path");
-const os = require("os");
 const { app } = require("electron");
 const ProcessManager = require("./process-manager");
 
@@ -12,16 +11,7 @@ class AppState {
     this.errorSplashScreen = null;
 
     // Configuration
-    let rPath;
-    if (os.platform() === "win32") {
-      rPath = "r-win";
-    } else if (os.platform() === "linux") {
-      rPath = "r-linux";
-    } else if (os.platform() === "darwin") {
-      rPath = "r-mac";
-    } else {
-      rPath = "r-unknown";
-    }
+    let rPath = "r-nhyris";
 
     this.config = {
       rPath: rPath,
