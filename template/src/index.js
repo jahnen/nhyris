@@ -1,7 +1,6 @@
 // Copyright (c) 2018 Dirk Schumacher, Noam Ross, Rich FitzJohn
 // Copyright (c) 2025 Jinhwan Kim
-const { app, session, BrowserWindow } = require("electron");
-const path = require("path");
+const { app, session } = require("electron");
 const os = require("os");
 const ErrorHandler = require("./error-handler");
 const ProcessManager = require("./process-manager"); // <-- import ProcessManager

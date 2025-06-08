@@ -7,20 +7,9 @@
 # set cran mirror
 options(repos = "https://cloud.r-project.org")
 
-if (dir.exists("r-mac")) {
-    library_path <- file.path("r-mac", "library")
-}
-
-if (dir.exists("r-win")) {
-    library_path <- file.path("r-win", "library")
-}
-
-if (dir.exists("r-linux")) {    
-    library_path <- file.path("r-linux", "library")
-}
+library_path <- file.path("r-nhyris", "library")
 
 .libPaths(library_path)
-cat('Setting library path to:', library_path, '\n')
 
 # assumes pak package is not installed with r-local
 suppressMessages(suppressWarnings(

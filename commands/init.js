@@ -19,6 +19,7 @@ export const initCommand = new Command("init")
     copyTemplates(templatePath, projectPath, name);
     installDependencies(projectPath);
 
-    console.log(`Project '${name}' fully initialized and running.`);
+    console.log(`Project '${name}' fully initialized.`);
+    console.log(`run application using nhyris run ${name} command`);
     console.log("Please modify package.json as needed.");
   });

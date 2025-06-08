@@ -60,11 +60,15 @@ export function copyTemplates(templatePath, projectPath, name) {
   const shinyPath = path.join(projectPath, "shiny");
   const fromPath = path.join(templatePath, "shiny", "app.R");
   const toPath = path.join(shinyPath, "app.R");
+
   if (!downloadedFromGithub) {
+    // Ensure shiny directory exists (again, after src copy)
+    if (!fs.existsSync(shinyPath)) {
+      fs.mkdirSync(shinyPath, { recursive: true });
+    }
     if (fs.existsSync(fromPath) && !fs.existsSync(toPath)) {
       try {
         fs.copyFileSync(fromPath, toPath);
-        console.log(`Copied 'app.R' to 'app.R' (default)`);
       } catch (err) {
         console.error(`Error copying 'app.R' to 'app.R':`, err.message);
         throw err;
@@ -80,7 +84,6 @@ export function copyTemplates(templatePath, projectPath, name) {
     if (fs.existsSync(from)) {
       try {
         fs.copyFileSync(from, to);
-        console.log(`Copied '${file}' to project directory.`);
       } catch (err) {
         console.error(`Error copying '${file}':`, err.message);
         throw err;
@@ -91,15 +94,4 @@ export function copyTemplates(templatePath, projectPath, name) {
       throw new Error(msg);
     }
   });
-}
-
-export function copyFile(templatePath, projectPath, file) {
-  const from = path.join(templatePath, file);
-  const to = path.join(projectPath, file);
-  if (fs.existsSync(from)) {
-    fs.copyFileSync(from, to);
-    console.log(`Copied '${file}' to project directory.`);
-  } else {
-    console.warn(`Missing template file: ${file}`);
-  }
 }

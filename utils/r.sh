@@ -15,26 +15,23 @@ elif [ "$(uname)" = "Linux" ]; then
     OS_TYPE="linux"
 fi
 
-
-
-echo "Detected OS: $OS_TYPE"
-
 # Define the R version explicitly
 # Chosen for compatibility with specific dependencies
 R_VERSION="4.5.0"
+R_DIR="r-nhyris"
+
+mkdir -p "$R_DIR"
+cd "$R_DIR"
 
 if [ "$OS_TYPE" = "macos" ]; then
     # macOS installation
     R_URL="https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-${R_VERSION}-arm64.pkg"
 
-    # Print the R version being installed
     echo "Installing R version: $R_VERSION for macOS"
 
     # Download and extract the main Mac Resources directory
-    mkdir -p r-mac
-    curl -o r-mac/latest_r.pkg "$R_URL"
+    curl -o latest_r.pkg "$R_URL"
 
-    cd r-mac
     xar -xf latest_r.pkg
     rm -r Resources tcltk.pkg texinfo.pkg Distribution latest_r.pkg
     # cat R-app.pkg/Payload | gunzip -dc | cpio -i
@@ -44,8 +41,7 @@ if [ "$OS_TYPE" = "macos" ]; then
 
     # Patch the main R script
     sed -i.bak '/^R_HOME_DIR=/d' bin/R
-    sed -i.bak 's;/Library/Frameworks/R.framework/Resources;${R_HOME};g' \
-        bin/R
+    sed -i.bak 's;/Library/Frameworks/R.framework/Resources;${R_HOME};g' bin/R
     chmod +x bin/R
     rm -f bin/R.bak
 
@@ -60,44 +56,37 @@ elif [ "$OS_TYPE" = "windows" ]; then
 
     echo "Installing R version: $R_VERSION for Windows"
 
-    # Create Windows R directory
-    mkdir -p r-win
-    cd r-win
-
-    # Download R installer    
+    # Download R installer
     curl -L -o R-installer.exe "$R_WIN_URL"
 
-    # Innoextract for Windows (unzip the installer)    
-    if [ ! -d "innoextract_dir" ]; then        
+    # Innoextract for Windows (unzip the installer)
+    if [ ! -d "innoextract_dir" ]; then
         curl -L -o innoextract.zip "https://constexpr.org/innoextract/files/innoextract-1.9-windows.zip"
         unzip innoextract.zip -d innoextract_dir
-        rm innoextract.zip    
+        rm innoextract.zip
         ./innoextract_dir/innoextract.exe --silent R-installer.exe
 
-        mv app/* .          
+        mv app/* .
         rm -r innoextract_dir
-    fi    
+    fi
 
     rm -r app R-installer.exe
-    rm -r doc tests Tcl        
+    rm -r doc tests Tcl
+
 elif [ "$OS_TYPE" = "linux" ]; then
     # Linux (Ubuntu) local R installation
     echo "Installing R version: $R_VERSION for Linux (Ubuntu) (local build)"
-
-    # Create a directory for the local R
-    mkdir -p r-linux
-    cd r-linux
 
     # Install the necessary build dependencies
     sudo sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list
     sudo apt-get update
     sudo apt-get build-dep -y r-base
     sudo apt-get install -y --no-install-recommends curl build-essential gfortran libreadline-dev libx11-dev libxt-dev libpng-dev libjpeg-dev libcairo2-dev libssl-dev libbz2-dev libzstd-dev liblzma-dev libcurl4-openssl-dev libicu-dev
-        
+
     # Check for missing packages
     missing_pkgs=""
     for pkg in build-essential gfortran libreadline-dev libx11-dev libxt-dev libpng-dev libjpeg-dev libcairo2-dev libssl-dev libbz2-dev libzstd-dev liblzma-dev libcurl4-openssl-dev libicu-dev; do
-        dpkg -s $pkg &> /dev/null || missing_pkgs="$missing_pkgs $pkg"
+        dpkg -s $pkg &>/dev/null || missing_pkgs="$missing_pkgs $pkg"
     done
     if [ -n "$missing_pkgs" ]; then
         echo "The following packages are missing and will be installed: $missing_pkgs"
@@ -128,7 +117,5 @@ elif [ "$OS_TYPE" = "linux" ]; then
     cd ..
     rm -f R-${R_VERSION}.tar.gz
 
-    cd ../..
+    cd ..
 fi
-
-echo "R installation completed for $OS_TYPE"

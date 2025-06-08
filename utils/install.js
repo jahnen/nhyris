@@ -25,7 +25,12 @@ function runRscriptCommand(rscriptCmd, platformLabel = "") {
   try {
     execSync(rscriptCmd, { stdio: "inherit" });
   } catch (err) {
-    console.error(`Failed to install R packages${platformLabel ? " on " + platformLabel : ""}:`, err.message);
+    console.error(
+      `Failed to install R packages${
+        platformLabel ? " on " + platformLabel : ""
+      }:`,
+      err.message
+    );
     throw err;
   }
 }
@@ -36,12 +41,14 @@ export function installRPackages() {
   const pakPkgsPath = path.join(__dirname, "pak-pkgs.R");
   let rscriptCmd, platformLabel;
 
+  const rDir = "r-nhyris";
+
   if (process.platform === "win32") {
-    const rscriptPath = path.join(process.cwd(), "r-win", "bin", "Rscript.exe");
+    const rscriptPath = path.join(process.cwd(), rDir, "bin", "Rscript.exe");
     rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
     platformLabel = "Windows";
   } else if (process.platform === "linux") {
-    const rscriptPath = path.join(process.cwd(), "r-linux", "bin", "Rscript");
+    const rscriptPath = path.join(process.cwd(), rDir, "bin", "Rscript");
     rscriptCmd = `"${rscriptPath}" "${pakPkgsPath}"`;
     platformLabel = "Linux";
   } else {
