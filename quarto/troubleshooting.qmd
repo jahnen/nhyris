@@ -2,21 +2,18 @@
 title: "Troubleshooting"
 ---
 
-### nhyris project successfully built, but not started
+### Project builds successfully, but does not start
 
-In most case, running shiny code with `nhyris` has problem. 
+In most cases, issues running Shiny code with `nhyris` are related to the R environment.
 
-Because `nhyris` uses independent R environment even if your shiny worked well in your environment like Positron, Rstudio or vscode shiny may not work in `nhyris`. 
+Because `nhyris` uses an independent R environment, your Shiny app may work in Positron, RStudio, or VS Code, but not in `nhyris`.  
+Common causes include different R versions or missing package dependencies.
 
-For example: using different version of R or dependency problem from not installed R package and so on.
+To diagnose R-related issues, follow these steps:
 
-To check R problem, follow these steps.
-
-1. move to inside your project <Myapp>
-
-2. find `src/process-manager.js`
-
-3. in L42, modify code.
+1. Navigate to your project directory (e.g., `<Myapp>`).
+2. Open `src/process-manager.js`.
+3. Around line 42, modify the code as follows:
 
 ```js
 // To enable terminal output for debugging the R Shiny process:
@@ -27,12 +24,14 @@ stdio: "inherit",
 ```
 
 ::: {.callout-note}
-This will show log from shiny application to your IDE's terminal
+This will display logs from the Shiny application in your IDE's terminal.
 :::
 
-### Example logs
+---
 
-Here's example log
+### Example Logs
+
+Here is an example log output:
 
 ```bash
 > 
@@ -74,9 +73,11 @@ Error checking server status: TypeError: fetch failed
 }
 ```
 
-This log can be considered as 3 part.
+This log can be divided into three parts:
 
-1. R execution part: log from running R and shiny. This is not error.
+#### 1. R Execution
+
+This section shows the R and Shiny startup process. These lines are not errors.
 
 ```r
 > 
@@ -98,48 +99,42 @@ Loading required package: shiny
 ...
 ```
 
-2. Error part: you need to investigate where it's from.
+#### 2. Application Error
+
+This section shows an error in your Shiny application. You need to investigate and fix the cause.
 
 ```r
 Error: `server` must be a function
 ```
 
-Tn this shiny application, I used server as ui.
+For example, in this case, the `server` object was incorrectly assigned:
+
 ```r
 ui <- fluidPage(...)
 server <- ui
 shinyApp(ui = ui, server = server)
 ```
 
-3. Connection part: the most important you should notice.
+#### 3. Connection Error
 
-`nhyris` has mechanism with 2 part:
-- Run shiny application with R script to port localhost:1124
-- Connect shiny application in electron.
+This section shows connection attempts from Electron to the Shiny server.
 
-the run part, will takes some time (shiny requires time to load).
+`nhyris` works in two parts:
 
-However both part are initiated almost same time, so Connect part may generate error like below.
+- Runs the Shiny application on localhost:1124 using R.
+- Connects to the Shiny application from Electron.
 
-But after some trial, (around ~ 10) it will connected with shiny application and open electron application.
-
-So if you see this log with few, it's fine. but if you see this more than 10 time: you should fix the shiny application.
+The Shiny app may take some time to start. Both processes are initiated almost simultaneously, so connection errors like the following may appear at first:
 
 ```bash
 Error checking server status: TypeError: fetch failed
-    at node:internal/deps/undici/undici:13510:13
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async checkServerStatus (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:34:17)
-    at async tryStartWebserver (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:139:24)
-    at async App.<anonymous> (/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:253:5) {
-  [cause]: Error: connect ECONNREFUSED 127.0.0.1:1124
-      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16) {
-    errno: -61,
-    code: 'ECONNREFUSED',
-    syscall: 'connect',
-    address: '127.0.0.1',
-    port: 1124
-  }
-}
+...
+[cause]: Error: connect ECONNREFUSED 127.0.0.1:1124
+...
 ```
+
+If you see this error only a few times, it is normal—Electron will retry until the Shiny app is ready.  
+However, if you see this error more than 10 times, you should check and fix your Shiny application.
+
+---
 

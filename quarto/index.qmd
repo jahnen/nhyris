@@ -2,60 +2,83 @@
 title: "nhyris"
 ---
 
-`nhyris` is minimal framework to transform R Shiny application into standalone.
+`nhyris` is a minimal framework to transform an R Shiny application into a standalone desktop app.
 
-## How to use
+### Prerequisites
 
-1. clone repository: either fork or clone is OK
+- Node.js >= 22.13.1 (LTS: 22.15)
+- npm >= 11.4.1
 
-2. install dependencies
-
-node version >= 22.13.1 (LTS: 22.15)
+Check your versions:
 
 ```sh
-node -v 
-npm install 
-npm link 
+node -v
+npm -v
+```
+
+### Installation
+
+Install nhyris globally via npm:
+
+```sh
+npm install -g nhyris
 ```
 
 ::: {.callout-note}
-please use zsh or git-bash not powershell
+Please use zsh or git-bash, not PowerShell.
 :::
 
-3. initialize project with
+### Usage
+
+1. **Initialize a new project** (replace `myapp` with your project name):
 
 ```sh
 nhyris init myapp
 ```
 
-4. modify your shiny application
+2. **Modify your Shiny application**
 
+- Edit your app code in `myapp/shiny/app.R`    
 
-5. Modify shiny and Run your application
-
-Code for shiny is in **"myapp/shiny/app.R"**
+3. **Run your application in development mode:**
 
 ```sh
 nhyris run myapp
 ```
 
-::: {.callout-note}
-nhyris supports single file: not `ui.R` & `server.R`
-:::
+4. **Update dependencies or project files (optional):**
 
-6. build application into electron
+```sh
+nhyris update myapp
+```
+
+5. **Build the application into an Electron app:**
 
 ```sh
 nhyris build myapp
 ```
 
-7. Share your result
+6. **Find your packaged app in the `out` directory.**
 
-results exists in "out"
+### Example: Using Shiny Gallery Templates
 
-## app.R template from Shiny Galleries 
+You can use example apps from the [RStudio Shiny Gallery](https://github.com/rstudio/shiny-examples) as templates.
+
+For example, to initialize a project with the `001-hello` template:
 
 ```sh
-nhyris init ex01
+nhyris init 001-hello
 ```
+
+### Cross-platform
+
+nhyris supports building desktop applications for multiple operating systems, including **Windows**, **macOS**, and **Linux**.  
+It leverages Electron's cross-platform capabilities and supports various makers such as:
+
+- **ZIP** (universal)
+- **Squirrel.Windows** (Windows installer)
+- **DMG** (macOS)
+- **deb** (ubuntu linux)
+
+You can configure the target platforms and makers in your project settings to generate installers or packages suitable for your users' environments.
 

@@ -37,8 +37,6 @@ This will add the `nhyris` command to your PATH.
 
 ## How to use
 
-[![Use this template](https://img.shields.io/badge/USE_THIS_TEMPLATE-54A258?style=for-the-badge)](https://github.com/new?template_owner=jahnen&template_name=nhyris&owner=%40me)
-
 You can use the following commands after installing nhyris:
 
 - Initialize a new project (replace `myapp` with your project name):

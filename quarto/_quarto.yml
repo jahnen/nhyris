@@ -13,7 +13,7 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
+        text: Get Started
       - href: introduction.qmd
         text: Introduction
       - href: roadmap.qmd

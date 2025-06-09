@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./introduction.html"> 
@@ -155,8 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#nhyris-project-successfully-built-but-not-started" id="toc-nhyris-project-successfully-built-but-not-started" class="nav-link active" data-scroll-target="#nhyris-project-successfully-built-but-not-started">nhyris project successfully built, but not started</a></li>
-  <li><a href="#example-logs" id="toc-example-logs" class="nav-link" data-scroll-target="#example-logs">Example logs</a></li>
+  <li><a href="#project-builds-successfully-but-does-not-start" id="toc-project-builds-successfully-but-does-not-start" class="nav-link active" data-scroll-target="#project-builds-successfully-but-does-not-start">Project builds successfully, but does not start</a></li>
+  <li><a href="#example-logs" id="toc-example-logs" class="nav-link" data-scroll-target="#example-logs">Example Logs</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -182,16 +182,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="nhyris-project-successfully-built-but-not-started" class="level3">
-<h3 class="anchored" data-anchor-id="nhyris-project-successfully-built-but-not-started">nhyris project successfully built, but not started</h3>
-<p>In most case, running shiny code with <code>nhyris</code> has problem.</p>
-<p>Because <code>nhyris</code> uses independent R environment even if your shiny worked well in your environment like Positron, Rstudio or vscode shiny may not work in <code>nhyris</code>.</p>
-<p>For example: using different version of R or dependency problem from not installed R package and so on.</p>
-<p>To check R problem, follow these steps.</p>
+<section id="project-builds-successfully-but-does-not-start" class="level3">
+<h3 class="anchored" data-anchor-id="project-builds-successfully-but-does-not-start">Project builds successfully, but does not start</h3>
+<p>In most cases, issues running Shiny code with <code>nhyris</code> are related to the R environment.</p>
+<p>Because <code>nhyris</code> uses an independent R environment, your Shiny app may work in Positron, RStudio, or VS Code, but not in <code>nhyris</code>.<br>
+Common causes include different R versions or missing package dependencies.</p>
+<p>To diagnose R-related issues, follow these steps:</p>
 <ol type="1">
-<li><p>move to inside your project <myapp></myapp></p></li>
-<li><p>find <code>src/process-manager.js</code></p></li>
-<li><p>in L42, modify code.</p></li>
+<li>Navigate to your project directory (e.g., <code>&lt;Myapp&gt;</code>).</li>
+<li>Open <code>src/process-manager.js</code>.</li>
+<li>Around line 42, modify the code as follows:</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// To enable terminal output for debugging the R Shiny process:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Change this line in src/process-manager.js (around L42):</span></span>
@@ -208,13 +208,14 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This will show log from shiny application to your IDE’s terminal</p>
+<p>This will display logs from the Shiny application in your IDE’s terminal.</p>
 </div>
 </div>
+<hr>
 </section>
 <section id="example-logs" class="level3">
-<h3 class="anchored" data-anchor-id="example-logs">Example logs</h3>
-<p>Here’s example log</p>
+<h3 class="anchored" data-anchor-id="example-logs">Example Logs</h3>
+<p>Here is an example log output:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> .libPaths<span class="kw">(</span><span class="ex">r_lib_paths</span><span class="kw">)</span> <span class="co"># Temporarily set library paths to R_LIB_PATHS</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
@@ -252,10 +253,10 @@ Note
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">port:</span> 1124</span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This log can be considered as 3 part.</p>
-<ol type="1">
-<li>R execution part: log from running R and shiny. This is not error.</li>
-</ol>
+<p>This log can be divided into three parts:</p>
+<section id="r-execution" class="level4">
+<h4 class="anchored" data-anchor-id="r-execution">1. R Execution</h4>
+<p>This section shows the R and Shiny startup process. These lines are not errors.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">.libPaths</span>(r_lib_paths) <span class="co"># Temporarily set library paths to R_LIB_PATHS</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span>
@@ -273,39 +274,35 @@ Note
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Loading required package<span class="sc">:</span> shiny</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="2" type="1">
-<li>Error part: you need to investigate where it’s from.</li>
-</ol>
+</section>
+<section id="application-error" class="level4">
+<h4 class="anchored" data-anchor-id="application-error">2. Application Error</h4>
+<p>This section shows an error in your Shiny application. You need to investigate and fix the cause.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> <span class="st">`</span><span class="at">server</span><span class="st">`</span> must be a <span class="cf">function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Tn this shiny application, I used server as ui.</p>
+<p>For example, in this case, the <code>server</code> object was incorrectly assigned:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(...)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> ui</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="3" type="1">
-<li>Connection part: the most important you should notice.</li>
-</ol>
-<p><code>nhyris</code> has mechanism with 2 part: - Run shiny application with R script to port localhost:1124 - Connect shiny application in electron.</p>
-<p>the run part, will takes some time (shiny requires time to load).</p>
-<p>However both part are initiated almost same time, so Connect part may generate error like below.</p>
-<p>But after some trial, (around ~ 10) it will connected with shiny application and open electron application.</p>
-<p>So if you see this log with few, it’s fine. but if you see this more than 10 time: you should fix the shiny application.</p>
+</section>
+<section id="connection-error" class="level4">
+<h4 class="anchored" data-anchor-id="connection-error">3. Connection Error</h4>
+<p>This section shows connection attempts from Electron to the Shiny server.</p>
+<p><code>nhyris</code> works in two parts:</p>
+<ul>
+<li>Runs the Shiny application on localhost:1124 using R.</li>
+<li>Connects to the Shiny application from Electron.</li>
+</ul>
+<p>The Shiny app may take some time to start. Both processes are initiated almost simultaneously, so connection errors like the following may appear at first:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error</span> checking server status: TypeError: fetch failed</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> node:internal/deps/undici/undici:13510:13</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> process.processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async checkServerStatus <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:34:17</span><span class="kw">)</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async tryStartWebserver <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:139:24</span><span class="kw">)</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">at</span> async App.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">/Users/jinhwan/Documents/GitHub/nhyris/ex39/src/index.js:253:5</span><span class="kw">)</span> <span class="kw">{</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[cause]:</span> Error: connect ECONNREFUSED 127.0.0.1:1124</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> TCPConnectWrap.afterConnect [as oncomplete] <span class="er">(</span><span class="ex">node:net:1611:16</span><span class="kw">)</span> <span class="kw">{</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">errno:</span> <span class="at">-61,</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">code:</span> <span class="st">'ECONNREFUSED'</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">syscall:</span> <span class="st">'connect'</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">address:</span> <span class="st">'127.0.0.1'</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">port:</span> 1124</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[cause]:</span> Error: connect ECONNREFUSED 127.0.0.1:1124</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you see this error only a few times, it is normal—Electron will retry until the Shiny app is ready.<br>
+However, if you see this error more than 10 times, you should check and fix your Shiny application.</p>
+<hr>
 
 
+</section>
 </section>
 
 <p>Made by <a href="https://jahnen.io">jahnen</a></p></main> <!-- /main -->
