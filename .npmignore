@@ -2,7 +2,6 @@
 docs/
 examples/
 *.qmd
-README.md
 quarto/
 .quarto
 
