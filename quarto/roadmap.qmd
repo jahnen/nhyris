@@ -6,50 +6,51 @@ title: "nhyris Roadmap"
 If you have ideas, it's always welcome to [submit](https://github.com/jahnen/nhyris/issues/new)
 :::
 
-## Planned features
+### Provided Features
 
-### Multiple OS
+#### Multiple OS
 
 - [x] macOS
-- [x] windows
-- [x] Linux (ubuntu)
+- [x] Windows
+- [x] Linux (Ubuntu)
 
-### Multiple type of installer
+#### Multiple Types of Installer
 
 - [x] ZIP 
 - [x] DMG for macOS
-- [ ] deb for ubuntu
-- [x] Squirrel.windows for windows
- 
-### Advanced shiny
+- [x] deb for Ubuntu
+- [x] Squirrel.Windows for Windows
 
-- [x] CRAN
-- [ ] bioconductor
-- [ ] r-universe (github)
- 
-### Advanced electron
+#### Advanced Shiny
 
-- [ ] Configuration of electron (requires research)
-- [ ] Code signing for macOS or windows
+- [x] CRAN package support
+- [x] Bioconductor package support
+- [x] r-universe (GitHub) package support
 
-### Example shiny application
+#### Example Shiny Application
 
-See [shiny gallery](https://shiny.posit.co/r/gallery/)
+- [x] See [shiny gallery](https://shiny.posit.co/r/gallery/)
 
+### Planned Features
 
-## IDEAS
+#### Advanced Electron
+
+- [ ] Configuration of Electron (requires research)
+- [ ] Code signing for macOS or Windows
+
+### IDEAS
 
 ::: {.callout-note}
 These are just ideas, which can be changed as the project evolves.
 :::
 
-### Advanced shiny
+#### Advanced shiny
 
-`nhyris` only supports one-file: `app.R`
+`nhyris` only supports simple shiny application
 
-So, frameworks like `rhino`, `golem`, `leprechaun`, ... maybe considered.
+So, allowing shiny frameworks like `rhino`, `golem`, `leprechaun`, ... maybe considered.
 
-### Delivering method
+#### Delivering method
 
 `nhyris` only uses `electron.js`.
 

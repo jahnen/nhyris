@@ -52,6 +52,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -75,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./introduction.html"> 
@@ -120,14 +123,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#architecture-of-nhyris" id="toc-architecture-of-nhyris" class="nav-link active" data-scroll-target="#architecture-of-nhyris">Architecture of nhyris</a>
-  <ul class="collapse">
-  <li><a href="#template" id="toc-template" class="nav-link" data-scroll-target="#template">1. template</a></li>
+  <li><a href="#template" id="toc-template" class="nav-link active" data-scroll-target="#template">1. template</a></li>
   <li><a href="#commands" id="toc-commands" class="nav-link" data-scroll-target="#commands">2. commands</a></li>
-  <li><a href="#electrons" id="toc-electrons" class="nav-link" data-scroll-target="#electrons">3. Electrons</a></li>
-  <li><a href="#installings" id="toc-installings" class="nav-link" data-scroll-target="#installings">4. Installings</a></li>
-  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents">5. Documents</a></li>
-  </ul></li>
+  <li><a href="#electron-config" id="toc-electron-config" class="nav-link" data-scroll-target="#electron-config">3. electron-config</a></li>
+  <li><a href="#installers" id="toc-installers" class="nav-link" data-scroll-target="#installers">4. installers</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">5. documentation</a></li>
+  <li><a href="#additional-notes" id="toc-additional-notes" class="nav-link" data-scroll-target="#additional-notes">Additional Notes</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -166,62 +167,130 @@ Note
 <p>This documentation is for developers who want to contribute or make modifications.</p>
 </div>
 </div>
-<section id="architecture-of-nhyris" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-of-nhyris">Architecture of nhyris</h2>
-<p>nhyris consists of five parts: <strong>template</strong>, <strong>commands</strong>, <strong>Electrons</strong>, <strong>Installings</strong>, and <strong>Documents</strong>.</p>
+<p>nhyris consists of five main parts: <strong>template</strong>, <strong>commands</strong>, <strong>electron-config</strong>, <strong>installers</strong>, and <strong>documentation</strong>.</p>
+<hr>
 <section id="template" class="level3">
 <h3 class="anchored" data-anchor-id="template">1. template</h3>
 <section id="shiny" class="level4">
 <h4 class="anchored" data-anchor-id="shiny">shiny</h4>
-<p>If the name is not predefined (e.g., <strong>ex01</strong>):</p>
 <ul>
-<li><strong>app.R</strong>: R script for a simple Shiny application.</li>
-<li><strong>nn-x.R (pattern)</strong>: R scripts used in the Shiny gallery. If a predefined template name is used, it will replace the previous <strong>app.R</strong>.</li>
+<li><strong>app.R</strong>: R script for a simple Shiny application (default entry point).</li>
 </ul>
 </section>
 <section id="src" class="level4">
 <h4 class="anchored" data-anchor-id="src">src</h4>
-<p>These files are responsible for running the Electron application and managing its lifecycle:</p>
+<p>Responsible for running the Electron application and managing its lifecycle:</p>
 <ul>
-<li><strong>index.js</strong>:<br>
-The main entry point for the Electron app. Handles application state, creates and manages windows (loading, main, error), launches and monitors the R process via <strong>start-shiny.R</strong>, and switches to the Shiny app view when ready.</li>
-<li><strong>app-state.js</strong>:<br>
-Manages global application state, such as window references, configuration, and paths.</li>
-<li><strong>window-manager.js</strong>:<br>
-Contains functions for creating and controlling different Electron windows (splash, main, error).</li>
-<li><strong>process-manager.js</strong>:<br>
-Handles launching, monitoring, and terminating external processes (e.g., R).</li>
-<li><strong>server-utils.js</strong>:<br>
-Provides utilities for checking Shiny server status, port availability, and related server tasks.</li>
-<li><strong>error-handler.js</strong>:<br>
-Handles errors during app execution and displays error windows.</li>
-<li><strong>loading.html</strong>:<br>
-The HTML file shown as a splash/loading screen while the Shiny server is starting.</li>
-<li><strong>preload.js</strong>:<br>
-Preload script for secure IPC communication between Electron’s main and renderer processes.</li>
-<li><strong>start-shiny.R</strong>:<br>
-R script that launches the Shiny app on a specified port (default: 1124).</li>
+<li><strong>index.js</strong>: Main entry point for the Electron app. Handles application state, window management (loading, main, error), launches and monitors the R process via <strong>start-shiny.R</strong>, and switches to the Shiny app view when ready.
+<ul>
+<li><strong>app-state.js</strong>: Manages global application state, configuration, and paths.</li>
+<li><strong>window-manager.js</strong>: Functions for creating and controlling Electron windows (splash, main, error).</li>
+<li><strong>process-manager.js</strong>: Handles launching, monitoring, and terminating external processes (e.g., R).</li>
+<li><strong>server-utils.js</strong>: Utilities for checking Shiny server status, port availability, etc.</li>
+<li><strong>error-handler.js</strong>: Handles errors during app execution and displays error windows.</li>
+<li><strong>loading.html</strong>: Splash/loading screen shown while the Shiny server is starting.</li>
+<li><strong>preload.js</strong>: Preload script for secure IPC communication between Electron’s main and renderer processes.</li>
+<li><strong>start-shiny.R</strong>: R script that launches the Shiny app on a specified port (default: 1124).</li>
+</ul></li>
 </ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A --&gt; B(app-state)    
+    A --&gt; E(server-utils)
+    A((index)) --&gt; C(window-manager)
+    A --&gt; H((preload))
+    A --&gt; I(start-shiny)
+    I --&gt; J
+    
+    G --&gt; J((Shiny App View))
+    A --&gt; F(error-handler)
+    C --&gt; G((loading))
+
+style A fill:#f5c692,color:#424651
+
+style B fill:#C18373,color:#FFF
+style C fill:#C18373,color:#FFF
+style E fill:#C18373,color:#FFF
+style F fill:#C18373,color:#FFF
+
+style I fill:#007FFF,color:#FFF
+style H fill:#7D5C67,color:#FFF
+
+style G fill:#f5c692,color:#424651
+style J fill:#FBF6E1,color:#424651
+
+style D fill:#FA8072,color:#424651
+
+
+H --&gt; G
+J --&gt; D(process-manager.js)
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
 </section>
 </section>
 <section id="commands" class="level3">
 <h3 class="anchored" data-anchor-id="commands">2. commands</h3>
-<p>These files provide CLI commands for managing <code>nhyris</code> projects.</p>
+<p>CLI commands for managing nhyris projects:</p>
 <ul>
 <li><strong>bin/nhyris.js</strong>: Entry point for all CLI commands.</li>
-<li><strong>init.js</strong>: Implements the <code>nhyris init</code> command. Initializes a new project, copies templates, installs dependencies, and updates <code>.gitignore</code>.</li>
-<li><strong>build.js</strong>: Implements the <code>nhyris build</code> command. Builds a nhyris app using Electron Forge, supporting makers like <code>zip</code>, <code>dmg</code>, and <code>squirrel</code>.</li>
-<li><strong>run.js</strong>: Implements the <code>nhyris run</code> command. Runs a specified nhyris app using Electron Forge, and ensures proper process cleanup.</li>
-<li><strong>update.js</strong>: Implements the <code>nhyris update</code> command. Updates R and Node packages for a specified nhyris project.</li>
+<li><strong>init.js</strong>: Implements <code>nhyris init</code>. Initializes a new project, copies templates, installs dependencies, and updates <code>.gitignore</code>.</li>
+<li><strong>build.js</strong>: Implements <code>nhyris build</code>. Builds a nhyris app using Electron Forge, supporting makers like <code>zip</code>, <code>dmg</code>, and <code>squirrel</code>, <code>deb</code>.</li>
+<li><strong>update.js</strong>: Implements <code>nhyris update</code>. Updates R and Node packages for a specified nhyris project.</li>
+<li><strong>run.js</strong>: Implements <code>nhyris run</code>. Runs a specified nhyris app using Electron Forge, ensuring proper process cleanup.</li>
 </ul>
-<p>If you have issues with these, please set the label as <code>commands</code>.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR    
+    B --&gt; A    
+    C --&gt; A
+    A[init] --&gt; B[run]    
+    A --&gt; C[update]
+    A --&gt; D[build]
+
+style A fill:#C18373,color:#FFF
+style B fill:#f5c692,color:#424651
+style C fill:#f5c692,color:#424651
+style D fill:#FBF6E1,color:#424651
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you have issues with these, please set the label as <code>commands</code> in your GitHub issue.</p>
+</div>
+</div>
+<hr>
 </section>
-<section id="electrons" class="level3">
-<h3 class="anchored" data-anchor-id="electrons">3. Electrons</h3>
-<p>These files contain configuration for managing the Electron application. Some configuration is also present in <strong>src/index.js</strong>.</p>
+<section id="electron-config" class="level3">
+<h3 class="anchored" data-anchor-id="electron-config">3. electron-config</h3>
+<p>Configuration files for managing the Electron application:</p>
 <ul>
-<li><strong>template/forge.config.js</strong>: Electron Forge configuration file.</li>
-<li><strong>template/package.json</strong>: Node package information for Electron.</li>
+<li><strong>template/forge.config.js</strong>: Electron Forge configuration file (makers, packaging, etc.).</li>
+<li><strong>template/package.json</strong>: Node package information for the Electron app template.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -233,30 +302,41 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>/package.json</strong> is the Node package information for <code>nhyris</code>.</p>
+<p>The root <strong>/package.json</strong> is for the nhyris CLI tool itself, while <strong>template/package.json</strong> is for user projects.</p>
 </div>
 </div>
+<p>Some Electron configuration is also present in <strong>src/index.js</strong>.</p>
+<hr>
 </section>
-<section id="installings" class="level3">
-<h3 class="anchored" data-anchor-id="installings">4. Installings</h3>
-<p>These files are for installing a local R environment.</p>
+<section id="installers" class="level3">
+<h3 class="anchored" data-anchor-id="installers">4. installers</h3>
+<p>Files for installing and managing a local R environment:</p>
 <ul>
-<li><strong>pak-pkgs.R</strong>: Installs CRAN packages into the local R environment.</li>
 <li><strong>r.sh</strong>: Shell script to install a local R distribution.</li>
+<li><strong>pak-pkgs.R</strong>: Installs CRAN / Bioconductor / Github packages into the local R environment.</li>
 </ul>
+<hr>
 </section>
-<section id="documents" class="level3">
-<h3 class="anchored" data-anchor-id="documents">5. Documents</h3>
+<section id="documentation" class="level3">
+<h3 class="anchored" data-anchor-id="documentation">5. documentation</h3>
+<p>Project documentation and branding resources:</p>
 <ul>
-<li><strong>_quarto.yml</strong>: Quarto configuration.</li>
-<li><strong>*.qmd</strong>: Quarto document files.</li>
-<li><strong>brand/</strong>: Quarto configuration.</li>
-<li><strong>docs/</strong>: Quarto output destination.</li>
-<li><strong>images/</strong>: nhyris logos and images.</li>
+<li><strong>_quarto.yml</strong>: Quarto configuration file.</li>
+<li><strong>*.qmd</strong>: Quarto document files (architecture, introduction, roadmap, etc.).</li>
+<li><strong>brand/</strong>: Branding resources (logos, styles) for documentation.</li>
+<li><strong>docs/</strong>: Quarto output destination (rendered documentation).</li>
+<li><strong>images/</strong>: nhyris logos, screenshots, and other images.</li>
+</ul>
+<hr>
+</section>
+<section id="additional-notes" class="level3">
+<h3 class="anchored" data-anchor-id="additional-notes">Additional Notes</h3>
+<ul>
+<li><strong>out/</strong>: Build output directory for packaged apps.</li>
+<li>Directory and file structure may evolve as the project grows. Please refer to the latest documentation and repository structure for updates.</li>
 </ul>
 
 
-</section>
 </section>
 
 <p>Made by <a href="https://jahnen.io">jahnen</a></p></main> <!-- /main -->

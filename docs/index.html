@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./introduction.html"> 
@@ -155,8 +155,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link active" data-scroll-target="#how-to-use">How to use</a></li>
-  <li><a href="#app.r-template-from-shiny-galleries" id="toc-app.r-template-from-shiny-galleries" class="nav-link" data-scroll-target="#app.r-template-from-shiny-galleries">app.R template from Shiny Galleries</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#example-using-shiny-gallery-templates" id="toc-example-using-shiny-gallery-templates" class="nav-link" data-scroll-target="#example-using-shiny-gallery-templates">Example: Using Shiny Gallery Templates</a></li>
+  <li><a href="#cross-platform" id="toc-cross-platform" class="nav-link" data-scroll-target="#cross-platform">Cross-platform</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -182,65 +185,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>nhyris</code> is minimal framework to transform R Shiny application into standalone.</p>
-<section id="how-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
-<ol type="1">
-<li><p>clone repository: either fork or clone is OK</p></li>
-<li><p>install dependencies</p></li>
-</ol>
-<p>node version &gt;= 22.13.1 (LTS: 22.15)</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">-v</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> link </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>please use zsh or git-bash not powershell</p>
-</div>
-</div>
-<ol start="3" type="1">
-<li>initialize project with</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> init myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="4" type="1">
-<li><p>modify your shiny application</p></li>
-<li><p>Modify shiny and Run your application</p></li>
-</ol>
-<p>Code for shiny is in <strong>“myapp/shiny/app.R”</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> run myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>nhyris supports single file: not <code>ui.R</code> &amp; <code>server.R</code></p>
-</div>
-</div>
-<ol start="6" type="1">
-<li>build application into electron</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> build myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="7" type="1">
-<li>Share your result</li>
-</ol>
-<p>results exists in “out”</p>
+<p><code>nhyris</code> is a minimal framework to transform an R Shiny application into a standalone desktop app.</p>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Node.js &gt;= 22.13.1 (LTS: 22.15)</li>
+<li>npm &gt;= 11.4.1</li>
+</ul>
+<p>Check your versions:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">-v</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="app.r-template-from-shiny-galleries" class="level2">
-<h2 class="anchored" data-anchor-id="app.r-template-from-shiny-galleries">app.R template from Shiny Galleries</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> init ex01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="installation" class="level3">
+<h3 class="anchored" data-anchor-id="installation">Installation</h3>
+<p>Install nhyris globally via npm:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> nhyris</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please use zsh or git-bash, not PowerShell.</p>
+</div>
+</div>
+</section>
+<section id="usage" class="level3">
+<h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<ol type="1">
+<li><strong>Initialize a new project</strong> (replace <code>myapp</code> with your project name):</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> init myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><strong>Modify your Shiny application</strong></li>
+</ol>
+<ul>
+<li>Edit your app code in <code>myapp/shiny/app.R</code></li>
+</ul>
+<ol start="3" type="1">
+<li><strong>Run your application in development mode:</strong></li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> run myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>Update dependencies or project files (optional):</strong></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> update myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><strong>Build the application into an Electron app:</strong></li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> build myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><strong>Find your packaged app in the <code>out</code> directory.</strong></li>
+</ol>
+</section>
+<section id="example-using-shiny-gallery-templates" class="level3">
+<h3 class="anchored" data-anchor-id="example-using-shiny-gallery-templates">Example: Using Shiny Gallery Templates</h3>
+<p>You can use example apps from the <a href="https://github.com/rstudio/shiny-examples">RStudio Shiny Gallery</a> as templates.</p>
+<p>For example, to initialize a project with the <code>001-hello</code> template:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nhyris</span> init 001-hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="cross-platform" class="level3">
+<h3 class="anchored" data-anchor-id="cross-platform">Cross-platform</h3>
+<p>nhyris supports building desktop applications for multiple operating systems, including <strong>Windows</strong>, <strong>macOS</strong>, and <strong>Linux</strong>.<br>
+It leverages Electron’s cross-platform capabilities and supports various makers such as:</p>
+<ul>
+<li><strong>ZIP</strong> (universal)</li>
+<li><strong>Squirrel.Windows</strong> (Windows installer)</li>
+<li><strong>DMG</strong> (macOS)</li>
+<li><strong>deb</strong> (ubuntu linux)</li>
+</ul>
+<p>You can configure the target platforms and makers in your project settings to generate installers or packages suitable for your users’ environments.</p>
 
 
 </section>

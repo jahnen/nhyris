@@ -75,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./introduction.html" aria-current="page"> 
@@ -120,8 +120,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-this-is-important" id="toc-why-this-is-important" class="nav-link active" data-scroll-target="#why-this-is-important">Why this is important?</a></li>
-  <li><a href="#how-we-solve-this" id="toc-how-we-solve-this" class="nav-link" data-scroll-target="#how-we-solve-this">How we solve this?</a></li>
+  <li><a href="#why-is-this-important" id="toc-why-is-this-important" class="nav-link active" data-scroll-target="#why-is-this-important">Why is this important?</a></li>
+  <li><a href="#how-do-we-solve-this" id="toc-how-do-we-solve-this" class="nav-link" data-scroll-target="#how-do-we-solve-this">How do we solve this?</a></li>
   <li><a href="#why-nhyris" id="toc-why-nhyris" class="nav-link" data-scroll-target="#why-nhyris">Why nhyris?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -148,31 +148,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><code>nhyris</code> (an anagram of <code>rshiny</code>, pronounced <em>nai-riss</em>), is a framework for transform R shiny application into desktop standalone app.</p>
-<p>Which mean, <strong>you can run shiny application, with only ZIP file</strong> (without R or Rstudio installed)</p>
-<section id="why-this-is-important" class="level3">
-<h3 class="anchored" data-anchor-id="why-this-is-important">Why this is important?</h3>
-<p>R shiny let R developer to build interactive web application with R. but as shiny, it requires dependency for engineering concepts like <strong>server</strong> &amp; <strong>infrastructure</strong> to response user’s action interactively.</p>
-<p>So, even one of main target user of R shiny is non-technical like Statisticans, or Decision maker. But they don’t have experience or don’t want to maintain R shiny.</p>
-<p>Also, utilizing shiny application involves infrastructure complexity like offline access, run in separated environment, handle data security and compliance concerns even for R developer.</p>
-<p>Therefore we suggest as build R shiny application completely independent and self-contained way. Which doesn’t require any dependency to run (<em>and build / maintain more easier than before</em>)</p>
-<p><img src="images/fig-1.png" width="70%"></p>
-<p>This issue will affect to <code>R shiny developers</code>, <code>organization</code> users, <code>SAS</code> users transitioning to R, and <code>academics</code>, all of whom need self-contained, server-free shiny applications accessible without technical setup.</p>
-<p>Also, Real-world adoption of R and Shiny in regulated and enterprise settings, as shown by <a href="https://www.youtube.com/live/t33dS17QHuA?si=bQB4w_NCoi0XQBIj">Novo Nordisk</a> and the <a href="https://rconsortium.github.io/submissions-wg/">Submission Working Group</a>, highlights the growing need for seamless, accessible deployment solutions beyond academia.</p>
+<p><code>nhyris</code> (an anagram of <code>rshiny</code>, pronounced <em>nai-riss</em>) is a framework to transform R Shiny applications into standalone desktop apps.</p>
+<p>This means <strong>you can run a Shiny application using only a ZIP file</strong>—no need to install R or RStudio.</p>
+<hr>
+<section id="why-is-this-important" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-this-important">Why is this important?</h3>
+<p>R Shiny enables R developers to build interactive web applications with R.<br>
+However, deploying Shiny apps typically requires engineering knowledge of <strong>servers</strong> and <strong>infrastructure</strong> to handle user interactions.</p>
+<p>Many of Shiny’s target users—such as statisticians and decision makers—are non-technical and may lack the experience or desire to maintain Shiny servers.</p>
+<p>Even for R developers, using Shiny apps can involve infrastructure complexity:<br>
+- Ensuring offline access<br>
+- Running in isolated environments<br>
+- Handling data security and compliance</p>
+<p>We propose building R Shiny applications in a completely independent and self-contained way, requiring <strong>no external dependencies to run</strong>—making building, running, and maintaining apps easier than ever.</p>
+<p><img src="images/fig-1.png" width="70%" alt="Self-contained Shiny app illustration"></p>
+<p>This challenge affects R Shiny developers, organizations, SAS users transitioning to R, and academics—all of whom need self-contained, server-free Shiny applications accessible without technical setup.</p>
+<p>The real-world adoption of R and Shiny in regulated and enterprise settings, as demonstrated by <a href="https://www.youtube.com/live/t33dS17QHuA?si=bQB4w_NCoi0XQBIj">Novo Nordisk</a> and the <a href="https://rconsortium.github.io/submissions-wg/">Submission Working Group</a>, highlights the growing need for seamless, accessible deployment solutions beyond academia.</p>
+<hr>
 </section>
-<section id="how-we-solve-this" class="level3">
-<h3 class="anchored" data-anchor-id="how-we-solve-this">How we solve this?</h3>
-<p>Previously, there was try to build application based on <code>Electron.js</code>, commonly used technique for building cross-platform application. See this <a href="https://www.electronjs.org/apps">link</a> for showcase.</p>
-<p><img src="images/showcase.png" width="70%"></p>
-<p>However, electron is not R (but javascript), it also brings some challenge to R developer who only familliar with R or shiny.</p>
-<p>Since few years ago, we tried to make this process simple and reproducible with instructions. See this <a href="https://github.com/zarathucorp/shiny-electron-template-m1">repository</a>. and It worked well.</p>
-<p><img src="images/fig-4.png" width="70%"></p>
+<section id="how-do-we-solve-this" class="level3">
+<h3 class="anchored" data-anchor-id="how-do-we-solve-this">How do we solve this?</h3>
+<p>Previously, some attempted to build desktop applications using <code>Electron.js</code>, a popular framework for cross-platform apps. See this <a href="https://www.electronjs.org/apps">showcase</a> for examples.</p>
+<p><img src="images/showcase.png" width="70%" alt="Electron app showcase"></p>
+<p>However, Electron is JavaScript-based, which can be challenging for R developers who are only familiar with R or Shiny.</p>
+<p>A few years ago, we created a simple, reproducible process with step-by-step instructions (<a href="https://github.com/zarathucorp/shiny-electron-template-m1">see this repository</a>), and it worked well.</p>
+<p><img src="images/fig-4.png" width="70%" alt="Previous template workflow"></p>
+<hr>
 </section>
 <section id="why-nhyris" class="level3">
 <h3 class="anchored" data-anchor-id="why-nhyris">Why nhyris?</h3>
-<p>Previous trial was targeted to make most-minimal application, which doesn’t have guide about more detailed configuration even it has ability for do that.</p>
-<p>As enhanced version, <code>nhyris</code> will expand beyond the <strong>macOS</strong> prototype to support <strong>Windows</strong> and <strong>Linux</strong>, reduce deployment overhead, offer customizable design options, and provide comprehensive documentation and tutorials for R developers.</p>
-<p>so it’s mainly designed as CLI tool, which generates application as a desktop wrapper, with a bundled R runtime for standalone execution.</p>
+<p>The previous approach focused on minimal applications and lacked guidance for advanced configuration, even though it was possible.</p>
+<p>As an enhanced solution, <strong>nhyris</strong> expands beyond the original macOS prototype to support <strong>Windows</strong> and <strong>Linux</strong>, reduces deployment overhead, offers customizable design options, and provides comprehensive documentation and tutorials for R developers.</p>
+<p>nhyris is designed as a CLI tool that generates a desktop application wrapper with a bundled R runtime for true standalone execution—no R or RStudio installation required.</p>
 
 
 </section>
