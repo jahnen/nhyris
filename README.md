@@ -11,30 +11,57 @@
 
 The minimal framework for transform R shiny application into standalone
 
+## Prerequisites
+
+Before installing **nhyris**, make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v22.13.1 or higher recommended)
+- [npm](https://www.npmjs.com/) (v11.4.1 or higher recommended)
+
+You can check your versions with:
+
+```sh
+node -v
+npm -v
+```
+
+## How to install
+
+You can install nhyris globally using npm:
+
+```sh
+npm i -g nhyris
+```
+
+This will add the `nhyris` command to your PATH.
+
 ## How to use
 
-- install node
+You can use the following commands after installing nhyris:
+
+- Initialize a new project (replace `myapp` with your project name):
 
 ```sh
-sh ./node.sh
+nhyris init myapp
 ```
 
-- make project: assuming 'myapp'
+- Run your Shiny app in development mode:
 
 ```sh
-sh ./project.sh myapp
+nhyris run myapp
 ```
 
-- modify meta data: `myapp/package.json`
-- modify shiny application with yours: `myapp/shiny/app.R`
-
-- build electron application
+- Update dependencies and project files:
 
 ```sh
-sh ./electron.sh myapp
+nhyris update myapp
 ```
 
-- finish
+- Build a standalone Electron application:
+
+```sh
+nhyris build myapp
+```
 
 ## License
 
