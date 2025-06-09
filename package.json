@@ -1,13 +1,14 @@
 {
   "name": "nhyris",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "CLI for packaging R Shiny apps into Electron-based desktop apps",
   "type": "module",
   "bin": {
     "nhyris": "./bin/nhyris.js"
   },
   "scripts": {
-    "start": "node ./bin/nhyris.js"
+    "start": "node ./bin/nhyris.js",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -15,6 +16,24 @@
   },
   "engines": {
     "node": ">=22.13.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jahnen/nhyris.git"
+  },
+  "keywords": [
+    "shiny",
+    "electron",
+    "cli",
+    "rstats",
+    "R",
+    "desktop",
+    "standalone",
+    "packaging"
+  ],
+  "homepage": "https://github.com/jahnen/nhyris#readme",
+  "bugs": {
+    "url": "https://github.com/jahnen/nhyris/issues"
   },
   "author": "Jinhwan Kim",
   "license": "MIT"
