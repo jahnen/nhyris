@@ -158,6 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#r-packages" id="toc-r-packages" class="nav-link active" data-scroll-target="#r-packages">R Packages</a></li>
   <li><a href="#icon" id="toc-icon" class="nav-link" data-scroll-target="#icon">Icon</a></li>
   <li><a href="#squirrel.windows" id="toc-squirrel.windows" class="nav-link" data-scroll-target="#squirrel.windows">squirrel.windows</a></li>
+  <li><a href="#deb" id="toc-deb" class="nav-link" data-scroll-target="#deb">deb</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jahnen/nhyris/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -333,6 +334,29 @@ This is an Electron policy and cannot be changed by <code>nhyris</code>.</p>
 <h4 class="anchored" data-anchor-id="creating-ico-files">Creating ICO Files</h4>
 <p>Simply renaming a file to <code>.ico</code> may not work properly.<br>
 To convert a PNG to ICO, it is recommended to use an online converter such as <a href="https://www.icoconverter.com/">icoconverter.com</a>.</p>
+</section>
+</section>
+<section id="deb" class="level3">
+<h3 class="anchored" data-anchor-id="deb">deb</h3>
+<p><code>nhyris</code> supports building <code>.deb</code> installers for Debian-based Linux distributions using Electron Forge’s deb maker.</p>
+<section id="prerequisites" class="level4">
+<h4 class="anchored" data-anchor-id="prerequisites">Prerequisites</h4>
+<p>To build a <code>.deb</code> package, you need to have <code>dpkg</code> and <code>fakeroot</code> installed on your system.<br>
+You can install them with:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install dpkg fakeroot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="configuration-options" class="level4">
+<h4 class="anchored" data-anchor-id="configuration-options">Configuration Options</h4>
+<p>By default, no extra options are specified for the deb maker in <code>nhyris</code>.<br>
+If you need to customize the build (e.g., set maintainer, description, categories, etc.), refer to the available options in the <a href="https://github.com/electron/forge/blob/9f35bdea87fe0df5b2566b74ff909f2f037ef556/packages/maker/deb/src/Config.ts#L211">Electron Forge deb maker config documentation</a>.</p>
+</section>
+<section id="uninstalling-the-application" class="level4">
+<h4 class="anchored" data-anchor-id="uninstalling-the-application">Uninstalling the Application</h4>
+<p>To uninstall your <code>.deb</code> application, use one of the following commands:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove myapp</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or, to remove configuration files as well:</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt purge myapp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

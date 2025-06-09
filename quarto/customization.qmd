@@ -184,5 +184,34 @@ Simply renaming a file to `.ico` may not work properly.
 To convert a PNG to ICO, it is recommended to use an online converter such as [icoconverter.com](https://www.icoconverter.com/).
 
 
+### deb
+
+`nhyris` supports building `.deb` installers for Debian-based Linux distributions using Electron Forge's deb maker.
+
+#### Prerequisites
+
+To build a `.deb` package, you need to have `dpkg` and `fakeroot` installed on your system.  
+You can install them with:
+
+```bash
+sudo apt-get update
+sudo apt-get install dpkg fakeroot
+```
+
+#### Configuration Options
+
+By default, no extra options are specified for the deb maker in `nhyris`.  
+If you need to customize the build (e.g., set maintainer, description, categories, etc.), refer to the available options in the [Electron Forge deb maker config documentation](https://github.com/electron/forge/blob/9f35bdea87fe0df5b2566b74ff909f2f037ef556/packages/maker/deb/src/Config.ts#L211).
+
+#### Uninstalling the Application
+
+To uninstall your `.deb` application, use one of the following commands:
+
+```bash
+sudo apt remove myapp
+# or, to remove configuration files as well:
+sudo apt purge myapp
+```
+
 
 
