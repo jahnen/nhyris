@@ -1,0 +1,19 @@
+# Documentation and examples
+docs/
+examples/
+*.qmd
+quarto/
+.quarto
+
+# Build and environment artifacts
+node_modules/
+dist/
+build/
+out/
+.env
+.DS_Store
+
+# Editor and OS-specific files
+.vscode/
+*.iml
+*.log
