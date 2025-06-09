@@ -1,6 +1,6 @@
 {
   "name": "nhyris",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "CLI for packaging R Shiny apps into Electron-based desktop apps",
   "type": "module",
   "bin": {
@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node ./bin/nhyris.js",
-    "test": "echo \"No test specified\" && exit 0",
-    "prepublishOnly": "npm run build"
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "chalk": "^5.4.1",
