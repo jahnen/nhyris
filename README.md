@@ -1,6 +1,6 @@
 ![Project banner](./images/banner.png)
 
-[![npm](https://img.shields.io/badge/npm-1.0.0-CB3837?logo=npm&style=for-the-badge&logoColor=white)](https://www.npmjs.com/package/nhyris)
+[![npm](https://img.shields.io/badge/npm-1.0.2-CB3837?logo=npm&style=for-the-badge&logoColor=white)](https://www.npmjs.com/package/nhyris)
 
 # nhyris
 
